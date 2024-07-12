@@ -77,6 +77,7 @@ public class EmpleadoServiceimpl implements EmpleadoService {
             dto.setJornadaLaboral((contrato.getJornadaLaboral() == null) ? "" : contrato.getJornadaLaboral().getNombre());
             dto.setAntiguedad(calcularAnitguedad(contrato.getFechaInicio(), emp.isActivo()));
             dto.setActivo(emp.isActivo());
+            dto.setFoto(emp.getFoto());
 
             empleados.add(dto);
         }
@@ -133,15 +134,15 @@ public class EmpleadoServiceimpl implements EmpleadoService {
 
     @Override
     public ContratoDto getContratoDto(int id) throws Exception {
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        //SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         Contrato contrato = contratoRepository.findByEmpleado(id);
         ContratoDto dto = new ContratoDto();
 
         dto.setId(contrato.getId());
-        dto.setAntiguedad(calcularAnitguedad(contrato.getFechaEmision(), contrato.getEmpleado().isActivo()));
+        dto.setAntiguedad(calcularAnitguedad(contrato.getFechaInicio(), contrato.getEmpleado().isActivo()));
         dto.setModalidadContrato(contrato.getModalidadCont().getNombre());
-        dto.setFechaInicio(format.format(Date.valueOf(contrato.getFechaInicio())));
-        dto.setFechaFin(null);//dto.setFechaFin(format.format(Date.valueOf(contrato.getFechaFin())));
+        dto.setFechaInicio((contrato.getFechaInicio()==null)?"-":contrato.getFechaInicio()+"");
+        dto.setFechaFin((contrato.getFechaFin()==null)?"-":contrato.getFechaFin()+"");
         dto.setArea(contrato.getArea().getNombre());
         dto.setSueldoBasico(contrato.getArea().getSueldoBasico());
         dto.setJornadaLaboral(contrato.getJornadaLaboral().getNombre());
@@ -151,7 +152,7 @@ public class EmpleadoServiceimpl implements EmpleadoService {
 
     @Override
     public FacturacionDto emitirRecibo(FacturacionDto facturacionDto, int id, boolean bonificacion) throws Exception {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        //SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Contrato contrato = contratoRepository.findByEmpleado(id);
 
         if (contrato == null)
@@ -175,7 +176,7 @@ public class EmpleadoServiceimpl implements EmpleadoService {
         dto.setCod(empleado.getCod());
         dto.setDni(empleado.getDni());
         dto.setEmpleado(empleado.getNombre() + " " + empleado.getApPaterno().toUpperCase() + " " + empleado.getApMaterno().toUpperCase());
-        dto.setFechaPago(format.format(Date.valueOf(fecha)));
+        dto.setFechaPago((fecha==null)?"-":fecha+"");
         dto.setSueldoBruto(sueldo);
         dto.setBonificacion(0.0);
         dto.setSueldoNeto(sueldo);
@@ -268,7 +269,7 @@ public class EmpleadoServiceimpl implements EmpleadoService {
     }
 
     public String calcularAnitguedad(LocalDate inicio, boolean activo) {
-        if (!activo)
+        if (!activo || inicio==null)
             return "";
 
         Period periodo = Period.between(inicio, LocalDate.now());
@@ -311,7 +312,7 @@ public class EmpleadoServiceimpl implements EmpleadoService {
                 if (i > 0) {
                 	extension = originalFilename.substring(i);
                 }
-                if (extension.equals(".jpg") || extension.equals(".png") || extension.equals(".webp") || extension.equals(".svg")) {
+                if (extension.equals(".jpg")|| extension.equals(".jpeg") || extension.equals(".png") || extension.equals(".webp") || extension.equals(".svg")) {
                     Path filePath = Paths.get("src/main/resources/static/img/" + empleado.getCod() + extension);
                     Files.copy(foto.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
                     return empleado.getCod() + extension;
@@ -345,6 +346,8 @@ public class EmpleadoServiceimpl implements EmpleadoService {
 		e.setDni(empe.getDni());
 		e.setEstadoCivil(empe.getEstadoCivil());
 		e.setFechaEmision(contrato.getFechaEmision());
+		e.setFechaFin(contrato.getFechaFin());
+		e.setFechaInicio(contrato.getFechaInicio());
 		e.setFechaNacimiento(empe.getFechaNac());
 		e.setFoto(empe.getFoto());
 		e.setGenero(empe.isGenero());
@@ -359,7 +362,7 @@ public class EmpleadoServiceimpl implements EmpleadoService {
 		Empleado actualizado= null;
 		try {
 			 actualizado = new Empleado(id,getEmpleado(id).getCod(),empe.getDni(),empe.getNombre(),empe.getApPaterno(),empe.getApMaterno(),empe.isGenero(),
-				empe.getEstadoCivil(),empe.getFechaNacimiento(),getEmpleado(id).getFoto(),empe.isGenero());
+				empe.getEstadoCivil(),empe.getFechaNacimiento(),getEmpleado(id).getFoto(),getEmpleado(id).isActivo());
 			 if(!foto.isEmpty())
 				 actualizado.setFoto(nombreFoto(foto, actualizado));
 			 updateEmple(actualizado);

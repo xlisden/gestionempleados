@@ -127,7 +127,7 @@
         <div class="profile-card">
             <div class="d-flex align-items-start mb-3">
                 <div class="d-flex flex-column align-items-center me-3">
-                    <img src="" alt="empleado_imagen" class="profile-img mb-1">
+                    <img th:src="@{/img/{image}(image=${ empleado.foto })}" alt="empleado_imagen" class="profile-img mb-1">
                     <span th:text="${empleado.activo} ? 'Activo' : 'Inactivo'"
                           th:class="${empleado.activo} ? 'active-class' : 'inactive-class'" class="small"></span>
                 </div>
