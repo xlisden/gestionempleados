@@ -1,5 +1,6 @@
 package com.unu.serviceimpl;
 
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +44,18 @@ public class LoginServiceimpl implements LoginService{
 		logrepo.deleteById(id);
 	}
 	 
-	 
+	@Override
+	public boolean validacion(String us, String ps) {
+		try {
+			if(logrepo.user_contra(us, ps)!=null) {
+				Login log=getLogin(1);
+				logrepo.save(new Login(1, us, ps, log.getEmpleado(),true,LocalTime.now()));
+				System.out.println("------ sesion iniciada bien-----");
+				return true;
+			}
+		} catch (Exception e) {
+			return false;
+		}
+		return false;
+	}
 }

@@ -10,4 +10,5 @@ public interface LoginService {
 	public abstract Login getLogin(long	id)throws Exception;
 	public abstract void updatelogin(Login logi);
 	public abstract void deletelogin(long id);
+	public abstract boolean validacion(String us,String ps);
 }
