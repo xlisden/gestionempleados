@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	
+	<div>
+		<table border=4 >
+			<thead class="table-dark">
+				<tr>
+					<th>CODIGO</th>
+					<th>NOMBRES</th>
+					<th>TIEMPO</th>
+					<th>AREA</th>
+					<th>MODALIDAD</th>
+					<th>JORNADA</th>
+					<th>DETALLES</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="e:${empleados}">
+					<td th:text="${e[0]}"></td>
+					<td th:text="${e[1]}"></td>
+					<td th:text="${e[2]}"></td>
+					<td th:text="${e[3]}"></td>
+					<td th:text="${e[4]}"></td>
+					<td th:text="${e[5]}"></td>
+					<td >
+						<div class="col-md-3">						
+							<a th:href="@{/temp/list}">
+							  <img th:src="@{/img/detalle.png}" width="30px" height="30px" alt="detalleIcon" >
+							</a>
+		                </div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	
+	
+	
+</body>
+</html>

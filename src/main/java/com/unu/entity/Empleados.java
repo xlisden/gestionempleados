@@ -17,74 +17,71 @@ import jakarta.persistence.Table;
 public class Empleados {
 	
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id_empleado;
-	private String empleado_cod;
+	private int idEmpleado;
+	private String empleadoCod;
 	private String dni;
 	private String nombres;
-	private String ap_paterno;
-	private String ap_materno;
+	private String apPaterno;
+	private String apMaterno;
 	private int genero;
-	private LocalDate fecha_nac;
-	private String foto="no_image.png";
-	private LocalDate fecha_ingreso;
+	private boolean estado;
+	private LocalDate fechaNaci;
+	private String foto;
+	private LocalDate fechaIngreso;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "id_area", foreignKey = @ForeignKey(name = "fk_empleado_area"))
+	@JoinColumn(name = "idArea", foreignKey = @ForeignKey(name = "fk_empleado_area"))
 	private Areas area;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "j_lab_codigo", foreignKey = @ForeignKey(name = "fk_empleado_jornada"))
-	private Jornadas_laborales jornada;
+	@JoinColumn(name = "jLabCodigo", foreignKey = @ForeignKey(name = "fk_empleado_jornada"))
+	private JornadasLaborales jornada;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "est_civil_cod", foreignKey = @ForeignKey(name = "fk_empleado_estadoc"))
-	private Estados_civiles estado_c;
+	@JoinColumn(name = "estCivilCod", foreignKey = @ForeignKey(name = "fk_empleado_estadoc"))
+	private EstadosCiviles estadoC;
 
 	public Empleados() {
 		super();
 	}
 
-	
-
-	public int getId_empleado() {
-		return id_empleado;
-	}
-
-
-
-	public void setId_empleado(int id_empleado) {
-		this.id_empleado = id_empleado;
-	}
-
-
-
-	public Empleados(int id_empleado, String empleado_cod, String dni, String nombres, String ap_paterno,
-			String ap_materno, int genero, LocalDate fecha_nac, String foto, LocalDate fecha_ingreso, Areas area,
-			Jornadas_laborales jornada, Estados_civiles estado_c) {
+	public Empleados(int idEmpleado, String empleadoCod, String dni, String nombres, String apPaterno, String apMaterno,
+			int genero, boolean estado, LocalDate fechaNaci, String foto, LocalDate fechaIngreso, Areas area,
+			JornadasLaborales jornada, EstadosCiviles estadoC) {
 		super();
-		this.id_empleado = id_empleado;
-		this.empleado_cod = empleado_cod;
+		this.idEmpleado = idEmpleado;
+		this.empleadoCod = empleadoCod;
 		this.dni = dni;
 		this.nombres = nombres;
-		this.ap_paterno = ap_paterno;
-		this.ap_materno = ap_materno;
+		this.apPaterno = apPaterno;
+		this.apMaterno = apMaterno;
 		this.genero = genero;
-		this.fecha_nac = fecha_nac;
-		this.foto = foto;
-		this.fecha_ingreso = fecha_ingreso;
+		this.estado = true;
+		this.fechaNaci = fechaNaci;
+		if(foto==null)
+			this.foto = "ddd.png";
+		else
+			this.foto=foto;
+		this.fechaIngreso = fechaIngreso;
 		this.area = area;
 		this.jornada = jornada;
-		this.estado_c = estado_c;
+		this.estadoC = estadoC;
 	}
 
-
-
-	public String getEmpleado_cod() {
-		return empleado_cod;
+	public int getIdEmpleado() {
+		return idEmpleado;
 	}
 
-	public void setEmpleado_cod(String empleado_cod) {
-		this.empleado_cod = empleado_cod;
+	public void setIdEmpleado(int idEmpleado) {
+		this.idEmpleado = idEmpleado;
+	}
+
+	public String getEmpleadoCod() {
+		return empleadoCod;
+	}
+
+	public void setEmpleadoCod(String empleadoCod) {
+		this.empleadoCod = empleadoCod;
 	}
 
 	public String getDni() {
@@ -103,20 +100,20 @@ public class Empleados {
 		this.nombres = nombres;
 	}
 
-	public String getAp_paterno() {
-		return ap_paterno;
+	public String getApPaterno() {
+		return apPaterno;
 	}
 
-	public void setAp_paterno(String ap_paterno) {
-		this.ap_paterno = ap_paterno;
+	public void setApPaterno(String apPaterno) {
+		this.apPaterno = apPaterno;
 	}
 
-	public String getAp_materno() {
-		return ap_materno;
+	public String getApMaterno() {
+		return apMaterno;
 	}
 
-	public void setAp_materno(String ap_materno) {
-		this.ap_materno = ap_materno;
+	public void setApMaterno(String apMaterno) {
+		this.apMaterno = apMaterno;
 	}
 
 	public int getGenero() {
@@ -127,12 +124,20 @@ public class Empleados {
 		this.genero = genero;
 	}
 
-	public LocalDate getFecha_nac() {
-		return fecha_nac;
+	public boolean isEstado() {
+		return estado;
 	}
 
-	public void setFecha_nac(LocalDate fecha_nac) {
-		this.fecha_nac = fecha_nac;
+	public void setEstado(boolean estado) {
+		this.estado = estado;
+	}
+
+	public LocalDate getFechaNaci() {
+		return fechaNaci;
+	}
+
+	public void setFechaNaci(LocalDate fechaNaci) {
+		this.fechaNaci = fechaNaci;
 	}
 
 	public String getFoto() {
@@ -143,12 +148,12 @@ public class Empleados {
 		this.foto = foto;
 	}
 
-	public LocalDate getFecha_ingreso() {
-		return fecha_ingreso;
+	public LocalDate getFechaIngreso() {
+		return fechaIngreso;
 	}
 
-	public void setFecha_ingreso(LocalDate fecha_ingreso) {
-		this.fecha_ingreso = fecha_ingreso;
+	public void setFechaIngreso(LocalDate fechaIngreso) {
+		this.fechaIngreso = fechaIngreso;
 	}
 
 	public Areas getArea() {
@@ -159,22 +164,21 @@ public class Empleados {
 		this.area = area;
 	}
 
-	public Jornadas_laborales getJornada() {
+	public JornadasLaborales getJornada() {
 		return jornada;
 	}
 
-	public void setJornada(Jornadas_laborales jornada) {
+	public void setJornada(JornadasLaborales jornada) {
 		this.jornada = jornada;
 	}
 
-	public Estados_civiles getEstado_c() {
-		return estado_c;
+	public EstadosCiviles getEstadoC() {
+		return estadoC;
 	}
 
-	public void setEstado_c(Estados_civiles estado_c) {
-		this.estado_c = estado_c;
+	public void setEstadoC(EstadosCiviles estadoC) {
+		this.estadoC = estadoC;
 	}
-	
-	
+
 	
 }

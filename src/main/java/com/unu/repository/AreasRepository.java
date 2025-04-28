@@ -5,10 +5,9 @@ import java.io.Serializable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.unu.entity.Datos_bancarios;
+import com.unu.entity.Areas;
 
-@Repository("datosrepository")
-public interface Datos_bancariosRepository extends JpaRepository<Datos_bancarios,Serializable>{
-	
+@Repository("arearepository")
+public interface AreasRepository extends JpaRepository<Areas,Serializable>{
 	
 }

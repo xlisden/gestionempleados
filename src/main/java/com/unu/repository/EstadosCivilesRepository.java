@@ -5,9 +5,10 @@ import java.io.Serializable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.unu.entity.Facturacion;
+import com.unu.entity.EstadosCiviles;
 
-@Repository("facturasrepository")
-public interface FacturacionRepository extends JpaRepository<Facturacion,Serializable>{
+@Repository("estadosrepository")
+public interface EstadosCivilesRepository extends JpaRepository<EstadosCiviles,Serializable>{
+	
 	
 }

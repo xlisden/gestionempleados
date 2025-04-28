@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.unu.entity.Empleados;
-import com.unu.repository.EmpleadoRepository;
+import com.unu.repository.EmpleadosRepository;
 import com.unu.service.EmpleadosService;
 
 @Service("empleadosservice")
@@ -15,7 +15,7 @@ public class EmpleadosServiceimpl implements EmpleadosService {
 	
 	@Autowired
 	@Qualifier("empleadorepository")
-	private EmpleadoRepository emplerepo;
+	private EmpleadosRepository emplerepo;
 
 	@Override
 	public List<Empleados> listAllEmpleados(String emple) {
@@ -34,12 +34,12 @@ public class EmpleadosServiceimpl implements EmpleadosService {
 	}
 
 	@Override
-	public void updateemple(Empleados emple) {
+	public void updateEmple(Empleados emple) {
 		emplerepo.save(emple);
 	}
 
 	@Override
-	public void deleteemple(long id) {
+	public void deleteEmple(long id) {
 		// TODO Auto-generated method stub
 		emplerepo.deleteById(id);
 	}

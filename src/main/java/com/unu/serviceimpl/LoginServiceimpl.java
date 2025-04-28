@@ -1,5 +1,6 @@
 package com.unu.serviceimpl;
 
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,14 +35,47 @@ public class LoginServiceimpl implements LoginService{
 	}
 
 	@Override
-	public void updatelogin(Login logi) {
+	public void updateLogin(Login logi) {
 		logrepo.save(logi);
 	}
 
 	@Override
-	public void deletelogin(long id) {
+	public void deleteLogin(long id) {
 		logrepo.deleteById(id);
 	}
 	 
-	 
+	@Override
+	public boolean validacion(String us, String ps) {
+		try {
+			if(logrepo.user_contra(us, ps)!=null) {
+				Login log=getLogin(1);
+				logrepo.save(new Login(1, us, ps, log.getEmpleado(),true,LocalTime.now()));
+				System.out.println("------ sesion iniciada bien-----");
+				return true;
+			}
+		} catch (Exception e) {
+			return false;
+		}
+		return false;
+	}
+	
+	public boolean tiempoSesion() {
+		try {
+			LocalTime sesion=getLogin(1).getHoras();
+			LocalTime ahora = LocalTime.now();
+			
+			int diferencia=(ahora.getHour()-sesion.getHour())*60 - (sesion.getMinute()-ahora.getMinute());
+			System.out.println("minutos en sesion: "+diferencia);
+			if(diferencia<5 && getLogin(1).isEstado()) {
+				Login log=getLogin(1);
+				updateLogin(new Login(1,log.getUsurio(),log.getContraseña(),log.getEmpleado(), true,log.getHoras()));
+				return true;
+			}
+		} catch (Exception e) {
+			System.out.println("---- CERRAR SESION| HAY ERROR  ---- : "+e.getMessage());
+			return false;
+		}
+		System.out.println("---- CERRAR SESION  ----");
+		return false;
+	}
 }
