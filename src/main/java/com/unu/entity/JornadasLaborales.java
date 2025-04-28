@@ -7,30 +7,32 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "estados_civiles")
-public class Estados_civiles {
+@Table(name = "jorandaslaborales")
+public class JornadasLaborales {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int est_civil_cod;
+	private int jLabCodigo;
 	private String nombre;
 
-	public Estados_civiles() {
+	
+
+	public JornadasLaborales() {
 		super();
 	}
 
-	public Estados_civiles(int est_civil_cod, String nombre) {
+	public JornadasLaborales(int jLabCodigo, String nombre) {
 		super();
-		this.est_civil_cod = est_civil_cod;
+		this.jLabCodigo = jLabCodigo;
 		this.nombre = nombre;
 	}
 
-	public int getEst_civil_cod() {
-		return est_civil_cod;
+	public int getjLabCodigo() {
+		return jLabCodigo;
 	}
 
-	public void setEst_civil_cod(int est_civil_cod) {
-		this.est_civil_cod = est_civil_cod;
+	public void setjLabCodigo(int jLabCodigo) {
+		this.jLabCodigo = jLabCodigo;
 	}
 
 	public String getNombre() {

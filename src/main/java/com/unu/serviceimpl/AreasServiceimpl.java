@@ -7,15 +7,15 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.unu.entity.Areas;
-import com.unu.repository.AreaRepository;
-import com.unu.service.AreaService;
+import com.unu.repository.AreasRepository;
+import com.unu.service.AreasService;
 
 @Service("areaservice")
-public class AreasServiceimpl implements AreaService {
+public class AreasServiceimpl implements AreasService {
 
 	@Autowired
 	@Qualifier("arearepository")
-	private AreaRepository arearepo;
+	private AreasRepository arearepo;
 	
 	@Override
 	public List<Areas> listAllAreas(String area) {
@@ -34,12 +34,12 @@ public class AreasServiceimpl implements AreaService {
 	}
 
 	@Override
-	public void updatearea(Areas area) {
+	public void updateArea(Areas area) {
 		arearepo.save(area);
 	}
 
 	@Override
-	public void deletearea(long id) {
+	public void deleteArea(long id) {
 		arearepo.deleteById(id);
 	}
 

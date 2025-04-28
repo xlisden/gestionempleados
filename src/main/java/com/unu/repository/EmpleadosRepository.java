@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.unu.entity.Empleados;
 
 @Repository("empleadorepository")
-public interface EmpleadoRepository extends JpaRepository<Empleados,Serializable>{
+public interface EmpleadosRepository extends JpaRepository<Empleados,Serializable>{
 	
 	//falta por nombre, dni, y codigo
 	

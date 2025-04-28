@@ -13,49 +13,29 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="login")
+@Table(name = "login")
 public class Login {
-	
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id_login;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int idLogin;
 	private String usurio;
 	private String contraseña;
-	
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "id_empleado", foreignKey = @ForeignKey(name = "fk_login_empleado"))
+	@JoinColumn(name = "idEmpleado", foreignKey = @ForeignKey(name = "fk_login_empleado"))
 	private Empleados empleado;
-	
+
 	private boolean estado;
 	private LocalTime horas;
-	
+
 	public Login() {
 		super();
 	}
 
-	
-
-	public int getId_login() {
-		return id_login;
-	}
-
-
-
-	public void setId_login(int id_login) {
-		this.id_login = id_login;
-	}
-
-
-
-
-
-
-
-
-
-	public Login(int id_login, String usurio, String contraseña, Empleados empleado, boolean estado, LocalTime horas) {
+	public Login(int idLogin, String usurio, String contraseña, Empleados empleado, boolean estado, LocalTime horas) {
 		super();
-		this.id_login = id_login;
+		this.idLogin = idLogin;
 		this.usurio = usurio;
 		this.contraseña = contraseña;
 		this.empleado = empleado;
@@ -63,31 +43,29 @@ public class Login {
 		this.horas = horas;
 	}
 
+	public int getIdLogin() {
+		return idLogin;
+	}
 
+	public void setIdLogin(int idLogin) {
+		this.idLogin = idLogin;
+	}
 
 	public boolean isEstado() {
 		return estado;
 	}
 
-
-
 	public void setEstado(boolean estado) {
 		this.estado = estado;
 	}
-
-
 
 	public LocalTime getHoras() {
 		return horas;
 	}
 
-
-
 	public void setHoras(LocalTime horas) {
 		this.horas = horas;
 	}
-
-
 
 	public String getUsurio() {
 		return usurio;
@@ -112,7 +90,5 @@ public class Login {
 	public void setEmpleado(Empleados empleado) {
 		this.empleado = empleado;
 	}
-	
-	
 
 }

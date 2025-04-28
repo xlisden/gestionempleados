@@ -11,8 +11,8 @@ import jakarta.persistence.Table;
 public class Areas {
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id_area;
-	private String Area_cod;
+	private int idArea;
+	private String areaCod;
 	private String nombre;
 	private double salario;
 	
@@ -20,24 +20,28 @@ public class Areas {
 		super();
 	}
 
-	
-
-	public Areas(int id_area, String area_cod, String nombre, double salario) {
+	public Areas(int idArea, String areaCod, String nombre, double salario) {
 		super();
-		this.id_area = id_area;
-		Area_cod = area_cod;
+		this.idArea = idArea;
+		this.areaCod = areaCod;
 		this.nombre = nombre;
 		this.salario = salario;
 	}
 
-
-
-	public String getArea_cod() {
-		return Area_cod;
+	public int getIdArea() {
+		return idArea;
 	}
 
-	public void setArea_cod(String area_cod) {
-		Area_cod = area_cod;
+	public void setIdArea(int idArea) {
+		this.idArea = idArea;
+	}
+
+	public String getAreaCod() {
+		return areaCod;
+	}
+
+	public void setAreaCod(String areaCod) {
+		this.areaCod = areaCod;
 	}
 
 	public String getNombre() {
@@ -56,18 +60,9 @@ public class Areas {
 		this.salario = salario;
 	}
 
-
-
-	public int getId_area() {
-		return id_area;
-	}
-
-
-
-	public void setId_area(int id_area) {
-		this.id_area = id_area;
-	}
 	
+	
+
 	
 	
 }

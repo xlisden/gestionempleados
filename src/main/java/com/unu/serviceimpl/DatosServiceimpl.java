@@ -6,40 +6,40 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.unu.entity.Datos_bancarios;
-import com.unu.repository.Datos_bancariosRepository;
-import com.unu.service.Datos_bancariosService;
+import com.unu.entity.DatosBancarios;
+import com.unu.repository.DatosBancariosRepository;
+import com.unu.service.DatosBancariosService;
 
 @Service("datosservice")
-public class DatosServiceimpl implements Datos_bancariosService {
+public class DatosServiceimpl implements DatosBancariosService {
 	
 	@Autowired
 	@Qualifier("datosrepository")
-	private Datos_bancariosRepository datosrepo;
+	private DatosBancariosRepository datosrepo;
 
 	@Override
-	public List<Datos_bancarios> listAllDatos(String datos) {
+	public List<DatosBancarios> listAllDatos(String datos) {
 		// TODO Auto-generated method stub
 		return datosrepo.findAll();
 	}
 
 	@Override
-	public Datos_bancarios addDatos(Datos_bancarios datos) {
+	public DatosBancarios addDatos(DatosBancarios datos) {
 		return datosrepo.save(datos);
 	}
 
 	@Override
-	public Datos_bancarios getDatos(long id) throws Exception {
+	public DatosBancarios getDatos(long id) throws Exception {
 		return datosrepo.findById(id).orElseThrow(() -> new Exception("Los Datos banc para editar no existe"));
 	}
 
 	@Override
-	public void updatedatos(Datos_bancarios datos) {
+	public void updateDatos(DatosBancarios datos) {
 		datosrepo.save(datos);
 	}
 
 	@Override
-	public void deletedatos(long id) {
+	public void deleteDatos(long id) {
 		datosrepo.deleteById(id);
 	}
 	

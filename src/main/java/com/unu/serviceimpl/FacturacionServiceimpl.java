@@ -6,39 +6,39 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.unu.entity.Facturacion;
-import com.unu.repository.FacturacionRepository;
-import com.unu.service.FacturacionService;
+import com.unu.entity.Facturaciones;
+import com.unu.repository.FacturacionesRepository;
+import com.unu.service.FacturacionesService;
 
 @Service("facturasservice")
-public class FacturacionServiceimpl implements FacturacionService{
+public class FacturacionServiceimpl implements FacturacionesService{
 	@Autowired
 	@Qualifier("facturasrepository")
-	private FacturacionRepository factrepo;
+	private FacturacionesRepository factrepo;
 
 	@Override
-	public List<Facturacion> listAllFact(String fact) {
+	public List<Facturaciones> listAllFact(String fact) {
 		// TODO Auto-generated method stub
 		return factrepo.findAll();
 	}
 
 	@Override
-	public Facturacion addFact(Facturacion fact) {
+	public Facturaciones addFact(Facturaciones fact) {
 		return factrepo.save(fact);
 	}
 
 	@Override
-	public Facturacion getFact(long id) throws Exception {
+	public Facturaciones getFact(long id) throws Exception {
 		return factrepo.findById(id).orElseThrow(() -> new Exception("La Factura para editar no existe"));
 	}
 
 	@Override
-	public void updatefact(Facturacion fact) {
+	public void updateFact(Facturaciones fact) {
 		factrepo.save(fact);
 	}
 
 	@Override
-	public void deletefact(long id) {
+	public void deleteFact(long id) {
 		factrepo.deleteById(id);
 	}
 	
