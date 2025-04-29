@@ -26,7 +26,7 @@ public class LoginController {
 	    ModelAndView mav = new ModelAndView("Logeo");
 	    mav.addObject("login",new Login());
 	    //validar 
-	    return new ModelAndView("empleados");
+	    return new ModelAndView("empleados/EmpleadosList");
 	}
 
 	@PostMapping("/login")

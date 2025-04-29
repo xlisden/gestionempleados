@@ -1,6 +1,5 @@
 package com.unu.controller;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.unu.entity.Empleados;
-import com.unu.entity.Login;
 import com.unu.service.AreasService;
 import com.unu.service.EmpleadosService;
 import com.unu.service.EstadosCivilesService;
@@ -46,7 +44,7 @@ public class EmpleadosController {
 	@GetMapping({"/", ""})
 	public ModelAndView empleados() {
 		if(logiservice.tiempoSesion()){
-			ModelAndView mav = new ModelAndView("empleados");
+			ModelAndView mav = new ModelAndView("empleados/EmpleadosList");
 			
 			List<Empleados> empleados = empleservice.listAllEmpleados("");
 			List<String[]> listaEmple = new ArrayList<String[]>();

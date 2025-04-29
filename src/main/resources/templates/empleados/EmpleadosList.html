@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head th:replace="~{shared/head :: head()}"></head>
+<div th:replace="~{shared/header/header :: header()}"></div>
+
+<body>
+	<br>
+	<hr>
+	<div class="container-fluid px-3">
+		<div class="table-responsive">
+		  <table class="table table-striped table-hover align-middle">
+			<thead class="table">
+			  <tr>
+				<th>CODIGO</th>
+				<th>NOMBRES</th>
+				<th>TIEMPO</th>
+				<th>AREA</th>
+				<th>MODALIDAD</th>
+				<th>JORNADA</th>
+				<th>DETALLES</th>
+			  </tr>
+			</thead>
+			<tbody>
+			  <tr th:each="e : ${empleados}">
+				<td th:text="${e[0]}"></td>
+				<td th:text="${e[1]}"></td>
+				<td th:text="${e[2]}"></td>
+				<td th:text="${e[3]}"></td>
+				<td th:text="${e[4]}"></td>
+				<td th:text="${e[5]}"></td>
+				<td>
+				  <a th:href="@{/temp/list}">
+					<img th:src="@{/img/detalle.png}" width="30" height="30" alt="detalleIcon">
+				  </a>
+				</td>
+			  </tr>
+			</tbody>
+		  </table>
+		</div>
+	  </div>
+	  
+	
+	
+	
+	
+</body>
+</html>
