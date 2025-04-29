@@ -1,5 +1,6 @@
 package com.unu.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
@@ -12,23 +13,29 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="datosbancarios")
-public class DatosBancarios {
+public class DatosBancario {
 	
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="IdCuenta")
 	private int idCuenta;
-	private String entidadBancaria;
-	private double cci;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "idEmpleado", foreignKey = @ForeignKey(name = "fk_Datos_empleado"))
-	private Empleados empleado;
+	@JoinColumn(name = "IdEntidad", foreignKey = @ForeignKey(name = "fk_Datos_entidad"))
+	private EntidadBancaria entidadBancaria;
+	
+	@Column(name="Cci",unique = true, length =20)
+	private String cci;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "IdEmpleado", foreignKey = @ForeignKey(name = "fk_Datos_empleado"))
+	private Empleado empleado;
 
-	public DatosBancarios() {
+	public DatosBancario() {
 		super();
 	}
 
-	public DatosBancarios(int idCuenta, String entidadBancaria, double cci, Empleados empleado) {
+	public DatosBancario(int idCuenta, EntidadBancaria entidadBancaria, String cci, Empleado empleado) {
 		super();
 		this.idCuenta = idCuenta;
 		this.entidadBancaria = entidadBancaria;
@@ -44,27 +51,27 @@ public class DatosBancarios {
 		this.idCuenta = idCuenta;
 	}
 
-	public String getEntidadBancaria() {
+	public EntidadBancaria getEntidadBancaria() {
 		return entidadBancaria;
 	}
 
-	public void setEntidadBancaria(String entidadBancaria) {
+	public void setEntidadBancaria(EntidadBancaria entidadBancaria) {
 		this.entidadBancaria = entidadBancaria;
 	}
 
-	public double getCci() {
+	public String getCci() {
 		return cci;
 	}
 
-	public void setCci(double cci) {
+	public void setCci(String cci) {
 		this.cci = cci;
 	}
 
-	public Empleados getEmpleado() {
+	public Empleado getEmpleado() {
 		return empleado;
 	}
 
-	public void setEmpleado(Empleados empleado) {
+	public void setEmpleado(Empleado empleado) {
 		this.empleado = empleado;
 	}
 	

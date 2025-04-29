@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.unu.entity.ModalidadesContrato;
 
 @Repository("modalidadrepository")
-public interface ModalidadesContratoRepository extends JpaRepository<ModalidadesContrato,Serializable>{
+public interface ModalidadeContratoRepository extends JpaRepository<ModalidadesContrato,Serializable>{
 
 }

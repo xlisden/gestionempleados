@@ -6,35 +6,35 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.unu.entity.Empleados;
-import com.unu.repository.EmpleadosRepository;
-import com.unu.service.EmpleadosService;
+import com.unu.entity.Empleado;
+import com.unu.repository.EmpleadoRepository;
+import com.unu.service.EmpleadoService;
 
 @Service("empleadosservice")
-public class EmpleadosServiceimpl implements EmpleadosService {
+public class EmpleadoServiceimpl implements EmpleadoService {
 	
 	@Autowired
 	@Qualifier("empleadorepository")
-	private EmpleadosRepository emplerepo;
+	private EmpleadoRepository emplerepo;
 
 	@Override
-	public List<Empleados> listAllEmpleados(String emple) {
+	public List<Empleado> listAllEmpleados(String emple) {
 		// TODO Auto-generated method stub
 		return emplerepo.findAll();
 	}
 
 	@Override
-	public Empleados addEmple(Empleados emple) {
+	public Empleado addEmple(Empleado emple) {
 		return emplerepo.save(emple);
 	}
 
 	@Override
-	public Empleados getEmple(long id) throws Exception {
+	public Empleado getEmple(long id) throws Exception {
 		return emplerepo.findById(id).orElseThrow(() -> new Exception("El Empleado para editar no existe"));
 	}
 
 	@Override
-	public void updateEmple(Empleados emple) {
+	public void updateEmple(Empleado emple) {
 		emplerepo.save(emple);
 	}
 

@@ -6,34 +6,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.unu.entity.EstadosCiviles;
-import com.unu.repository.EstadosCivilesRepository;
-import com.unu.service.EstadosCivilesService;
+import com.unu.entity.EstadosCivile;
+import com.unu.repository.EstadosCivileRepository;
+import com.unu.service.EstadosCivileService;
 
 @Service("estadosservice")
-public class EstadosServiceimpl implements EstadosCivilesService {
+public class EstadoServiceimpl implements EstadosCivileService {
 	@Autowired
 	@Qualifier("estadosrepository")
-	private EstadosCivilesRepository estadosrepo;
+	private EstadosCivileRepository estadosrepo;
 
 	@Override
-	public List<EstadosCiviles> listAllEstados(String estado) {
+	public List<EstadosCivile> listAllEstados(String estado) {
 		// TODO Auto-generated method stub
 		return estadosrepo.findAll();
 	}
 
 	@Override
-	public EstadosCiviles addEstados(EstadosCiviles estado) {
+	public EstadosCivile addEstados(EstadosCivile estado) {
 		return estadosrepo.save(estado);
 	}
 
 	@Override
-	public EstadosCiviles getEstados(long id) throws Exception {
+	public EstadosCivile getEstados(long id) throws Exception {
 		return estadosrepo.findById(id).orElseThrow(() -> new Exception("El Estado civ para editar no existe"));
 	}
 
 	@Override
-	public void updateEstado(EstadosCiviles estado) {
+	public void updateEstado(EstadosCivile estado) {
 		estadosrepo.save(estado);
 	}
 

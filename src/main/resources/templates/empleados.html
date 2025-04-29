@@ -6,6 +6,31 @@
 </head>
 <body>
 	
+	<header>
+		<h1>Administración de Empleados</h1>
+		<div>
+			<button th:action="@{/sis/login}">cerrar sesion</button>
+		</div>
+	</header>
+	<br>
+	<div>
+		<nav>
+			<input placeholder="Nombre o DNI o Codigo">
+			<select>
+				<option value="">Todos los Areas</option>
+                <option th:each="a:${areas}" th:text="${a.nombre}"></option>
+			</select>
+			<select>
+				<option value="">Todos los Jornadas</option>
+                <option th:each="j: ${jornadas}" th:text="${j.nombre}"></option>
+			</select>
+			<button    >
+				<img th:src="@{/img/filtrar.png}" width="20px" height="20px">
+				Filtrar
+			</button>
+		</nav>
+	</div>
+	<br>
 	<div>
 		<table border=4 >
 			<thead class="table-dark">
@@ -29,7 +54,7 @@
 					<td th:text="${e[5]}"></td>
 					<td >
 						<div class="col-md-3">						
-							<a th:href="@{/temp/list}">
+							<a th:href="@{/temp/detalleemple}">
 							  <img th:src="@{/img/detalle.png}" width="30px" height="30px" alt="detalleIcon" >
 							</a>
 		                </div>
@@ -38,9 +63,6 @@
 			</tbody>
 		</table>
 	</div>
-	
-	
-	
 	
 </body>
 </html>

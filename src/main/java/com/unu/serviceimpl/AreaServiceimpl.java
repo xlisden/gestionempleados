@@ -6,35 +6,35 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.unu.entity.Areas;
-import com.unu.repository.AreasRepository;
-import com.unu.service.AreasService;
+import com.unu.entity.Area;
+import com.unu.repository.AreaRepository;
+import com.unu.service.AreaService;
 
 @Service("areaservice")
-public class AreasServiceimpl implements AreasService {
+public class AreaServiceimpl implements AreaService {
 
 	@Autowired
 	@Qualifier("arearepository")
-	private AreasRepository arearepo;
+	private AreaRepository arearepo;
 	
 	@Override
-	public List<Areas> listAllAreas(String area) {
+	public List<Area> listAllAreas(String area) {
 		// TODO Auto-generated method stub
 		return arearepo.findAll();
 	}
 
 	@Override
-	public Areas addArea(Areas area) {
+	public Area addArea(Area area) {
 		return arearepo.save(area);
 	}
 
 	@Override
-	public Areas getArea(long id) throws Exception {
+	public Area getArea(long id) throws Exception {
 		return arearepo.findById(id).orElseThrow(() -> new Exception("El Area para editar no existe"));
 	}
 
 	@Override
-	public void updateArea(Areas area) {
+	public void updateArea(Area area) {
 		arearepo.save(area);
 	}
 

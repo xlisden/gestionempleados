@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Diseño de Página</title>
+
+</head>
+<body>
+
+	<header><h1>Detalle Empleados</h1>  </header>
+
+	<h3>Datos Personales</h3>
+	<section class="section">
+		<div th:object="${datosPer}">
+			<label th:text="${datosPer[0]}"></label><br>
+			<label th:text="${datosPer[1]}"></label><br>
+			<label th:text="${datosPer[2]}"></label><br>
+			<label th:text="${datosPer[3]}"></label><br>
+			<label th:text="${datosPer[4]}"></label><br>
+			<label th:text="${datosPer[5]}"></label><br>
+			<label th:text="${datosPer[6]}"></label><br>
+			<div class="image">
+				<img th:src="@{/img/{image}(image=${datosPer[7]})}" width="80px">
+			</div>
+		</div>
+	</section>
+
+	<h3>Datos Bancarios</h3>
+	<section class="section">
+		<div th:object="${datosBan}">
+			<label th:text="${datosBan[0]}"></label><br>
+			<label th:text="${datosBan[1]}"></label><br>
+		</div>
+	</section>
+
+	<h3>Datos Contraro</h3>
+	<section class="section">
+		<div th:object="${datosCon}">
+			<label th:text="${datosCon[0]}"></label><br>
+			<label th:text="${datosCon[1]}"></label><br>
+			<label th:text="${datosCon[2]}"></label><br>
+			<label th:text="${datosCon[3]}"></label><br>
+			<label th:text="${datosCon[4]}"></label><br>
+			<label th:text="${datosCon[5]}"></label><br>
+			<label th:text="${datosCon[6]}"></label><br>
+		</div>
+	</section>
+
+</body>
+</html>

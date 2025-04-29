@@ -1,5 +1,6 @@
 package com.unu.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -7,35 +8,35 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "estadosciviles")
-public class EstadosCiviles {
+@Table(name = "jorandaslaborales")
+public class JornadasLaborale {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int estCivilCod;
+	@Column(name="JLabCodigo")
+	private int jLabCodigo;
+	@Column(name="Nombre",unique = true, length =20)
 	private String nombre;
 
-	public EstadosCiviles() {
+	
+
+	public JornadasLaborale() {
 		super();
 	}
 
-	
-	public EstadosCiviles(int estCivilCod, String nombre) {
+	public JornadasLaborale(int jLabCodigo, String nombre) {
 		super();
-		this.estCivilCod = estCivilCod;
+		this.jLabCodigo = jLabCodigo;
 		this.nombre = nombre;
 	}
 
-
-	public int getEstCivilCod() {
-		return estCivilCod;
+	public int getjLabCodigo() {
+		return jLabCodigo;
 	}
 
-
-	public void setEstCivilCod(int estCivilCod) {
-		this.estCivilCod = estCivilCod;
+	public void setjLabCodigo(int jLabCodigo) {
+		this.jLabCodigo = jLabCodigo;
 	}
-
 
 	public String getNombre() {
 		return nombre;

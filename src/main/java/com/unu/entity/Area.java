@@ -1,5 +1,6 @@
 package com.unu.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,19 +9,23 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="areas")
-public class Areas {
+public class Area {
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="IdArea")
 	private int idArea;
+	@Column(name="AreaCod",unique = true, length =5)
 	private String areaCod;
+	@Column(name="Nombre",unique = true, length =20)
 	private String nombre;
+	@Column(name="Salario")
 	private double salario;
 	
-	public Areas() {
+	public Area() {
 		super();
 	}
 
-	public Areas(int idArea, String areaCod, String nombre, double salario) {
+	public Area(int idArea, String areaCod, String nombre, double salario) {
 		super();
 		this.idArea = idArea;
 		this.areaCod = areaCod;

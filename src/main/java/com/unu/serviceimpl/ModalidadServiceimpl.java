@@ -7,15 +7,15 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.unu.entity.ModalidadesContrato;
-import com.unu.repository.ModalidadesContratoRepository;
-import com.unu.service.ModalidadesService;
+import com.unu.repository.ModalidadeContratoRepository;
+import com.unu.service.ModalidadService;
 
 @Service("modalidadservice")
-public class ModalidadeesServiceimpl implements ModalidadesService {
+public class ModalidadServiceimpl implements ModalidadService {
 
 	@Autowired
 	@Qualifier("modalidadrepository")
-	private ModalidadesContratoRepository modarepo;
+	private ModalidadeContratoRepository modarepo;
 
 	@Override
 	public List<ModalidadesContrato> listAllModali(String moda) {

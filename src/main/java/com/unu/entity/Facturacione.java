@@ -2,6 +2,7 @@ package com.unu.entity;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
@@ -14,22 +15,25 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="facturacion")
-public class Facturaciones {
+public class Facturacione {
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="FacturacionCod")
 	private int facturacionCod;
+	@Column(name="FechaPago")
 	private LocalDate fechaPago;
+	@Column(name="SueldoNeto")
 	private double sueldoNeto;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "idEmpleado", foreignKey = @ForeignKey(name = "fk_facturacion_empleado"))
-	private Empleados empleado;
+	@JoinColumn(name = "IdEmpleado", foreignKey = @ForeignKey(name = "fk_facturacion_empleado"))
+	private Empleado empleado;
 
-	public Facturaciones() {
+	public Facturacione() {
 		super();
 	}
 
-	public Facturaciones(int facturacionCod, LocalDate fechaPago, double sueldoNeto, Empleados empleado) {
+	public Facturacione(int facturacionCod, LocalDate fechaPago, double sueldoNeto, Empleado empleado) {
 		super();
 		this.facturacionCod = facturacionCod;
 		this.fechaPago = fechaPago;
@@ -61,11 +65,11 @@ public class Facturaciones {
 		this.sueldoNeto = sueldoNeto;
 	}
 
-	public Empleados getEmpleado() {
+	public Empleado getEmpleado() {
 		return empleado;
 	}
 
-	public void setEmpleado(Empleados empleado) {
+	public void setEmpleado(Empleado empleado) {
 		this.empleado = empleado;
 	}
 	
