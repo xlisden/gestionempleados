@@ -1,6 +1,5 @@
 package com.unu.controller;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.unu.entity.Empleados;
-import com.unu.entity.Login;
 import com.unu.service.AreasService;
 import com.unu.service.EmpleadosService;
 import com.unu.service.EstadosCivilesService;
@@ -20,8 +18,8 @@ import com.unu.service.JornadasService;
 import com.unu.service.LoginService;
 
 @Controller
-@RequestMapping("/temp")
-public class EmpleadoControlador {
+@RequestMapping("/empleados")
+public class EmpleadosController {
 	
 	@Autowired
 	@Qualifier("loginservice")
@@ -43,10 +41,10 @@ public class EmpleadoControlador {
 	@Qualifier("empleadosservice")
 	private EmpleadosService empleservice;
 	
-	@GetMapping("/listaemple")
+	@GetMapping({"/", ""})
 	public ModelAndView empleados() {
 		if(logiservice.tiempoSesion()){
-			ModelAndView mav = new ModelAndView("empleados");
+			ModelAndView mav = new ModelAndView("empleados/EmpleadosList");
 			
 			List<Empleados> empleados = empleservice.listAllEmpleados("");
 			List<String[]> listaEmple = new ArrayList<String[]>();
@@ -102,17 +100,5 @@ public class EmpleadoControlador {
 		}
 		return new LoginController().login();
 	}
-	// borrador prueba 1 , no lo borre me da pena xd
-	@GetMapping("/list")
-	public ModelAndView inicial() {
-		if(logiservice.tiempoSesion()){
-			ModelAndView mav = new ModelAndView("borrar");
-			mav.addObject("login", logiservice.listAllLogin("sd"));
-			return mav;
-		}
-		return new LoginController().login();
-	}
-	
-
 	
 }
