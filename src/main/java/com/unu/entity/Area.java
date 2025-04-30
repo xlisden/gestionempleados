@@ -1,9 +1,16 @@
 package com.unu.entity;
 
-import jakarta.persistence.*;
+//<editor-fold defaultstate="collapsed" desc=" Librerías...">
+import jakarta.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Column;
+//</editor-fold>
 
 @Entity
-@Table(name = "Areas")
+@Table(name = "Area")
 public class Area {
 
     @Id
@@ -21,12 +28,9 @@ public class Area {
     private double sueldoBasico;
 
     public Area() {
-        super();
     }
 
-    public Area(int id, String cod, String nombre, double sueldoBasico) {
-        super();
-        this.id = id;
+    public Area(String cod, String nombre, double sueldoBasico) {
         this.cod = cod;
         this.nombre = nombre;
         this.sueldoBasico = sueldoBasico;

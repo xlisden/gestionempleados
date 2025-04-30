@@ -7,18 +7,17 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.unu.entity.JornadaLaboral;
-import com.unu.repository.JornadasLaboraleRepository;
-import com.unu.service.JornadaService;
+import com.unu.repository.JornadaLaboralRepository;
+import com.unu.service.JornadaLaboralService;
 
 @Service("jornadaservice")
-public class JornadaServiceimpl implements JornadaService {
+public class JornadaLaboralServiceImpl implements JornadaLaboralService {
 	@Autowired
-	@Qualifier("jornadasrepository")
-	private JornadasLaboraleRepository jordrepo;
+	@Qualifier("jornadarepository")
+	private JornadaLaboralRepository jordrepo;
 
 	@Override
-	public List<JornadaLaboral> listAllJornada(String jord) {
-		// TODO Auto-generated method stub
+	public List<JornadaLaboral> listAllJornadas() {
 		return jordrepo.findAll();
 	}
 
@@ -29,7 +28,7 @@ public class JornadaServiceimpl implements JornadaService {
 
 	@Override
 	public JornadaLaboral getJord(long id) throws Exception {
-		return jordrepo.findById(id).orElseThrow(() -> new Exception("La Jornada para editar no existe"));
+		return jordrepo.findById(id).orElseThrow(() -> new Exception("La Jornada Laboral no existe."));
 	}
 
 	@Override

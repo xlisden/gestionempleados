@@ -28,7 +28,7 @@ public class EstadoCivilServiceImpl implements EstadoCivilService {
 
 	@Override
 	public EstadoCivil getEstados(long id) throws Exception {
-		return estadosrepo.findById(id).orElseThrow(() -> new Exception("El Estado civ para editar no existe"));
+		return estadosrepo.findById(id).orElseThrow(() -> new Exception("El Estado Civil no existe."));
 	}
 
 	@Override

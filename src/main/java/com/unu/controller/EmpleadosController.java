@@ -13,12 +13,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.unu.entity.Empleado;
 import com.unu.service.AreaService;
-import com.unu.service.DatosBancarioService;
+import com.unu.service.CuentaBancariaService;
 import com.unu.service.EmpleadoService;
 import com.unu.service.EstadoCivilService;
-import com.unu.service.JornadaService;
+import com.unu.service.JornadaLaboralService;
 import com.unu.service.LoginService;
-import com.unu.service.ModalidadService;
+import com.unu.service.ModalidadContratoService;
 
 @Controller
 @RequestMapping("/empleados")
@@ -34,19 +34,19 @@ public class EmpleadosController {
 	
 	@Autowired
 	@Qualifier("jornadaservice")
-	private JornadaService jorservice;
+	private JornadaLaboralService jorservice;
 	
 	@Autowired
 	@Qualifier("estadosservice")
 	private EstadoCivilService estaservice;
 	
 	@Autowired
-	@Qualifier("modalidadservice")
-	private ModalidadService modalidadservice;
+	@Qualifier("modalidadcontratoservice")
+	private ModalidadContratoService modalidadservice;
 	
 	@Autowired
 	@Qualifier("datosservice")
-	private DatosBancarioService datosservice;
+	private CuentaBancariaService datosservice;
 	
 	@Autowired
 	@Qualifier("empleadosservice")
@@ -63,19 +63,19 @@ public class EmpleadosController {
 			for (Empleado e : empleados) {
 				String datos[]= new String[7];
 				
-				datos[0]=e.getEmpleadoCod();
-				datos[1]=e.getNombres()+" "+e.getApPaterno()+" "+e.getApMaterno();
-				datos[2]=calcularTiempo(e.getFechaIngreso());
-				datos[3]=e.getArea().getNombre();
-				datos[4]=modalidad(e.getIdEmpleado());
-				datos[5]=e.getJornada().getNombre();
-				datos[6]=e.getIdEmpleado()+"";  // por siaca
+//				datos[0]=e.getEmpleadoCod();
+//				datos[1]=e.getNombres()+" "+e.getApPaterno()+" "+e.getApMaterno();
+//				datos[2]=calcularTiempo(e.getFechaIngreso());
+//				datos[3]=e.getArea().getNombre();
+//				datos[4]=modalidad(e.getIdEmpleado());
+//				datos[5]=e.getJornada().getNombre();
+//				datos[6]=e.getIdEmpleado()+"";  // por siaca
 				
 				listaEmple.add(datos);
 			}
 			mav.addObject("empleados",listaEmple);
-			mav.addObject("areas", areaservice.listAllAreas(""));
-			mav.addObject("jornadas", jorservice.listAllJornada(""));
+			mav.addObject("areas", areaservice.listAllAreas());
+			mav.addObject("jornadas", jorservice.listAllJornadas());
 			return mav;
 		}
 		return new LoginController().login();
@@ -92,27 +92,27 @@ public class EmpleadosController {
 			try {
 				Empleado e = empleservice.getEmple(1); // ID
 				
-				datosPersonales[0]="Nombres: "+e.getNombres();
-				datosPersonales[1]="Apellido P: "+e.getApPaterno();
-				datosPersonales[2]="Apellido M: "+e.getApMaterno();
-				datosPersonales[3]="DNI: "+e.getDni();
-				datosPersonales[4]="Estado C: "+e.getEstadoC().getNombre();
-				datosPersonales[5]="Edad: "+ calcularAnio(e.getFechaNaci());
-				datosPersonales[6]="Genero: "+ genero(e.isGenero());
-				datosPersonales[7]=e.getFoto();
-				datosPersonales[8]=e.isEstado()+"";
-				datosPersonales[9]=e.getIdEmpleado()+""; // para los cambios ocupados Id 
-
-				datosBanco[0]="Entidad: "+datosservice.getDatosByEmpleado(e.getIdEmpleado()).getEntidadBancaria().getNombre();
-				datosBanco[1]="CCI: "+datosservice.getDatosByEmpleado(e.getIdEmpleado()).getCci();
-				
-				datosContrato[0]="Tiempo en la empresa: "+calcularTiempo(e.getFechaIngreso());
-				datosContrato[1]="Modalidad: "+modalidadservice.getModali(e.getIdEmpleado()).getTipomodalidad().getNombre();
-				datosContrato[2]="Inicio Contr: "+modalidadservice.getModali(e.getIdEmpleado()).getFechaInicio()+"";
-				datosContrato[3]="Final Contra: "+modalidadservice.getModali(e.getIdEmpleado()).getFechaFin()+"";
-				datosContrato[4]="Area: "+e.getArea().getNombre();
-				datosContrato[5]="Salario :p "+e.getArea().getSueldoBasico()+"";
-				datosContrato[6]="Jornada: "+jorservice.getJord(e.getIdEmpleado()).getNombre();
+//				datosPersonales[0]="Nombres: "+e.getNombres();
+//				datosPersonales[1]="Apellido P: "+e.getApPaterno();
+//				datosPersonales[2]="Apellido M: "+e.getApMaterno();
+//				datosPersonales[3]="DNI: "+e.getDni();
+//				datosPersonales[4]="Estado C: "+e.getEstadoC().getNombre();
+//				datosPersonales[5]="Edad: "+ calcularAnio(e.getFechaNaci());
+//				datosPersonales[6]="Genero: "+ genero(e.isGenero());
+//				datosPersonales[7]=e.getFoto();
+//				datosPersonales[8]=e.isEstado()+"";
+//				datosPersonales[9]=e.getIdEmpleado()+""; // para los cambios ocupados Id
+//
+//				datosBanco[0]="Entidad: "+datosservice.getDatosByEmpleado(e.getIdEmpleado()).getEntidadBancaria().getNombre();
+//				datosBanco[1]="CCI: "+datosservice.getDatosByEmpleado(e.getIdEmpleado()).getCci();
+//
+//				datosContrato[0]="Tiempo en la empresa: "+calcularTiempo(e.getFechaIngreso());
+//				datosContrato[1]="Modalidad: "+modalidadservice.getModalidad(e.getIdEmpleado()).getTipomodalidad().getNombre();
+//				datosContrato[2]="Inicio Contr: "+modalidadservice.getModalidad(e.getIdEmpleado()).getFechaInicio()+"";
+//				datosContrato[3]="Final Contra: "+modalidadservice.getModalidad(e.getIdEmpleado()).getFechaFin()+"";
+//				datosContrato[4]="Area: "+e.getArea().getNombre();
+//				datosContrato[5]="Salario :p "+e.getArea().getSueldoBasico()+"";
+//				datosContrato[6]="Jornada: "+jorservice.getJord(e.getIdEmpleado()).getNombre();
 				
 			} catch (Exception e) {
 				System.out.println("fallo en la captura de datos: "+e.getMessage());
@@ -160,7 +160,7 @@ public class EmpleadosController {
 	public String modalidad(int idemple) {
 		String modalidad ="no-se-encontro";
 		try {
-			modalidad=modalidadservice.getModali(idemple).getTipomodalidad().getNombre();
+//			modalidad=modalidadservice.getModalidad(idemple).getTipomodalidad().getNombre();
 		} catch (Exception e) {
 			System.out.println("Modalidad no encontrada: "+e.getMessage());
 		}

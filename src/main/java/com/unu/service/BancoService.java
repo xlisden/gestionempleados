@@ -4,6 +4,6 @@ import java.util.List;
 
 import com.unu.entity.Banco;
 
-public interface EntidadBancariaService {
+public interface BancoService {
 	public abstract List<Banco> findAllEntidades();
 }

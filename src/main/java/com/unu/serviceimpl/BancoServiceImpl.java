@@ -7,15 +7,15 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.unu.entity.Banco;
-import com.unu.repository.EntidadBancariaRepository;
-import com.unu.service.EntidadBancariaService;
+import com.unu.repository.BancoRepository;
+import com.unu.service.BancoService;
 
 @Service("entidadservice")
-public class EntidadBancariaServiceimpl implements EntidadBancariaService {
+public class BancoServiceImpl implements BancoService {
 	
 	@Autowired
 	@Qualifier("entidadrepository")
-	private EntidadBancariaRepository entirepo;
+	private BancoRepository entirepo;
 
 	@Override
 	public List<Banco> findAllEntidades() {

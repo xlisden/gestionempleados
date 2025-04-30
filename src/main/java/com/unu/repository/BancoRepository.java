@@ -5,9 +5,10 @@ import java.io.Serializable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.unu.entity.JornadaLaboral;
+import com.unu.entity.Banco;
 
-@Repository("jornadasrepository")
-public interface JornadasLaboraleRepository extends JpaRepository<JornadaLaboral,Serializable>{
+@Repository("entidadrepository")
+public interface BancoRepository extends JpaRepository<Banco,Serializable>{
 
+	
 }

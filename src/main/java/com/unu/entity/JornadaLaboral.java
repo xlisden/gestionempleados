@@ -1,9 +1,16 @@
 package com.unu.entity;
 
-import jakarta.persistence.*;
+//<editor-fold defaultstate="collapsed" desc=" Librerías...">
+import jakarta.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Column;
+//</editor-fold>ss
 
 @Entity
-@Table(name = "JorandasLaborales")
+@Table(name = "JornadaLaboral")
 public class JornadaLaboral {
 
     @Id
@@ -17,8 +24,7 @@ public class JornadaLaboral {
     public JornadaLaboral() {
     }
 
-    public JornadaLaboral(int id, String nombre) {
-        this.id = id;
+    public JornadaLaboral(String nombre) {
         this.nombre = nombre;
     }
 

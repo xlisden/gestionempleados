@@ -30,7 +30,7 @@ public class EmpleadoServiceimpl implements EmpleadoService {
 
 	@Override
 	public Empleado getEmple(long id) throws Exception {
-		return emplerepo.findById(id).orElseThrow(() -> new Exception("El Empleado para editar no existe"));
+		return emplerepo.findById(id).orElseThrow(() -> new Exception("El Empleado no existe."));
 	}
 
 	@Override

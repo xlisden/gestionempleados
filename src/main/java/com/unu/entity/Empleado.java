@@ -1,11 +1,22 @@
 package com.unu.entity;
 
-import jakarta.persistence.*;
+
+//<editor-fold defaultstate="collapsed" desc=" Librerías...">
+import jakarta.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Column;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ForeignKey;
 
 import java.sql.Date;
+//</editor-fold>
 
 @Entity
-@Table(name = "Empleados")
+@Table(name = "Empleado")
 public class Empleado {
 
     @Id
