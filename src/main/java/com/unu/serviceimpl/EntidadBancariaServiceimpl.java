@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.unu.entity.EntidadBancaria;
+import com.unu.entity.Banco;
 import com.unu.repository.EntidadBancariaRepository;
 import com.unu.service.EntidadBancariaService;
 
@@ -18,7 +18,7 @@ public class EntidadBancariaServiceimpl implements EntidadBancariaService {
 	private EntidadBancariaRepository entirepo;
 
 	@Override
-	public List<EntidadBancaria> findAllEntidades() {
+	public List<Banco> findAllEntidades() {
 		return entirepo.findAll();
 	}
 }

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.unu.entity.JornadasLaborale;
+import com.unu.entity.JornadaLaboral;
 import com.unu.repository.JornadasLaboraleRepository;
 import com.unu.service.JornadaService;
 
@@ -17,23 +17,23 @@ public class JornadaServiceimpl implements JornadaService {
 	private JornadasLaboraleRepository jordrepo;
 
 	@Override
-	public List<JornadasLaborale> listAllJornada(String jord) {
+	public List<JornadaLaboral> listAllJornada(String jord) {
 		// TODO Auto-generated method stub
 		return jordrepo.findAll();
 	}
 
 	@Override
-	public JornadasLaborale addJord(JornadasLaborale jord) {
+	public JornadaLaboral addJord(JornadaLaboral jord) {
 		return jordrepo.save(jord);
 	}
 
 	@Override
-	public JornadasLaborale getJord(long id) throws Exception {
+	public JornadaLaboral getJord(long id) throws Exception {
 		return jordrepo.findById(id).orElseThrow(() -> new Exception("La Jornada para editar no existe"));
 	}
 
 	@Override
-	public void updateJord(JornadasLaborale jord) {
+	public void updateJord(JornadaLaboral jord) {
 		jordrepo.save(jord);
 	}
 

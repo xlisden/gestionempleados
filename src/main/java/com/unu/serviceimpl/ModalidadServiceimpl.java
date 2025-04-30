@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.unu.entity.ModalidadesContrato;
+import com.unu.entity.ModalidadContrato;
 import com.unu.repository.ModalidadeContratoRepository;
 import com.unu.service.ModalidadService;
 
@@ -18,23 +18,23 @@ public class ModalidadServiceimpl implements ModalidadService {
 	private ModalidadeContratoRepository modarepo;
 
 	@Override
-	public List<ModalidadesContrato> listAllModali(String moda) {
+	public List<ModalidadContrato> listAllModali(String moda) {
 		// TODO Auto-generated method stub
 		return modarepo.findAll();
 	}
 
 	@Override
-	public ModalidadesContrato addModali(ModalidadesContrato moda) {
+	public ModalidadContrato addModali(ModalidadContrato moda) {
 		return modarepo.save(moda);
 	}
 
 	@Override
-	public ModalidadesContrato getModali(long id) throws Exception {
+	public ModalidadContrato getModali(long id) throws Exception {
 		return modarepo.findById(id).orElseThrow(() -> new Exception("La Moda para editar no existe"));
 	}
 
 	@Override
-	public void updateModali(ModalidadesContrato moda) {
+	public void updateModali(ModalidadContrato moda) {
 		modarepo.save(moda);
 	}
 

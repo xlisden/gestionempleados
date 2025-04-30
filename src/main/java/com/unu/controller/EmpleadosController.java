@@ -111,7 +111,7 @@ public class EmpleadosController {
 				datosContrato[2]="Inicio Contr: "+modalidadservice.getModali(e.getIdEmpleado()).getFechaInicio()+"";
 				datosContrato[3]="Final Contra: "+modalidadservice.getModali(e.getIdEmpleado()).getFechaFin()+"";
 				datosContrato[4]="Area: "+e.getArea().getNombre();
-				datosContrato[5]="Salario :p "+e.getArea().getSalario()+"";
+				datosContrato[5]="Salario :p "+e.getArea().getSueldoBasico()+"";
 				datosContrato[6]="Jornada: "+jorservice.getJord(e.getIdEmpleado()).getNombre();
 				
 			} catch (Exception e) {

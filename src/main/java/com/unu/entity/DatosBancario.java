@@ -1,81 +1,70 @@
 package com.unu.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ForeignKey;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name="datosbancarios")
+@Table(name = "datosbancarios")
 public class DatosBancario {
-	
-	
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="IdCuenta")
-	private int idCuenta;
-	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "IdEntidad", foreignKey = @ForeignKey(name = "fk_Datos_entidad"))
-	private EntidadBancaria entidadBancaria;
-	
-	@Column(name="Cci",unique = true, length =20)
-	private String cci;
-	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "IdEmpleado", foreignKey = @ForeignKey(name = "fk_Datos_empleado"))
-	private Empleado empleado;
 
-	public DatosBancario() {
-		super();
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "IdCuenta")
+    private int idCuenta;
 
-	public DatosBancario(int idCuenta, EntidadBancaria entidadBancaria, String cci, Empleado empleado) {
-		super();
-		this.idCuenta = idCuenta;
-		this.entidadBancaria = entidadBancaria;
-		this.cci = cci;
-		this.empleado = empleado;
-	}
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "IdEntidad", foreignKey = @ForeignKey(name = "fk_Datos_entidad"))
+    private Banco banco;
 
-	public int getIdCuenta() {
-		return idCuenta;
-	}
+    @Column(name = "Cci", unique = true, length = 20)
+    private String cci;
 
-	public void setIdCuenta(int idCuenta) {
-		this.idCuenta = idCuenta;
-	}
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "IdEmpleado", foreignKey = @ForeignKey(name = "fk_Datos_empleado"))
+    private Empleado empleado;
 
-	public EntidadBancaria getEntidadBancaria() {
-		return entidadBancaria;
-	}
+    public DatosBancario() {
+        super();
+    }
 
-	public void setEntidadBancaria(EntidadBancaria entidadBancaria) {
-		this.entidadBancaria = entidadBancaria;
-	}
+    public DatosBancario(int idCuenta, Banco banco, String cci, Empleado empleado) {
+        super();
+        this.idCuenta = idCuenta;
+        this.banco = banco;
+        this.cci = cci;
+        this.empleado = empleado;
+    }
 
-	public String getCci() {
-		return cci;
-	}
+    public int getIdCuenta() {
+        return idCuenta;
+    }
 
-	public void setCci(String cci) {
-		this.cci = cci;
-	}
+    public void setIdCuenta(int idCuenta) {
+        this.idCuenta = idCuenta;
+    }
 
-	public Empleado getEmpleado() {
-		return empleado;
-	}
+    public Banco getEntidadBancaria() {
+        return banco;
+    }
 
-	public void setEmpleado(Empleado empleado) {
-		this.empleado = empleado;
-	}
-	
-	
-	
-	
+    public void setEntidadBancaria(Banco banco) {
+        this.banco = banco;
+    }
+
+    public String getCci() {
+        return cci;
+    }
+
+    public void setCci(String cci) {
+        this.cci = cci;
+    }
+
+    public Empleado getEmpleado() {
+        return empleado;
+    }
+
+    public void setEmpleado(Empleado empleado) {
+        this.empleado = empleado;
+    }
+
+
 }
