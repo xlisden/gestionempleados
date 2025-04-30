@@ -26,14 +26,14 @@ public class LoginController {
 	    ModelAndView mav = new ModelAndView("Logeo");
 	    mav.addObject("login",new Login());
 	    //validar 
-	    return mav;
+	    return new ModelAndView("empleados/EmpleadosList");
 	}
 
 	@PostMapping("/login")
 	public String login(@ModelAttribute Login log) {
-		if(logiservice.validacion(log.getUsurio(),log.getContraseña()))
-			return "redirect:/temp/listaemple";
-		else
-			return "redirect:/sis/login";
+		// if(logiservice.validacion(log.getUsurio(),log.getContraseña()))
+			return "redirect:/empleados";
+		// else
+		// 	return "redirect:/sis/login";
 	}
 }

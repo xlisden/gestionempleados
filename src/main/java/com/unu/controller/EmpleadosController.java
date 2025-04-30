@@ -21,8 +21,8 @@ import com.unu.service.LoginService;
 import com.unu.service.ModalidadService;
 
 @Controller
-@RequestMapping("/temp")
-public class EmpleadoControlador {
+@RequestMapping("/empleados")
+public class EmpleadosController {
 	
 	@Autowired
 	@Qualifier("loginservice")
@@ -52,10 +52,10 @@ public class EmpleadoControlador {
 	@Qualifier("empleadosservice")
 	private EmpleadoService empleservice;
 	
-	@GetMapping("/listaemple")
+	@GetMapping({"/", ""})
 	public ModelAndView empleados() {
 		if(logiservice.tiempoSesion()){
-			ModelAndView mav = new ModelAndView("empleados");
+			ModelAndView mav = new ModelAndView("empleados/EmpleadosList");
 			
 			List<Empleado> empleados = empleservice.listAllEmpleados("");
 			List<String[]> listaEmple = new ArrayList<String[]>();
@@ -146,7 +146,6 @@ public class EmpleadoControlador {
 		return new LoginController().login();
 	}
 	
-	
 	//seccion de funciones extras
 	
 	
@@ -200,4 +199,5 @@ public class EmpleadoControlador {
 			}
 			return new LoginController().login();
 		}
+		
 }
