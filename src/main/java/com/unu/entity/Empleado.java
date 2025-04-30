@@ -12,7 +12,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ForeignKey;
 
-import java.sql.Date;
+import java.time.LocalDate;
 //</editor-fold>
 
 @Entity
@@ -47,7 +47,7 @@ public class Empleado {
     private EstadoCivil estadoCivil;
 
     @Column(name = "EmpFechaNac")
-    private Date fechaNac;
+    private LocalDate fechaNac;
 
     @Column(name = "EmpFoto", length = 30)
     private String foto;
@@ -58,7 +58,7 @@ public class Empleado {
     public Empleado() {
     }
 
-    public Empleado(int id, String cod, String dni, String nombre, String apPaterno, String apMaterno, boolean genero, EstadoCivil estadoCivil, Date fechaNac, String foto, boolean activo) {
+    public Empleado(int id, String cod, String dni, String nombre, String apPaterno, String apMaterno, boolean genero, EstadoCivil estadoCivil, LocalDate fechaNac, String foto, boolean activo) {
         this.id = id;
         this.cod = cod;
         this.dni = dni;
@@ -136,11 +136,11 @@ public class Empleado {
         this.estadoCivil = estadoCivil;
     }
 
-    public Date getFechaNac() {
+    public LocalDate getFechaNac() {
         return fechaNac;
     }
 
-    public void setFechaNac(Date fechaNacimiento) {
+    public void setFechaNac(LocalDate fechaNacimiento) {
         this.fechaNac = fechaNacimiento;
     }
 

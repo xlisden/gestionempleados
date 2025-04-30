@@ -11,6 +11,7 @@ import com.unu.entity.CuentaBancaria;
 @Repository("cuentabancariarepository")
 public interface CuentaBancariaRepository extends JpaRepository<CuentaBancaria,Serializable>{
 	
-	@Query("SELECT d FROM CuentaBancaria d WHERE d.empleado.id=?1")
-	public CuentaBancaria findDatosByEmpleado(int id);
+	@Query("SELECT c FROM CuentaBancaria c WHERE c.empleado.id = ?1")
+	public CuentaBancaria findByEmpleado(int id);
+
 }

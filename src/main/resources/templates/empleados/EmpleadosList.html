@@ -1,36 +1,36 @@
 <!DOCTYPE html>
 <html>
 
-<head th:replace="~{shared/head :: head()}"></head>
-<div th:replace="~{shared/header/header :: header()}"></div>
+<head th:replace="~{shared/head :: head() }"></head>
+<div th:replace="~{shared/header/header :: header() }"></div>
 
 <body>
 	<br>
 	<hr>
 	<div class="container-fluid px-3">
 		<div class="table-responsive">
-		  <table class="table table-striped table-hover align-middle">
+		  <table class="table align-middle">
 			<thead class="table">
 			  <tr>
-				<th>CODIGO</th>
-				<th>NOMBRES</th>
-				<th>TIEMPO</th>
-				<th>AREA</th>
-				<th>MODALIDAD</th>
-				<th>JORNADA</th>
-				<th>DETALLES</th>
+				<th>Cod.</th>
+				<th>Nombre Completo</th>
+				<th>Area</th>
+				<th>Antiguedad</th>
+				<th>Modalidad Cont.</th>
+				<th>Jornada Lab.</th>
+				<th></th>
 			  </tr>
 			</thead>
 			<tbody>
-			  <tr th:each="e : ${empleados}">
-				<td th:text="${e[0]}"></td>
-				<td th:text="${e[1]}"></td>
-				<td th:text="${e[2]}"></td>
-				<td th:text="${e[3]}"></td>
-				<td th:text="${e[4]}"></td>
-				<td th:text="${e[5]}"></td>
+			  <tr th:each="e : ${ empleados }">
+				<td th:text="${ e.cod }"></td>
+				<td th:text="${ e.nombreCompleto }"></td>
+				<td th:text="${ e.area }"></td>
+				<td th:text="${ e.antiguedad }"></td>
+				<td th:text="${ e.modalidadContrato }"></td>
+				<td th:text="${ e.jornadaLaboral  }"></td>
 				<td>
-				  <a th:href="@{/temp/list}">
+				  <a th:href="@{/temp/list }">
 					<img th:src="@{/img/detalle.png}" width="30" height="30" alt="detalleIcon">
 				  </a>
 				</td>

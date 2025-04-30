@@ -11,5 +11,6 @@ public interface CuentaBancariaService {
 	public abstract CuentaBancaria getDatos(long id)throws Exception;
 	public abstract void updateDatos(CuentaBancaria cuenta);
 	public abstract void deleteDatos(long id);
-	public abstract CuentaBancaria getDatosByEmpleado(int id)throws Exception;
+	public abstract CuentaBancaria getByEmpleado(int id)throws Exception;
+
 }
