@@ -18,8 +18,7 @@ public class EstadoCivil {
     public EstadoCivil() {
     }
 
-    public EstadoCivil(int id, String nombre) {
-        this.id = id;
+    public EstadoCivil(String nombre) {
         this.nombre = nombre;
     }
 

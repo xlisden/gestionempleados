@@ -15,7 +15,7 @@ import com.unu.entity.Empleado;
 import com.unu.service.AreaService;
 import com.unu.service.DatosBancarioService;
 import com.unu.service.EmpleadoService;
-import com.unu.service.EstadosCivileService;
+import com.unu.service.EstadoCivilService;
 import com.unu.service.JornadaService;
 import com.unu.service.LoginService;
 import com.unu.service.ModalidadService;
@@ -38,7 +38,7 @@ public class EmpleadosController {
 	
 	@Autowired
 	@Qualifier("estadosservice")
-	private EstadosCivileService estaservice;
+	private EstadoCivilService estaservice;
 	
 	@Autowired
 	@Qualifier("modalidadservice")

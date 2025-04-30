@@ -5,8 +5,6 @@ package com.unu;
 
 import java.time.LocalTime;
 
-import com.unu.service.EstadosCivileService;
-
 public class tomoe {
 	
 	//private static EstadosCivileService estaservice;
