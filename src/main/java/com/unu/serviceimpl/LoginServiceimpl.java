@@ -66,7 +66,7 @@ public class LoginServiceimpl implements LoginService{
 			
 			int diferencia=(ahora.getHour()-sesion.getHour())*60 - (sesion.getMinute()-ahora.getMinute());
 			System.out.println("minutos en sesion: "+diferencia);
-			if(diferencia<5 && getLogin(1).isEstado()) {
+			if(diferencia<15 && getLogin(1).isEstado()) {
 				Login log=getLogin(1);
 				updateLogin(new Login(1,log.getUsurio(),log.getContraseña(),log.getEmpleado(), true,log.getHoras()));
 				return true;

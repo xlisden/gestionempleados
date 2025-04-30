@@ -2,6 +2,7 @@ package com.unu.entity;
 
 import java.time.LocalTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
@@ -18,22 +19,27 @@ public class Login {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="IdLogin")
 	private int idLogin;
+	@Column(name="Usuario",unique = true, length =15)
 	private String usurio;
+	@Column(name="Contrasena",length =15)
 	private String contraseña;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "idEmpleado", foreignKey = @ForeignKey(name = "fk_login_empleado"))
-	private Empleados empleado;
-
+	@JoinColumn(name = "IdEmpleado", foreignKey = @ForeignKey(name = "fk_login_empleado"))
+	private Empleado empleado;
+	
+	@Column(name="Estado")
 	private boolean estado;
+	@Column(name="Horas")
 	private LocalTime horas;
 
 	public Login() {
 		super();
 	}
 
-	public Login(int idLogin, String usurio, String contraseña, Empleados empleado, boolean estado, LocalTime horas) {
+	public Login(int idLogin, String usurio, String contraseña, Empleado empleado, boolean estado, LocalTime horas) {
 		super();
 		this.idLogin = idLogin;
 		this.usurio = usurio;
@@ -83,11 +89,11 @@ public class Login {
 		this.contraseña = contraseña;
 	}
 
-	public Empleados getEmpleado() {
+	public Empleado getEmpleado() {
 		return empleado;
 	}
 
-	public void setEmpleado(Empleados empleado) {
+	public void setEmpleado(Empleado empleado) {
 		this.empleado = empleado;
 	}
 
