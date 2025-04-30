@@ -11,15 +11,14 @@ import com.unu.repository.AreaRepository;
 import com.unu.service.AreaService;
 
 @Service("areaservice")
-public class AreaServiceimpl implements AreaService {
+public class AreaServiceImpl implements AreaService {
 
 	@Autowired
 	@Qualifier("arearepository")
 	private AreaRepository arearepo;
 	
 	@Override
-	public List<Area> listAllAreas(String area) {
-		// TODO Auto-generated method stub
+	public List<Area> listAllAreas() {
 		return arearepo.findAll();
 	}
 
@@ -30,7 +29,7 @@ public class AreaServiceimpl implements AreaService {
 
 	@Override
 	public Area getArea(long id) throws Exception {
-		return arearepo.findById(id).orElseThrow(() -> new Exception("El Area para editar no existe"));
+		return arearepo.findById(id).orElseThrow(() -> new Exception("El Area no existe."));
 	}
 
 	@Override

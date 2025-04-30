@@ -5,9 +5,9 @@ import java.io.Serializable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.unu.entity.TipoModalidad;
+import com.unu.entity.Contrato;
 
-@Repository("tipomodalidadrepository")
-public interface TipoModalidadRepository extends JpaRepository<TipoModalidad,Serializable> {
+@Repository("contratorepository")
+public interface ContratoRepository extends JpaRepository<Contrato,Serializable> {
 	
 }
