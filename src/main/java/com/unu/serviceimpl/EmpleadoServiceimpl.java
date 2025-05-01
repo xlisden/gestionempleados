@@ -41,17 +41,18 @@ public class EmpleadoServiceimpl implements EmpleadoService {
     public List<EmpleadoDto> listAllEmpleados() {
         List<Empleado> lista = empleadoRepository.findAll();
         List<EmpleadoDto> empleados = new ArrayList<EmpleadoDto>();
-        for (Empleado e : lista) {
-            Contrato contrato = contratoRepository.findByEmpleado(e.getId());
+        for (Empleado emp : lista) {
+            Contrato contrato = contratoRepository.findByEmpleado(emp.getId());
             EmpleadoDto dto = new EmpleadoDto();
 
-            dto.setId(e.getId());
-            dto.setCod(e.getCod());
-            dto.setNombreCompleto(e.getNombre() + " " + e.getApPaterno().toUpperCase() + " " + e.getApMaterno().toUpperCase());
+            dto.setId(emp.getId());
+            dto.setCod(emp.getCod());
+            dto.setNombreCompleto(emp.getNombre() + " " + emp.getApPaterno().toUpperCase() + " " + emp.getApMaterno().toUpperCase());
             dto.setArea((contrato.getArea() == null) ? "" : contrato.getArea().getNombre());
             dto.setModalidadContrato((contrato.getModalidadCont() == null) ? "" : contrato.getModalidadCont().getNombre());
             dto.setJornadaLaboral((contrato.getJornadaLaboral() == null) ? "" : contrato.getJornadaLaboral().getNombre());
             dto.setAntiguedad(calcularAnitguedad(contrato.getFechaInicio()));
+            dto.setActivo(emp.isActivo());
 
             empleados.add(dto);
         }

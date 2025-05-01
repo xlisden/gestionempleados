@@ -16,5 +16,6 @@ public class EmpleadoDto {
     private String antiguedad;
     private String modalidadContrato;
     private String jornadaLaboral;
+    private boolean activo;
 
 }
