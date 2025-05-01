@@ -30,11 +30,11 @@ public class EmpleadosController {
 
     @Autowired
     @Qualifier("areaservice")
-    private AreaService areaservice;
+    private AreaService areaService;
 
     @Autowired
     @Qualifier("jornadaservice")
-    private JornadaLaboralService jorservice;
+    private JornadaLaboralService jornadaService;
 
     @Autowired
     @Qualifier("estadosservice")
@@ -65,8 +65,8 @@ public class EmpleadosController {
         }
 
         mav.addObject("empleados", empleados);
-        mav.addObject("areas", areaservice.listAllAreas());
-        mav.addObject("jornadas", jorservice.listAllJornadas());
+        mav.addObject("areas", areaService.listAllAreas());
+        mav.addObject("jornadas", jornadaService.listAllJornadas());
 
         return mav;
 //		}
