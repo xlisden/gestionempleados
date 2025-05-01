@@ -40,7 +40,11 @@ public class ContratoServiceImpl implements ContratoService {
 	public void deleteTipoM(long id) {
 		contratoRepository.deleteById(id);
 	}
-	
-	
-	
+
+	@Override
+	public Contrato findByEmpleado(int idEmpleado) {
+		return contratoRepository.findByEmpleado(idEmpleado);
+	}
+
+
 }

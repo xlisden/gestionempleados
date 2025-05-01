@@ -11,7 +11,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ForeignKey;
 
-import java.sql.Date;
+import java.time.LocalDate;
+
 //</editor-fold>
 
 @Entity
@@ -31,18 +32,95 @@ public class Contrato {
     @JoinColumn(name = "ContArea", foreignKey = @ForeignKey(name = "fk_contrato_area"))
     private Area area;
 
-    private Date fechaEmision;
+    private LocalDate fechaEmision;
 
     @ManyToOne
     @JoinColumn(name = "ContModalidadCont", foreignKey = @ForeignKey(name = "fk_contrato_modalidad_cont"))
-    private ModalidadContrato modContrato;
+    private ModalidadContrato modalidadCont;
 
-    private Date fechaInicio;
+    private LocalDate fechaInicio;
 
-    private Date fechaFin;
+    private LocalDate fechaFin;
 
     @ManyToOne
     @JoinColumn(name = "ContJLaboral", foreignKey = @ForeignKey(name = "fk_contrato_jord_laboral"))
     private JornadaLaboral jornadaLaboral;
 
+    public Contrato() {
+    }
+
+    public Contrato(int id, Empleado empleado, Area area, LocalDate fechaEmision, ModalidadContrato modalidadCont, LocalDate fechaInicio, LocalDate fechaFin, JornadaLaboral jornadaLaboral) {
+        this.id = id;
+        this.empleado = empleado;
+        this.area = area;
+        this.fechaEmision = fechaEmision;
+        this.modalidadCont = modalidadCont;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.jornadaLaboral = jornadaLaboral;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Empleado getEmpleado() {
+        return empleado;
+    }
+
+    public void setEmpleado(Empleado empleado) {
+        this.empleado = empleado;
+    }
+
+    public Area getArea() {
+        return area;
+    }
+
+    public void setArea(Area area) {
+        this.area = area;
+    }
+
+    public LocalDate getFechaEmision() {
+        return fechaEmision;
+    }
+
+    public void setFechaEmision(LocalDate fechaEmision) {
+        this.fechaEmision = fechaEmision;
+    }
+
+    public ModalidadContrato getModalidadCont() {
+        return modalidadCont;
+    }
+
+    public void setModalidadCont(ModalidadContrato modContrato) {
+        this.modalidadCont = modContrato;
+    }
+
+    public LocalDate getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(LocalDate fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public LocalDate getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(LocalDate fechaFin) {
+        this.fechaFin = fechaFin;
+    }
+
+    public JornadaLaboral getJornadaLaboral() {
+        return jornadaLaboral;
+    }
+
+    public void setJornadaLaboral(JornadaLaboral jornadaLaboral) {
+        this.jornadaLaboral = jornadaLaboral;
+    }
 }

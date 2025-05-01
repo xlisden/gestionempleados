@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <title>Diseño de Página</title>
@@ -11,38 +11,38 @@
 
 	<h3>Datos Personales</h3>
 	<section class="section">
-		<div th:object="${datosPer}">
-			<label th:text="${datosPer[0]}"></label><br>
-			<label th:text="${datosPer[1]}"></label><br>
-			<label th:text="${datosPer[2]}"></label><br>
-			<label th:text="${datosPer[3]}"></label><br>
-			<label th:text="${datosPer[4]}"></label><br>
-			<label th:text="${datosPer[5]}"></label><br>
-			<label th:text="${datosPer[6]}"></label><br>
-			<div class="image">
-				<img th:src="@{/img/{image}(image=${datosPer[7]})}" width="80px">
-			</div>
+		<div th:object="${empleado}">
+			<label th:text="${ empleado.nombre }"></label><br>
+			<label th:text="${ empleado.apPaterno }"></label><br>
+			<label th:text="${ empleado.apMaterno }"></label><br>
+			<label th:text="${ empleado.dni }"></label><br>
+			<label th:text="${ empleado.estado }"></label><br>
+			<label th:text="${ empleado.edad }"></label><br>
+			<label th:text="${ empleado.genero }"></label><br>
+<!--			<div class="image">-->
+<!--				<img th:src="@{/img/{image}(image=${datosPer[7]})}" width="80px">-->
+<!--			</div>-->
 		</div>
 	</section>
 
 	<h3>Datos Bancarios</h3>
 	<section class="section">
-		<div th:object="${datosBan}">
-			<label th:text="${datosBan[0]}"></label><br>
-			<label th:text="${datosBan[1]}"></label><br>
+		<div th:object="${cuentaBancaria}">
+			<label th:text="${ cuentaBancaria.banco }"></label><br>
+			<label th:text="${ cuentaBancaria.cci }"></label><br>
 		</div>
 	</section>
 
-	<h3>Datos Contraro</h3>
+	<h3>Cuenta Bancaria</h3>
 	<section class="section">
-		<div th:object="${datosCon}">
-			<label th:text="${datosCon[0]}"></label><br>
-			<label th:text="${datosCon[1]}"></label><br>
-			<label th:text="${datosCon[2]}"></label><br>
-			<label th:text="${datosCon[3]}"></label><br>
-			<label th:text="${datosCon[4]}"></label><br>
-			<label th:text="${datosCon[5]}"></label><br>
-			<label th:text="${datosCon[6]}"></label><br>
+		<div th:object="${contrato}">
+			<label th:text="${ contrato.antiguedad }"></label><br>
+			<label th:text="${ contrato.modalidadContrato }"></label><br>
+			<label th:text="${ contrato.fechaInicio }"></label><br>
+			<label th:text="${ contrato.fechaFin }"></label><br>
+			<label th:text="${ contrato.area }"></label><br>
+			<label th:text="${ contrato.sueldoBasico }"></label><br>
+			<label th:text="${ contrato.jornadaLaboral }"></label><br>
 		</div>
 	</section>
 

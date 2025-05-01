@@ -45,8 +45,8 @@ public class CuentaBancariaImpl implements CuentaBancariaService {
 	}
 
 	@Override
-	public CuentaBancaria getDatosByEmpleado(int id) throws Exception {
-		return datosrepo.findDatosByEmpleado(id);
+	public CuentaBancaria getByEmpleado(int id) throws Exception {
+		return datosrepo.findByEmpleado(id);
 	}
 	
 	
