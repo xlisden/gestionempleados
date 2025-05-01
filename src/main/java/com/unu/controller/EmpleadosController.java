@@ -1,15 +1,19 @@
 package com.unu.controller;
 
+import com.unu.controller.request.EditarEmpleadoRequest;
+import com.unu.controller.request.InsertarEmpleadoRequest;
 import com.unu.entity.dto.ContratoDto;
 import com.unu.entity.dto.CuentaBancariaDto;
+import com.unu.entity.dto.EmpleadoDetalleDto;
 import com.unu.entity.dto.EmpleadoDto;
 import com.unu.service.*;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
@@ -26,11 +30,11 @@ public class EmpleadosController {
 
     @Autowired
     @Qualifier("areaservice")
-    private AreaService areaservice;
+    private AreaService areaService;
 
     @Autowired
     @Qualifier("jornadaservice")
-    private JornadaLaboralService jorservice;
+    private JornadaLaboralService jornadaService;
 
     @Autowired
     @Qualifier("estadosservice")
@@ -61,8 +65,8 @@ public class EmpleadosController {
         }
 
         mav.addObject("empleados", empleados);
-        mav.addObject("areas", areaservice.listAllAreas());
-        mav.addObject("jornadas", jorservice.listAllJornadas());
+        mav.addObject("areas", areaService.listAllAreas());
+        mav.addObject("jornadas", jornadaService.listAllJornadas());
 
         return mav;
 //		}
@@ -72,8 +76,8 @@ public class EmpleadosController {
     @GetMapping("/{id}")
     public ModelAndView detalle(@PathVariable int id) { // falta mandarle argumento ID
 //		if(logiservice.tiempoSesion()){
-        ModelAndView mav = new ModelAndView("detalle");
-        EmpleadoDto empleado = new EmpleadoDto();
+        ModelAndView mav = new ModelAndView("empleados/EmpleadoDetalle");
+        EmpleadoDetalleDto empleado = new EmpleadoDetalleDto();
         CuentaBancariaDto cuenta = new CuentaBancariaDto();
         ContratoDto contrato = new ContratoDto();
 
@@ -84,7 +88,6 @@ public class EmpleadosController {
         } catch (Exception e) {
             System.out.println("fallo en la captura de datos: " + e.getMessage());
         }
-        System.out.println(empleado.toString());
 
         mav.addObject("empleado", empleado);
         mav.addObject("cuentaBancaria", cuenta);
@@ -96,8 +99,8 @@ public class EmpleadosController {
     }
 
 
-    @GetMapping("/editaremple")
-    public ModelAndView editar() {
+    @GetMapping("/editar/{id}")
+    public ModelAndView editarGetDatos(@PathVariable int id) {
         if (logiservice.tiempoSesion()) {
             ModelAndView mav = new ModelAndView("editar");
 			/*
@@ -111,6 +114,19 @@ public class EmpleadosController {
         }
         return new LoginController().login();
     }
+
+    @PutMapping("/editar/{id}")
+    private String editar(@PathVariable int id, @Valid @ModelAttribute EditarEmpleadoRequest empleadoRequest, BindingResult bindingResult, Model model) {
+        return "";
+    }
+
+    @PatchMapping("/desactivar/{id}")
+    public String deasctivar(@PathVariable int id) {
+        empleadoService.desactivar(id);
+
+        return "redirect:/empleados";
+    }
+
 
     //seccion de funciones extras
 
@@ -157,6 +173,11 @@ public class EmpleadosController {
             return mav;
         }
         return new LoginController().login();
+    }
+
+    private void borrar(){
+        InsertarEmpleadoRequest request = new InsertarEmpleadoRequest();
+        request.getApMaterno();
     }
 
 }

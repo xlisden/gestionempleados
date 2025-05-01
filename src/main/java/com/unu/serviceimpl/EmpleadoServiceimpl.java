@@ -5,6 +5,7 @@ import com.unu.entity.CuentaBancaria;
 import com.unu.entity.Empleado;
 import com.unu.entity.dto.ContratoDto;
 import com.unu.entity.dto.CuentaBancariaDto;
+import com.unu.entity.dto.EmpleadoDetalleDto;
 import com.unu.entity.dto.EmpleadoDto;
 import com.unu.repository.ContratoRepository;
 import com.unu.repository.CuentaBancariaRepository;
@@ -31,7 +32,7 @@ public class EmpleadoServiceimpl implements EmpleadoService {
     @Autowired
     @Qualifier("contratorepository")
     private ContratoRepository contratoRepository;
-    
+
     @Autowired
     @Qualifier("cuentabancariarepository")
     private CuentaBancariaRepository cuentabancariarepository;
@@ -40,22 +41,18 @@ public class EmpleadoServiceimpl implements EmpleadoService {
     public List<EmpleadoDto> listAllEmpleados() {
         List<Empleado> lista = empleadoRepository.findAll();
         List<EmpleadoDto> empleados = new ArrayList<EmpleadoDto>();
-        for (Empleado e : lista) {
-            Contrato contrato = contratoRepository.findByEmpleado(e.getId());
+        for (Empleado emp : lista) {
+            Contrato contrato = contratoRepository.findByEmpleado(emp.getId());
             EmpleadoDto dto = new EmpleadoDto();
 
-            dto.setId(e.getId());
-            dto.setCod(e.getCod());
-            dto.setDni(e.getDni());
-            dto.setNombreCompleto(e.getNombre() + " " + e.getApPaterno().toUpperCase() + " " + e.getApMaterno().toUpperCase());
-            dto.setGenero((e.isGenero()) ? "Femenino" : "Masculino");
+            dto.setId(emp.getId());
+            dto.setCod(emp.getCod());
+            dto.setNombreCompleto(emp.getNombre() + " " + emp.getApPaterno().toUpperCase() + " " + emp.getApMaterno().toUpperCase());
             dto.setArea((contrato.getArea() == null) ? "" : contrato.getArea().getNombre());
             dto.setModalidadContrato((contrato.getModalidadCont() == null) ? "" : contrato.getModalidadCont().getNombre());
             dto.setJornadaLaboral((contrato.getJornadaLaboral() == null) ? "" : contrato.getJornadaLaboral().getNombre());
-            dto.setEstadoCivil((e.getEstadoCivil() == null) ? "" : e.getEstadoCivil().getNombre());
-            dto.setEdad(calcularEdad(e.getFechaNac()));
-            dto.setEstado(e.isActivo() ? "Activo" : "Inactivo");
             dto.setAntiguedad(calcularAnitguedad(contrato.getFechaInicio()));
+            dto.setActivo(emp.isActivo());
 
             empleados.add(dto);
         }
@@ -68,26 +65,22 @@ public class EmpleadoServiceimpl implements EmpleadoService {
     }
 
     @Override
-    public EmpleadoDto getEmpleado(int id) throws Exception {
-        Empleado e = empleadoRepository.findById(id).orElseThrow(() -> new Exception("El Empleado no existe."));
-        Contrato contrato = contratoRepository.findByEmpleado(e.getId());
-        EmpleadoDto dto = new EmpleadoDto();
+    public EmpleadoDetalleDto getEmpleado(int id) throws Exception {
+        Empleado emp = empleadoRepository.findById(id).orElseThrow(() -> new Exception("El Empleado no existe."));
+        EmpleadoDetalleDto dto = new EmpleadoDetalleDto();
 
-        dto.setId(e.getId());
-        dto.setCod(e.getCod());
-        dto.setDni(e.getDni());
-        dto.setNombre(e.getNombre());
-        dto.setApPaterno(e.getApPaterno());
-        dto.setApMaterno(e.getApMaterno());
-        dto.setNombreCompleto(e.getNombre() + " " + e.getApPaterno().toUpperCase() + " " + e.getApMaterno().toUpperCase());
-        dto.setGenero((e.isGenero()) ? "Femenino" : "Masculino");
-        dto.setArea((contrato.getArea() == null) ? "" : contrato.getArea().getNombre());
-        dto.setModalidadContrato((contrato.getModalidadCont() == null) ? "" : contrato.getModalidadCont().getNombre());
-        dto.setJornadaLaboral((contrato.getJornadaLaboral() == null) ? "" : contrato.getJornadaLaboral().getNombre());
-        dto.setEstadoCivil((e.getEstadoCivil() == null) ? "" : e.getEstadoCivil().getNombre());
-        dto.setEdad(calcularEdad(e.getFechaNac()));
-        dto.setEstado(e.isActivo() ? "Activo" : "Inactivo");
-        dto.setAntiguedad(calcularAnitguedad(contrato.getFechaInicio()));
+        dto.setId(emp.getId());
+        dto.setCod(emp.getCod());
+        dto.setDni(emp.getDni());
+        dto.setNombre(emp.getNombre());
+        dto.setApPaterno(emp.getApPaterno());
+        dto.setApMaterno(emp.getApMaterno());
+        dto.setGenero((emp.isGenero()) ? "Femenino" : "Masculino");
+        dto.setEstadoCivil((emp.getEstadoCivil() == null) ? "" : emp.getEstadoCivil().getNombre());
+        dto.setEdad(calcularEdad(emp.getFechaNac()));
+        dto.setEstado(emp.isActivo() ? "Activo" : "Inactivo");
+//        dto.setFoto();
+        /* no se, tu sabes recuperar y manejar foto */
 
         return dto;
     }
@@ -99,7 +92,6 @@ public class EmpleadoServiceimpl implements EmpleadoService {
 
     @Override
     public void deleteEmple(long id) {
-        // TODO Auto-generated method stub
         empleadoRepository.deleteById(id);
     }
 
@@ -131,6 +123,16 @@ public class EmpleadoServiceimpl implements EmpleadoService {
         dto.setJornadaLaboral(contrato.getJornadaLaboral().getNombre());
 
         return dto;
+    }
+
+    @Override
+    public boolean dniExists(String dni) {
+        return empleadoRepository.dniExists(dni);
+    }
+
+    @Override
+    public void desactivar(int id) {
+        empleadoRepository.desactivar(id);
     }
 
     public String calcularAnitguedad(LocalDate inicio) {

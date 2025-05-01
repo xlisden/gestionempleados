@@ -1,5 +1,12 @@
 package com.unu.entity.dto;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
 public class FacturacionDto {
 
     private int id;
@@ -7,35 +14,4 @@ public class FacturacionDto {
     private String fechaPago;
     private double sueldoNeto;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getEmpleado() {
-        return empleado;
-    }
-
-    public void setEmpleado(String empleado) {
-        this.empleado = empleado;
-    }
-
-    public String getFechaPago() {
-        return fechaPago;
-    }
-
-    public void setFechaPago(String fechaPago) {
-        this.fechaPago = fechaPago;
-    }
-
-    public double getSueldoNeto() {
-        return sueldoNeto;
-    }
-
-    public void setSueldoNeto(double sueldoNeto) {
-        this.sueldoNeto = sueldoNeto;
-    }
 }

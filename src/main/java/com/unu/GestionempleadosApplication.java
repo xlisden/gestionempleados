@@ -52,10 +52,10 @@ public class GestionempleadosApplication  implements CommandLineRunner {
         }
 
 		if(areaService.listAllAreas().isEmpty()) {
-			areaService.addArea(new Area("A001", "Finanzas", 1200.0));
-			areaService.addArea(new Area("A002", "Servicio Al Cliente", 1400.0));
-			areaService.addArea(new Area("A003", "Marketing", 1600.0));
-			areaService.addArea(new Area("A004", "Administración", 1800.0));
+			areaService.addArea(new Area("Finanzas", 1200.0));
+			areaService.addArea(new Area("Servicio Al Cliente", 1400.0));
+			areaService.addArea(new Area("Marketing", 1600.0));
+			areaService.addArea(new Area("Administración", 1800.0));
 		}
 
 		if(jornadaService.listAllJornadas().isEmpty()) {

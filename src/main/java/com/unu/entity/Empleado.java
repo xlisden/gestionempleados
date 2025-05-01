@@ -24,7 +24,7 @@ public class Empleado {
     @Column(name = "EmpId")
     private int id;
 
-    @Column(name = "EmpCod", unique = true, length = 5)
+    @Column(name = "EmpCod", unique = true, length = 6)
     private String cod;
 
     @Column(name = "EmpDni", unique = true, length = 8)

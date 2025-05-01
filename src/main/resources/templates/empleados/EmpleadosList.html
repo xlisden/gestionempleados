@@ -1,48 +1,69 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 
 <head th:replace="~{shared/head :: head() }"></head>
 <div th:replace="~{shared/header/header :: header() }"></div>
 
 <body>
-	<br>
-	<hr>
-	<div class="container-fluid px-3">
-		<div class="table-responsive">
-		  <table class="table align-middle">
-			<thead class="table">
-			  <tr>
-				<th>Cod.</th>
-				<th>Nombre Completo</th>
-				<th>Area</th>
-				<th>Antiguedad</th>
-				<th>Modalidad Cont.</th>
-				<th>Jornada Lab.</th>
-				<th></th>
-			  </tr>
-			</thead>
-			<tbody>
-			  <tr th:each="e : ${ empleados }">
-				<td th:text="${ e.cod }"></td>
-				<td th:text="${ e.nombreCompleto }"></td>
-				<td th:text="${ e.area }"></td>
-				<td th:text="${ e.antiguedad }"></td>
-				<td th:text="${ e.modalidadContrato }"></td>
-				<td th:text="${ e.jornadaLaboral  }"></td>
-				<td>
-				  <a th:href="@{/temp/list }">
-					<img th:src="@{/img/detalle.png}" width="30" height="30" alt="detalleIcon">
-				  </a>
-				</td>
-			  </tr>
-			</tbody>
-		  </table>
-		</div>
-	  </div>
-	  
-	
-	
-	
-	
+
+<div class="container px-5">
+
+    <div class="row pb-4 d-flex g-3 align-items-center">
+        <div class="col-sm-4">
+            <input type="text" class="form-control" placeholder="Buscar por DNI, código o nombre...">
+        </div>
+        <button type="submit" class="btn btn-primary col-sm-1">Buscar</button>
+
+        <div id="selectJornada" class="col-sm-2 ms-auto">
+            <select id="jornada" class="form-select">
+                <option value="">Seleccione...</option>
+                <option th:each="jornada : ${ jornadas }" th:value="${ jornada.id }"
+                        th:text="${ jornada.nombre }"></option>
+            </select>
+        </div>
+
+        <div id="selectArea" class="col-sm-2">
+            <select id="area" class="form-select">
+                <option value="">Seleccione...</option>
+                <option th:each="area : ${ areas }" th:value="${ area.id }" th:text="${ area.nombre }"></option>
+            </select>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table align-middle">
+            <thead class="table">
+            <tr>
+                <th>Cod.</th>
+                <th>Nombre Completo</th>
+                <th>Area</th>
+                <th>Antiguedad</th>
+                <th>Modalidad Cont.</th>
+                <th>Jornada Lab.</th>
+                <th></th>
+                <th>Operaciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="empleado : ${ empleados }">
+                <td th:text="${ empleado.cod }"></td>
+                <td th:text="${ empleado.nombreCompleto }"></td>
+                <td th:text="${ empleado.area }"></td>
+                <td th:text="${ empleado.antiguedad }"></td>
+                <td th:text="${ empleado.modalidadContrato }"></td>
+                <td th:text="${ empleado.jornadaLaboral  }"></td>
+                <td th:if="${ empleado.activo }" class="text-success" style="font-size: 1.5rem">●</td>
+                <td th:if="${ !empleado.activo }" class="text-body-tertiary" style="font-size: 1.5rem">●</td>
+                <td>
+                    <a th:href="@{/temp/list }">
+                        <img th:src="@{/img/detalle.png}" width="30" height="30" alt="detalleIcon">
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
 </body>
 </html>

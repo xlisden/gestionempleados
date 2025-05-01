@@ -28,11 +28,11 @@ public class JornadaLaboral {
         this.nombre = nombre;
     }
 
-    public int getjId() {
+    public int getId() {
         return id;
     }
 
-    public void setjId(int jLabCodigo) {
+    public void setId(int jLabCodigo) {
         this.id = jLabCodigo;
     }
 
