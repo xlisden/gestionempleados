@@ -18,9 +18,6 @@ public class Area {
     @Column(name = "AreaId")
     private int id;
 
-    @Column(name = "AreaCod", length = 5)
-    private String cod;
-
     @Column(name = "AreaNombre", length = 20)
     private String nombre;
 
@@ -30,8 +27,7 @@ public class Area {
     public Area() {
     }
 
-    public Area(String cod, String nombre, double sueldoBasico) {
-        this.cod = cod;
+    public Area(String nombre, double sueldoBasico) {
         this.nombre = nombre;
         this.sueldoBasico = sueldoBasico;
     }
@@ -42,14 +38,6 @@ public class Area {
 
     public void setId(int idArea) {
         this.id = idArea;
-    }
-
-    public String getCod() {
-        return cod;
-    }
-
-    public void setCod(String areaCod) {
-        this.cod = areaCod;
     }
 
     public String getNombre() {
