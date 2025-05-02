@@ -1,100 +1,91 @@
 package com.unu.entity;
 
-import java.time.LocalTime;
+import jakarta.persistence.*;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ForeignKey;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "login")
 public class Login {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="IdLogin")
-	private int idLogin;
-	@Column(name="Usuario",unique = true, length =15)
-	private String usurio;
-	@Column(name="Contrasena",length =15)
-	private String contraseña;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "IdLogin")
+    private int idLogin;
+    @Column(name = "Usuario", unique = true, length = 15)
+    private String usurio;
+    @Column(name = "Contrasena", length = 15)
+    private String contraseña;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "IdEmpleado", foreignKey = @ForeignKey(name = "fk_login_empleado"))
-	private Empleado empleado;
-	
-	@Column(name="Estado")
-	private boolean estado;
-	@Column(name="Horas")
-	private LocalTime horas;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "IdEmpleado", foreignKey = @ForeignKey(name = "fk_login_empleado"))
+    private Empleado empleado;
 
-	public Login() {
-		super();
-	}
+    @Column(name = "Estado")
+    private boolean estado;
+    @Column(name = "Horas")
+    private LocalTime horas;
 
-	public Login(int idLogin, String usurio, String contraseña, Empleado empleado, boolean estado, LocalTime horas) {
-		super();
-		this.idLogin = idLogin;
-		this.usurio = usurio;
-		this.contraseña = contraseña;
-		this.empleado = empleado;
-		this.estado = estado;
-		this.horas = horas;
-	}
+    public Login() {
+        super();
+    }
 
-	public int getIdLogin() {
-		return idLogin;
-	}
+    public Login(int idLogin, String usurio, String contraseña, Empleado empleado, boolean estado, LocalTime horas) {
+        super();
+        this.idLogin = idLogin;
+        this.usurio = usurio;
+        this.contraseña = contraseña;
+        this.empleado = empleado;
+        this.estado = estado;
+        this.horas = horas;
+    }
 
-	public void setIdLogin(int idLogin) {
-		this.idLogin = idLogin;
-	}
+    public int getIdLogin() {
+        return idLogin;
+    }
 
-	public boolean isEstado() {
-		return estado;
-	}
+    public void setIdLogin(int idLogin) {
+        this.idLogin = idLogin;
+    }
 
-	public void setEstado(boolean estado) {
-		this.estado = estado;
-	}
+    public boolean isEstado() {
+        return estado;
+    }
 
-	public LocalTime getHoras() {
-		return horas;
-	}
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
 
-	public void setHoras(LocalTime horas) {
-		this.horas = horas;
-	}
+    public LocalTime getHoras() {
+        return horas;
+    }
 
-	public String getUsurio() {
-		return usurio;
-	}
+    public void setHoras(LocalTime horas) {
+        this.horas = horas;
+    }
 
-	public void setUsurio(String usurio) {
-		this.usurio = usurio;
-	}
+    public String getUsurio() {
+        return usurio;
+    }
 
-	public String getContraseña() {
-		return contraseña;
-	}
+    public void setUsurio(String usurio) {
+        this.usurio = usurio;
+    }
 
-	public void setContraseña(String contraseña) {
-		this.contraseña = contraseña;
-	}
+    public String getContraseña() {
+        return contraseña;
+    }
 
-	public Empleado getEmpleado() {
-		return empleado;
-	}
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
+    }
 
-	public void setEmpleado(Empleado empleado) {
-		this.empleado = empleado;
-	}
+    public Empleado getEmpleado() {
+        return empleado;
+    }
+
+    public void setEmpleado(Empleado empleado) {
+        this.empleado = empleado;
+    }
 
 }

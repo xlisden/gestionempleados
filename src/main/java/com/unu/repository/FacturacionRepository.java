@@ -1,13 +1,12 @@
 package com.unu.repository;
 
-import java.io.Serializable;
-
+import com.unu.entity.Facturacion;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.unu.entity.Facturacion;
+import java.io.Serializable;
 
 @Repository("facturacionrepository")
-public interface FacturacionRepository extends JpaRepository<Facturacion,Serializable>{
-	
+public interface FacturacionRepository extends JpaRepository<Facturacion, Serializable> {
+
 }
