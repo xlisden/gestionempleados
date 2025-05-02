@@ -1,14 +1,13 @@
 package com.unu.repository;
 
-import java.io.Serializable;
-
+import com.unu.entity.Banco;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.unu.entity.Banco;
+import java.io.Serializable;
 
 @Repository("entidadrepository")
-public interface BancoRepository extends JpaRepository<Banco,Serializable>{
+public interface BancoRepository extends JpaRepository<Banco, Serializable> {
 
-	
+
 }

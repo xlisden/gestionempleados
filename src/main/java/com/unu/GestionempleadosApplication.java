@@ -15,53 +15,53 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class GestionempleadosApplication  implements CommandLineRunner {
+public class GestionempleadosApplication implements CommandLineRunner {
 
-	@Autowired
-	@Qualifier("estadosservice")
-	private EstadoCivilService estadoCivilService;
+    @Autowired
+    @Qualifier("estadosservice")
+    private EstadoCivilService estadoCivilService;
 
     @Autowired
     @Qualifier("modalidadcontratoservice")
     private ModalidadContratoService modContratoService;
 
-	@Autowired
-	@Qualifier("areaservice")
-	private AreaService areaService;
+    @Autowired
+    @Qualifier("areaservice")
+    private AreaService areaService;
 
-	@Autowired
-	@Qualifier("jornadaservice")
-	private JornadaLaboralService jornadaService;
+    @Autowired
+    @Qualifier("jornadaservice")
+    private JornadaLaboralService jornadaService;
 
-	public static void main(String[] args) {
-		SpringApplication.run(GestionempleadosApplication.class, args);
-		System.out.println("READY!");
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(GestionempleadosApplication.class, args);
+        System.out.println("READY!");
+    }
 
-	public void run(String... args) throws Exception {
-		if(estadoCivilService.listAllEstados().isEmpty()) {
-			estadoCivilService.addEstados(new EstadoCivil("Soltero"));
-			estadoCivilService.addEstados(new EstadoCivil("Casado"));
-			estadoCivilService.addEstados(new EstadoCivil("Divorciado"));
-			estadoCivilService.addEstados(new EstadoCivil("Viudo"));
-		}
-
-        if(modContratoService.listAllModalidades().isEmpty()){
-			modContratoService.addModalidad(new ModalidadContrato("Plazo Indeterminado"));
-			modContratoService.addModalidad(new ModalidadContrato("Plazo Determinado"));
+    public void run(String... args) throws Exception {
+        if (estadoCivilService.listAllEstados().isEmpty()) {
+            estadoCivilService.addEstados(new EstadoCivil("Soltero"));
+            estadoCivilService.addEstados(new EstadoCivil("Casado"));
+            estadoCivilService.addEstados(new EstadoCivil("Divorciado"));
+            estadoCivilService.addEstados(new EstadoCivil("Viudo"));
         }
 
-		if(areaService.listAllAreas().isEmpty()) {
-			areaService.addArea(new Area("Finanzas", 1200.0));
-			areaService.addArea(new Area("Servicio Al Cliente", 1400.0));
-			areaService.addArea(new Area("Marketing", 1600.0));
-			areaService.addArea(new Area("Administración", 1800.0));
-		}
+        if (modContratoService.listAllModalidades().isEmpty()) {
+            modContratoService.addModalidad(new ModalidadContrato("Plazo Indeterminado"));
+            modContratoService.addModalidad(new ModalidadContrato("Plazo Determinado"));
+        }
 
-		if(jornadaService.listAllJornadas().isEmpty()) {
-			jornadaService.addJord(new JornadaLaboral("Tiempo Completo"));
-			jornadaService.addJord(new JornadaLaboral("Tiempo Parcial"));
-		}
-	}
+        if (areaService.listAllAreas().isEmpty()) {
+            areaService.addArea(new Area("Finanzas", 1200.0));
+            areaService.addArea(new Area("Servicio Al Cliente", 1400.0));
+            areaService.addArea(new Area("Marketing", 1600.0));
+            areaService.addArea(new Area("Administración", 1800.0));
+        }
+
+        if (jornadaService.listAllJornadas().isEmpty()) {
+            jornadaService.addJord(new JornadaLaboral("Tiempo Completo"));
+            jornadaService.addJord(new JornadaLaboral("Tiempo Parcial"));
+        }
+    }
 
 }

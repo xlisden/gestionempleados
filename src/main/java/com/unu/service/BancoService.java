@@ -1,9 +1,9 @@
 package com.unu.service;
 
-import java.util.List;
-
 import com.unu.entity.Banco;
 
+import java.util.List;
+
 public interface BancoService {
-	public abstract List<Banco> findAllEntidades();
+    public abstract List<Banco> findAllEntidades();
 }

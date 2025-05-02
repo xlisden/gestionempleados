@@ -1,12 +1,5 @@
 package com.unu.entity.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-@Getter
-@Setter
-@NoArgsConstructor
 public class ContratoDto {
 
     private int id;
@@ -18,4 +11,70 @@ public class ContratoDto {
     private double sueldoBasico;
     private String jornadaLaboral;
 
+    public ContratoDto() {
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public String getAntiguedad() {
+        return this.antiguedad;
+    }
+
+    public String getModalidadContrato() {
+        return this.modalidadContrato;
+    }
+
+    public String getFechaInicio() {
+        return this.fechaInicio;
+    }
+
+    public String getFechaFin() {
+        return this.fechaFin;
+    }
+
+    public String getArea() {
+        return this.area;
+    }
+
+    public double getSueldoBasico() {
+        return this.sueldoBasico;
+    }
+
+    public String getJornadaLaboral() {
+        return this.jornadaLaboral;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setAntiguedad(String antiguedad) {
+        this.antiguedad = antiguedad;
+    }
+
+    public void setModalidadContrato(String modalidadContrato) {
+        this.modalidadContrato = modalidadContrato;
+    }
+
+    public void setFechaInicio(String fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public void setFechaFin(String fechaFin) {
+        this.fechaFin = fechaFin;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public void setSueldoBasico(double sueldoBasico) {
+        this.sueldoBasico = sueldoBasico;
+    }
+
+    public void setJornadaLaboral(String jornadaLaboral) {
+        this.jornadaLaboral = jornadaLaboral;
+    }
 }
