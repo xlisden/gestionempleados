@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 
-@Repository("entidadrepository")
+@Repository("bancorepository")
 public interface BancoRepository extends JpaRepository<Banco, Serializable> {
 
 
