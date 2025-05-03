@@ -25,11 +25,11 @@ public class EstadoCivil {
         this.nombre = nombre;
     }
 
-    public int getEstCivilCod() {
+    public int getId() {
         return id;
     }
 
-    public void setEstCivilCod(int estCivilCod) {
+    public void setId(int estCivilCod) {
         this.id = estCivilCod;
     }
 

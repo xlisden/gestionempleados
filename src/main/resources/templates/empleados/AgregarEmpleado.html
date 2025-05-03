@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head th:replace="~{shared/head :: head() }"></head>
+<div th:replace="~{shared/header/header :: header() }"></div>
+
+<body>
+<div class="container">
+
+  <form action="">
+
+    <div class="card"> <!--sin border-dark si no se quiere tan notiorio-->
+      <div class="card-body">
+        <h5>Datos personales</h5>
+
+        <div class="form-floating">
+          <input type="text" class="form-control" id="floatDni" placeholder="dni">
+          <label for="floatDni">Nro de DNI</label>
+        </div>
+        <div class="form-floating">
+          <input type="text" class="form-control" id="floatNombre" placeholder="nombres">
+          <label for="floatNombre">Nombres</label>
+        </div>
+        <div class="form-floating">
+          <input type="text" class="form-control" id="floatApPaterno" placeholder="appaterno">
+          <label for="floatApPaterno">Ap. Paterno</label>
+        </div>
+        <div class="form-floating">
+          <input type="text" class="form-control" id="floatApMaterno" placeholder="apmaterno">
+          <label for="floatApMaterno">Ap. Materno</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="radioDefault" id="masculino">
+          <label class="form-check-label" for="masculino"> Masculino </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="radioDefault" id="femenino">
+          <label class="form-check-label" for="femenino"> Femenino </label>
+        </div>
+        <div class="form-floating">
+          <select id="floatEstCivil" class="form-select">
+            <option value="">Seleccione...</option>
+            <option th:each="estCivil : ${ estadosciviles }" th:value="${ estCivil.id }" th:text="${ estCivil.nombre }"></option>
+          </select>
+          <label for="floatEstCivil">Estado Civil</label>
+        </div>
+        <div class="form-floating">
+          <input type="date" class="form-control" id="floatFechaNac" placeholder="fechanac">
+          <label for="floatFechaNac">Fecha Nac.</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="card"> <!--sin border-dark si no se quiere tan notiorio-->
+      <div class="card-body">
+        <h5>Datos laborales</h5>
+
+        <div class="form-floating">
+          <select id="floatArea" class="form-select">
+            <option value="">Seleccione...</option>
+            <option th:each="area : ${ areas }" th:value="${ area.id }" th:text="${ area.nombre }"></option>
+          </select>
+          <label for="floatArea">Área</label>
+        </div>
+        <div class="form-floating">
+          <select id="floatJornada" class="form-select">
+            <option value="">Seleccione...</option>
+            <option th:each="jornada : ${ jornadas }" th:value="${ jornada.id }" th:text="${ jornada.nombre }"></option>
+          </select>
+          <label for="floatJornada">Jornada</label>
+        </div>
+        <div class="form-floating">
+          <select id="floatModalidad" class="form-select">
+            <option value="">Seleccione...</option>
+            <option th:each="modalidad : ${ modalidades }" th:value="${ modalidad.id }" th:text="${ modalidad.nombre }"></option>
+          </select>
+          <label for="floatModalidad">Modalidad</label>
+        </div>
+        <div class="form-floating">
+          <input type="date" class="form-control" id="fechaEmision" placeholder="fechaems">
+          <label for="fechaEmision">Fecha Emisión.</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="card"> <!--sin border-dark si no se quiere tan notiorio-->
+      <div class="card-body">
+        <h5>Datos bancarios</h5>
+
+        <div class="form-floating">
+          <select id="floatBanco" class="form-select">
+            <option value="">Seleccione...</option>
+            <option th:each="area : ${ areas }" th:value="${ area.id }" th:text="${ area.nombre }"></option>
+          </select>
+          <label for="floatBanco">Área</label>
+        </div>
+      </div>
+    </div>
+
+  </form>
+
+</div>
+</body>
+</html>

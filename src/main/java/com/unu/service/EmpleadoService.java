@@ -1,6 +1,9 @@
 package com.unu.service;
 
+import com.unu.entity.Banco;
 import com.unu.entity.Empleado;
+import com.unu.entity.EstadoCivil;
+import com.unu.entity.ModalidadContrato;
 import com.unu.entity.dto.ContratoDto;
 import com.unu.entity.dto.CuentaBancariaDto;
 import com.unu.entity.dto.EmpleadoDetalleDto;
@@ -27,4 +30,11 @@ public interface EmpleadoService {
     public abstract boolean dniExists(String dni);
 
     public abstract void desactivar(int id);
+
+    public abstract List<EstadoCivil> getEstadosCiviles();
+
+    public abstract List<ModalidadContrato> getModalidadesContrato();
+
+    public abstract List<Banco> getBancos();
+
 }

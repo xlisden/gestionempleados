@@ -2,6 +2,7 @@ package com.unu.controller;
 
 import com.unu.controller.request.EditarEmpleadoRequest;
 import com.unu.controller.request.InsertarEmpleadoRequest;
+import com.unu.controller.request.PersonaRequest;
 import com.unu.entity.dto.ContratoDto;
 import com.unu.entity.dto.CuentaBancariaDto;
 import com.unu.entity.dto.EmpleadoDetalleDto;
@@ -53,7 +54,7 @@ public class EmpleadosController {
     private EmpleadoService empleadoService;
 
     @GetMapping({"/", ""})
-    public ModelAndView empleados() {
+    public ModelAndView listEmpleados() {
 //		if(logiservice.tiempoSesion()){
         ModelAndView mav = new ModelAndView("empleados/EmpleadosList");
 
@@ -61,7 +62,7 @@ public class EmpleadosController {
         try {
             empleados = empleadoService.listAllEmpleados();
         } catch (Exception e) {
-            System.out.println("EmpleadosController - empleados() -> " + e.getMessage());
+            System.out.println("listEmpleados() -> " + e.getMessage());
         }
 
         mav.addObject("empleados", empleados);
@@ -98,6 +99,58 @@ public class EmpleadosController {
 //		return new LoginController().login();
     }
 
+    /* Insertar */
+
+    @GetMapping("/agregar")
+    public ModelAndView insertarGetDatos(Model model){
+        ModelAndView mav = new ModelAndView("empleados/AgregarEmpleado");
+
+        mav.addObject("estadosciviles", empleadoService.getEstadosCiviles());
+        mav.addObject("areas", areaService.listAllAreas());
+        mav.addObject("jornadas", jornadaService.listAllJornadas());
+        mav.addObject("modalidades", empleadoService.getModalidadesContrato());
+        mav.addObject("bancos", empleadoService.getBancos());
+        return mav;
+    }
+
+    @GetMapping("/personas")
+    public ModelAndView getPersona(){
+        ModelAndView mav = new ModelAndView("personas");
+
+        mav.addObject("persona", new PersonaRequest());
+        mav.addObject("hayErrorInsertar", false);
+        mav.addObject("estadosciviles", empleadoService.getEstadosCiviles());
+        return mav;
+    }
+
+    // si sabes hacer el postmapping con model and view le haces pue (io no se)
+    @PostMapping("/personas")
+    public String addPersona(@Valid @ModelAttribute("persona") PersonaRequest personaRequest, BindingResult result, Model model){
+        try {
+            // || personaRequest.getEstadoCivil() == null
+            if (result.hasErrors()) {
+                if (personaRequest.getEstadoCivil() == null){
+                    result.rejectValue("estadoCivil", "error.estadoCivil.notnull", "El Estado Civil es requerido.");
+                }
+                if (personaRequest.getFechaNacimiento() == null){
+                    result.rejectValue("fechaNacimiento", "error.fechaNacimiento.notnull", "La fecha de nacimiento es requerida.");
+                }
+                model.addAttribute("hayErrorInsertar", true);
+                model.addAttribute("estadosciviles", empleadoService.getEstadosCiviles());
+                return "personas";
+            }
+            System.out.println("nombre = " + personaRequest.getNombre());
+            System.out.println("estado civil = " + personaRequest.getEstadoCivil().getNombre());
+            System.out.println("fecha nac = " + personaRequest.getFechaNacimiento());
+            model.addAttribute("hayErrorInsertar", false);
+        } catch (Exception e) {
+            System.out.println("addPersona() -> " + e.getMessage());
+        }
+        return "redirect:/empleados/personas";
+    }
+
+
+    /* Editar */
 
     @GetMapping("/editar/{id}")
     public ModelAndView editarGetDatos(@PathVariable int id) {

@@ -6,6 +6,7 @@ package com.unu.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 //</editor-fold>
 
 @Entity
@@ -47,6 +48,9 @@ public class Empleado {
 
     @Column(name = "EmpActivo")
     private boolean activo;
+
+    @Transient
+    List<Contrato> contratos;
 
     public Empleado() {
     }

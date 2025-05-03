@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service("entidadservice")
+@Service("bancoservice")
 public class BancoServiceImpl implements BancoService {
 
     @Autowired
-    @Qualifier("entidadrepository")
+    @Qualifier("bancorepository")
     private BancoRepository entirepo;
 
     @Override

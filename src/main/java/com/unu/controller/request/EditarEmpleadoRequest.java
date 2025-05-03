@@ -46,9 +46,6 @@ public class EditarEmpleadoRequest {
     private LocalDate fechaInicio;
 
     @NotNull()
-    private LocalDate fechaFin;
-
-    @NotNull()
     private Area area;
 
     @NotNull()
@@ -109,10 +106,6 @@ public class EditarEmpleadoRequest {
         return this.fechaInicio;
     }
 
-    public @NotNull() LocalDate getFechaFin() {
-        return this.fechaFin;
-    }
-
     public @NotNull() Area getArea() {
         return this.area;
     }
@@ -171,10 +164,6 @@ public class EditarEmpleadoRequest {
 
     public void setFechaInicio(@NotNull() LocalDate fechaInicio) {
         this.fechaInicio = fechaInicio;
-    }
-
-    public void setFechaFin(@NotNull() LocalDate fechaFin) {
-        this.fechaFin = fechaFin;
     }
 
     public void setArea(@NotNull() Area area) {

@@ -1,15 +1,11 @@
 package com.unu.serviceimpl;
 
-import com.unu.entity.Contrato;
-import com.unu.entity.CuentaBancaria;
-import com.unu.entity.Empleado;
+import com.unu.entity.*;
 import com.unu.entity.dto.ContratoDto;
 import com.unu.entity.dto.CuentaBancariaDto;
 import com.unu.entity.dto.EmpleadoDetalleDto;
 import com.unu.entity.dto.EmpleadoDto;
-import com.unu.repository.ContratoRepository;
-import com.unu.repository.CuentaBancariaRepository;
-import com.unu.repository.EmpleadoRepository;
+import com.unu.repository.*;
 import com.unu.service.EmpleadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -36,6 +32,18 @@ public class EmpleadoServiceimpl implements EmpleadoService {
     @Autowired
     @Qualifier("cuentabancariarepository")
     private CuentaBancariaRepository cuentabancariarepository;
+
+    @Autowired
+    @Qualifier("estadosrepository")
+    private EstadoCivilRepository estCivilRepository;
+
+    @Autowired
+    @Qualifier("modalidadcontratorepository")
+    private ModalidadContratoRepository modContratoRepository;
+
+    @Autowired
+    @Qualifier("bancorepository")
+    private BancoRepository bancoRepository;
 
     @Override
     public List<EmpleadoDto> listAllEmpleados() {
@@ -133,6 +141,20 @@ public class EmpleadoServiceimpl implements EmpleadoService {
     @Override
     public void desactivar(int id) {
         empleadoRepository.desactivar(id);
+    }
+
+    // para no instanciar otro servicio, solo el de empleados
+    public List<EstadoCivil> getEstadosCiviles(){
+        return estCivilRepository.findAll();
+    }
+
+    @Override
+    public List<ModalidadContrato> getModalidadesContrato() {
+        return modContratoRepository.findAll();
+    }
+
+    public List<Banco> getBancos() {
+        return bancoRepository.findAll();
     }
 
     public String calcularAnitguedad(LocalDate inicio) {
