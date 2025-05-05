@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Repository("empleadorepository")
 public interface EmpleadoRepository extends JpaRepository<Empleado, Serializable> {
@@ -15,6 +16,9 @@ public interface EmpleadoRepository extends JpaRepository<Empleado, Serializable
 
     @Query("UPDATE Empleado e SET e.activo = false WHERE e.id = ?1")
     public void desactivar(int id);
+
+    @Query("SELECT e FROM Empleado e ORDER BY e.activo DESC")
+    public List<Empleado> getAllOrdenActivo();
 
     //falta por nombre, dni, y codigo
 

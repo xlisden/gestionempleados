@@ -37,4 +37,6 @@ public interface EmpleadoService {
 
     public abstract List<Banco> getBancos();
 
+    public abstract List<EmpleadoDto> listAllEmpleadosOrdenActivo();
+
 }

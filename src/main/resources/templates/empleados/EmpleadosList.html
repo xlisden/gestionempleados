@@ -61,15 +61,22 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="empleado : ${ empleados }">
+            <tr th:each="empleado : ${ empleados }" th:object="${empleado}">
                 <td th:text="${ empleado.cod }"></td>
                 <td th:text="${ empleado.nombreCompleto }"></td>
                 <td th:text="${ empleado.area }"></td>
                 <td th:text="${ empleado.antiguedad }"></td>
                 <td th:text="${ empleado.modalidadContrato }"></td>
                 <td th:text="${ empleado.jornadaLaboral  }"></td>
-                <td th:if="${ empleado.activo }" class="text-success" style="font-size: 1.5rem">●</td>
-                <td th:if="${ !empleado.activo }" class="text-body-tertiary" style="font-size: 1.5rem">●</td>
+<!--                <td th:if="${ empleado.activo }" class="text-success" style="font-size: 1.5rem">●</td>-->
+<!--                <td th:if="${ !empleado.activo }" class="text-body-tertiary" style="font-size: 1.5rem">●</td>-->
+                <td>
+                    <div class="form-check form-switch">
+                        <a th:href="@{/empleados/agregar}">
+                            <input class="form-check-input" type="checkbox" role="switch" id="isActivo" th:checked="${empleado.activo}">
+                        </a>
+                    </div>
+                </td>
                 <td>
                     <a th:href="@{/temp/list }">
                         <img th:src="@{/img/detalle.png}" width="30" height="30" alt="detalleIcon">
