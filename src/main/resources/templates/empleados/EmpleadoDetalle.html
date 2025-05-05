@@ -6,44 +6,138 @@
 
 <body>
 
-<h1>Detalle Empleados</h1>
+	<div class="container">
+	<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/empleados/">Empleados</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Detalle</li>
+        </ol>
+    </nav>
 
-<h3>Datos Personales</h3>
-<section class="section">
-    <div th:object="${empleado}">
-        <label th:text="${ empleado.nombre }"></label><br>
-        <label th:text="${ empleado.apPaterno }"></label><br>
-        <label th:text="${ empleado.apMaterno }"></label><br>
-        <label th:text="${ empleado.dni }"></label><br>
-        <label th:text="${ empleado.estadoCivil }"></label><br>
-        <label th:text="${ empleado.edad }"></label><br>
-        <label th:text="${ empleado.genero }"></label><br>
-        <div class="image">
-        	<img th:src="@{/img/{image}(image=${ empleado.foto })}" width="80px">
-        </div>-->
-    </div>
-</section>
-
-<h3>Datos Bancarios</h3>
-<section class="section">
-    <div th:object="${cuentaBancaria}">
-        <label th:text="${ cuentaBancaria.banco }"></label><br>
-        <label th:text="${ cuentaBancaria.cci }"></label><br>
-    </div>
-</section>
-
-<h3>Cuenta Bancaria</h3>
-<section class="section">
-    <div th:object="${contrato}">
-        <label th:text="${ contrato.antiguedad }"></label><br>
-        <label th:text="${ contrato.modalidadContrato }"></label><br>
-        <label th:text="${ contrato.fechaInicio }"></label><br>
-        <label th:text="${ contrato.fechaFin }"></label><br>
-        <label th:text="${ contrato.area }"></label><br>
-        <label th:text="${ contrato.sueldoBasico }"></label><br>
-        <label th:text="${ contrato.jornadaLaboral }"></label><br>
-    </div>
-</section>
-
+    <div class="row">
+		<div class="container mt-2">
+		
+		<h1 class="mt-2 mb-4">Detalle Empleados</h1>
+			
+		
+			<div class="row">
+				<div class="col-12 col-md-5">
+					<div class="card mb-3">
+	                    <div class="card-body">
+	                    
+	                    	<div class="position-absolute top- end-0 mb-2 me-3">
+					        	<img th:src="@{/img/{image}(image=${ empleado.foto })}" width="156px"><br>
+					        </div>
+	                        <h3 class="mb-3">Datos Personales</h3>
+	                        
+							<br><br><br><br><br>
+							<div class="form-floating mb-2">
+                                 <input type="text" class="form-control" id="floatNom" th:value="${ empleado.nombre }" disabled="false">
+                                 <label for="floatNom">Nombre</label>
+                             </div>
+                             <div class="form-floating mb-2">
+                                 <input type="text" class="form-control" id="floatAP" th:value="${ empleado.apPaterno }" disabled="false">
+                                 <label for="floatAP">Apellido Paterno</label>
+                             </div>
+                             <div class="form-floating mb-2">
+                                 <input type="text" class="form-control" id="floatAM" th:value="${ empleado.apMaterno }" disabled="false">
+                                 <label for="floatAM">Apellido Materno</label>
+                             </div>
+                             <div class="form-floating mb-2">
+                                 <input type="text" class="form-control" id="floatDni" th:value="${ empleado.dni }" disabled="false">
+                                 <label for="floatDni">DNI</label>
+                             </div>
+                             <div class="form-floating mb-2">
+                                 <input type="text" class="form-control" id="floatEC" th:value="${ empleado.estadoCivil }" disabled="false">
+                                 <label for="floatEC">Estado Civil</label>
+                             </div>
+                             <div class="form-floating mb-2">
+                                 <input type="text" class="form-control" id="floatEdad" th:value="${ empleado.edad }" disabled="false">
+                                 <label for="floatEdad">Edad</label>
+                             </div>
+                             <div class="form-floating mb-2">
+                                 <input type="text" class="form-control" id="floatGen" th:value="${ empleado.genero }" disabled="false">
+                                 <label for="floatGen">Nombre</label>
+                             </div>
+                             
+                            
+                            
+						</div>
+					</div>
+				</div>
+					<div class="col-12 col-md-6">
+                        <div class="row">
+                        
+                        	<div class="col-12">
+                        	<div class="card mb-4">
+                                <div class="card-body">
+                                    
+				                    
+							       	
+							        <h3>Datos Bancarios</h3>
+							        <div class="form-floating mb-2">
+		                                 <input type="text" class="form-control" id="floatBanco" th:value="${ cuentaBancaria.banco }" disabled="false">
+		                                 <label for="floatBanco">Banco</label>
+		                             </div>
+		                             <div class="form-floating mb-2">
+		                                 <input type="text" class="form-control" id="floatCci" th:value="${ cuentaBancaria.cci }" disabled="false">
+		                                 <label for="floatCci">CCI</label>
+		                             </div>	
+							
+								</div>
+							</div>
+							</div>
+							
+							<div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                    	<h3>Datos Contrato</h3>
+                                    	
+                                   		<div class="form-floating mb-2">
+			                                 <input type="text" class="form-control" id="floatAntiguedad" th:value="${ contrato.antiguedad }" disabled="false">
+			                                 <label for="floatAntiguedad">Antiguedad</label>
+	                            		</div>
+	                            		<div class="form-floating mb-2">
+			                                 <input type="text" class="form-control" id="floatModalidad" th:value="${ contrato.modalidadContrato }" disabled="false">
+			                                 <label for="floatModalidad">Modalidad Contrato</label>
+	                            		</div>
+	                            		<div class="form-floating mb-2">
+			                                 <input type="text" class="form-control" id="floatInicio" th:value="${ contrato.fechaInicio }" disabled="false">
+			                                 <label for="floatInicio">Fecha de Inicio</label>
+	                            		</div>
+	                            		<div class="form-floating mb-2">
+			                                 <input type="text" class="form-control" id="floatArea" th:value="${ contrato.area }" disabled="false">
+			                                 <label for="floatArea">Area</label>
+	                            		</div>
+	                            		<div class="form-floating mb-2">
+			                                 <input type="text" class="form-control" id="floatSueldo" th:value="${ contrato.sueldoBasico }" disabled="false">
+			                                 <label for="floatSueldo">Sueldo</label>
+	                            		</div>
+	                            		<div class="form-floating mb-2">
+			                                 <input type="text" class="form-control" id="floatJornada" th:value="${ contrato.jornadaLaboral }" disabled="false">
+			                                 <label for="floatJornada">Jornada Laboral</label>
+	                            		</div>
+                                    	
+                                	</div>
+                            	</div>  
+                            </div>
+                        
+                        </div>
+                    </div>   
+			        
+		 
+		 
+		 
+		 
+							
+					
+				
+		
+					
+		
+			</div>
+		</div>
+	</div>
+	</div>
 </body>
 </html>

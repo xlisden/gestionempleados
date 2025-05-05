@@ -2,6 +2,7 @@ package com.unu.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
@@ -24,13 +25,13 @@ public class Login {
     @Column(name = "Estado")
     private boolean estado;
     @Column(name = "Horas")
-    private LocalTime horas;
+    private LocalDateTime horas;
 
     public Login() {
         super();
     }
 
-    public Login(int idLogin, String usurio, String contraseña, Empleado empleado, boolean estado, LocalTime horas) {
+    public Login(int idLogin, String usurio, String contraseña, Empleado empleado, boolean estado, LocalDateTime horas) {
         super();
         this.idLogin = idLogin;
         this.usurio = usurio;
@@ -56,11 +57,11 @@ public class Login {
         this.estado = estado;
     }
 
-    public LocalTime getHoras() {
+    public LocalDateTime getHoras() {
         return horas;
     }
 
-    public void setHoras(LocalTime horas) {
+    public void setHoras(LocalDateTime horas) {
         this.horas = horas;
     }
 
