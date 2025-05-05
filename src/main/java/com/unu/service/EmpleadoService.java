@@ -1,14 +1,8 @@
 package com.unu.service;
 
 import com.unu.controller.request.InsertarEmpleadoRequest;
-import com.unu.entity.Banco;
-import com.unu.entity.Empleado;
-import com.unu.entity.EstadoCivil;
-import com.unu.entity.ModalidadContrato;
-import com.unu.entity.dto.ContratoDto;
-import com.unu.entity.dto.CuentaBancariaDto;
-import com.unu.entity.dto.EmpleadoDetalleDto;
-import com.unu.entity.dto.EmpleadoDto;
+import com.unu.entity.*;
+import com.unu.entity.dto.*;
 
 import java.util.List;
 
@@ -28,7 +22,11 @@ public interface EmpleadoService {
 
     public abstract CuentaBancariaDto getCuentaBancaria(int id) throws Exception;
 
-    public abstract ContratoDto getContrato(int id) throws Exception;
+    public abstract ContratoDto getContratoDto(int id) throws Exception;
+
+    public abstract FacturacionDto emitirRecibo(int id, boolean bonificacion) throws Exception;
+
+    public abstract FacturacionDto getDatosEmitirRecibo(int id) throws Exception;
 
     public abstract boolean dniExists(String dni);
 

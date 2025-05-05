@@ -2,13 +2,10 @@ package com.unu.controller;
 
 import com.unu.controller.request.EditarEmpleadoRequest;
 import com.unu.controller.request.InsertarEmpleadoRequest;
-import com.unu.controller.request.PersonaRequest;
 import com.unu.entity.CuentaBancaria;
 import com.unu.entity.Empleado;
-import com.unu.entity.dto.ContratoDto;
-import com.unu.entity.dto.CuentaBancariaDto;
-import com.unu.entity.dto.EmpleadoDetalleDto;
-import com.unu.entity.dto.EmpleadoDto;
+import com.unu.entity.dto.*;
+import com.unu.entity.enums.Bonificacion;
 import com.unu.service.*;
 import com.unu.serviceimpl.CuentaBancariaImpl;
 import jakarta.validation.Valid;
@@ -20,7 +17,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,7 +94,7 @@ public class EmpleadosController {
             try {
                 empleado = empleadoService.getEmpleado(id);
                 cuenta = empleadoService.getCuentaBancaria(id);
-                contrato = empleadoService.getContrato(id);
+                contrato = empleadoService.getContratoDto(id);
             } catch (Exception e) {
                 System.out.println("fallo en la captura de datos: " + e.getMessage());
             }
@@ -112,7 +111,7 @@ public class EmpleadosController {
     /* Insertar */
 
     @GetMapping("/agregar")
-    public ModelAndView insertarGetDatos(Model model) {
+    public ModelAndView insertarGetDatos() {
         ModelAndView mav = new ModelAndView("empleados/AgregarEmpleado");
         if (logiservice.tiempoSesion()) {
             mav.addObject("estadosciviles", empleadoService.getEstadosCiviles());
@@ -136,7 +135,7 @@ public class EmpleadosController {
 
             controtoService.addTipoM(controtoService.contratoEnBruto(empleado, nuevoEmpleado));
             cuentaService.addDatos(new CuentaBancaria(0, empleado.getBanco(), empleado.getCci(), nuevoEmpleado));
-            System.out.println("funciono el insertar");
+
             return "redirect:/empleados";
         } catch (Exception e) {
             System.out.println(" nada master: " + e.getMessage());
@@ -165,6 +164,36 @@ public class EmpleadosController {
     @PutMapping("/editar/{id}")
     private String editar(@PathVariable int id, @Valid @ModelAttribute EditarEmpleadoRequest empleadoRequest, BindingResult bindingResult, Model model) {
         return "";
+    }
+
+    /* pagar al empleado */
+
+    @GetMapping("/emitir-recibo/{id}")
+    public ModelAndView getEmitirRecibo(@PathVariable int id) throws Exception {
+        ModelAndView mav = new ModelAndView("empleados/EmitirRecibo");
+        try {
+            FacturacionDto facturacion = empleadoService.getDatosEmitirRecibo(id);
+
+            mav.addObject("facturacion", facturacion);
+            mav.addObject("bonificacion", Bonificacion.isBonificacion());
+        } catch (Exception e) {
+            System.out.println("getEmitirRecibo() => " + e.getMessage());
+        }
+        return mav;
+    }
+
+    @PostMapping("/emitir-recibo/{id}")
+    public String emitirRecibo(@PathVariable int id, @ModelAttribute("facturacion") FacturacionDto facturacionDto, RedirectAttributes redirectAttributes) throws Exception {
+        try {
+            FacturacionDto facturacion = empleadoService.emitirRecibo(id, Bonificacion.isBonificacion());
+
+            System.out.println("Recibo emitido exitosamente a " + facturacion.getEmpleado() + " (S/." + facturacion.getSueldoNeto() + ").");
+            redirectAttributes.addFlashAttribute("mensaje", "Recibo emitido exitosamente a " +facturacion.getEmpleado() + " (S/." + facturacion.getSueldoNeto() + ").");
+        } catch (Exception e) {
+            System.out.println("getEmitirRecibo() => " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", "Error al emitir el recibo a " + facturacionDto.getEmpleado() + " (S/." + facturacionDto.getSueldoNeto() + ").");
+        }
+        return "redirect:/empleados";
     }
 
     /* desactivar */

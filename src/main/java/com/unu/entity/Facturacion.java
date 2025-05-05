@@ -26,8 +26,7 @@ public class Facturacion {
     public Facturacion() {
     }
 
-    public Facturacion(int id, LocalDate fechaPago, double sueldoNeto, Empleado empleado) {
-        this.id = id;
+    public Facturacion(LocalDate fechaPago, double sueldoNeto, Empleado empleado) {
         this.fechaPago = fechaPago;
         this.sueldoNeto = sueldoNeto;
         this.empleado = empleado;
