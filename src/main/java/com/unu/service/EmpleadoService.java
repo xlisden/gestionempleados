@@ -42,4 +42,6 @@ public interface EmpleadoService {
     
     public abstract Empleado empleadoBruto(InsertarEmpleadoRequest e, MultipartFile foto);
 
+    public abstract List<EmpleadoDto> listAllEmpleadosOrdenActivo();
+
 }

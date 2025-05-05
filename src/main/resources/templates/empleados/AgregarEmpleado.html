@@ -6,6 +6,13 @@
 
 <body>
 <div class="container">
+  
+  <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/empleados/">Empleados</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Agregar</li>
+    </ol>
+  </nav>
 
   <form th:action="@{/empleados/agregar}" th:object="${empleado}" method="POST" enctype="multipart/form-data">
 

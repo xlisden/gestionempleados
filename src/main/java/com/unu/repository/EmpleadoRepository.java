@@ -17,15 +17,18 @@ public interface EmpleadoRepository extends JpaRepository<Empleado, Serializable
     @Query("UPDATE Empleado e SET e.activo = false WHERE e.id = ?1")
     public void desactivar(int id);
 
+    @Query("SELECT e FROM Empleado e ORDER BY e.activo DESC")
+    public List<Empleado> getAllOrdenActivo();
 
-    /*SELECT e.* FROM empleado AS e, contrato AS c
+    /*
+    SELECT e.* FROM empleado AS e, contrato AS c
 				WHERE e.EmpId = c.ContId AND
 					((null is null or LOWER(e.EmpNombre) LIKE '%173%')  OR 
 					(null is null or LOWER(e.EmpDni) LIKE '%173%') OR 
 					(null is null or LOWER(e.EmpApPaterno) LIKE '%173%')) AND
 					(2 is null or c.ContArea = 2) AND
-                    (2 is null or c.ContJLaboral = 2)
-*/
+                    (2 is null or c.ContJLaboral = 2);
+    */
     
     @Query("SELECT e,c from Empleado e, Contrato c where e.id=c.empleado.id "
     		+ "and ((?1 is null or lower(e.nombre) like  %?1%)"

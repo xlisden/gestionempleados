@@ -162,6 +162,27 @@ public class EmpleadoServiceimpl implements EmpleadoService {
         return bancoRepository.findAll();
     }
 
+    @Override
+    public List<EmpleadoDto> listAllEmpleadosOrdenActivo() {
+        List<Empleado> lista = empleadoRepository.getAllOrdenActivo();
+        List<EmpleadoDto> empleados = new ArrayList<EmpleadoDto>();
+        for (Empleado emp : lista) {
+            Contrato contrato = contratoRepository.findByEmpleado(emp.getId());
+            EmpleadoDto dto = new EmpleadoDto();
+            dto.setId(emp.getId());
+            dto.setCod(emp.getCod());
+            dto.setNombreCompleto(emp.getNombre() + " " + emp.getApPaterno().toUpperCase() + " " + emp.getApMaterno().toUpperCase());
+            dto.setArea((contrato.getArea() == null) ? "" : contrato.getArea().getNombre());
+            dto.setModalidadContrato((contrato.getModalidadCont() == null) ? "" : contrato.getModalidadCont().getNombre());
+            dto.setJornadaLaboral((contrato.getJornadaLaboral() == null) ? "" : contrato.getJornadaLaboral().getNombre());
+            dto.setAntiguedad(calcularAnitguedad(contrato.getFechaInicio()));
+            dto.setActivo(emp.isActivo());
+
+            empleados.add(dto);
+        }
+        return empleados;
+    }
+
     public String calcularAnitguedad(LocalDate inicio) {
         Period periodo = Period.between(inicio, LocalDate.now());
         int anios = periodo.getYears();

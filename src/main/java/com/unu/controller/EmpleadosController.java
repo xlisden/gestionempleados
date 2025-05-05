@@ -79,7 +79,7 @@ public class EmpleadosController {
 
         List<EmpleadoDto> empleados = new ArrayList<>();
         try {
-            empleados = empleadoService.listAllEmpleados(nombre,areaa,jornad);
+            empleados = empleadoService.listAllEmpleados(nombre,areaa,jornad); //listAllEmpleadosOrdenActivo
         } catch (Exception e) {
             System.out.println("listEmpleados() -> " + e.getMessage());
         }
