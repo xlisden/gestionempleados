@@ -34,6 +34,8 @@ public interface EmpleadoService {
 
     public abstract void desactivar(int id);
 
+    public abstract void activar(int id);
+
     public abstract List<EstadoCivil> getEstadosCiviles();
 
     public abstract List<ModalidadContrato> getModalidadesContrato();

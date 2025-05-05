@@ -9,7 +9,7 @@
 <div class="container px-5">
     <h1 class="pb-3">Empleados</h1>
 
-    <div class="d-flex justify-content-between align-items-center">
+    <div class="d-flex justify-content-between align-items-center pb-3">
         <a href="/empleados/agregar" class="btn btn-primary col-sm-2" style="font-size: 1.10rem">
             <i class="bi bi-plus-circle"></i> Agregar Empleado
         </a>
@@ -70,22 +70,28 @@
                 <td th:text="${ empleado.jornadaLaboral  }"></td>
 <!--                <td th:if="${ empleado.activo }" class="text-success" style="font-size: 1.5rem">●</td>-->
 <!--                <td th:if="${ !empleado.activo }" class="text-body-tertiary" style="font-size: 1.5rem">●</td>-->
+
+<!--                <td>-->
+<!--                    <div class="form-check form-switch">-->
+<!--                        <input class="form-check-input" type="checkbox" role="switch" id="isActivo" th:checked="${empleado.activo}"-->
+<!--                               th:onclick="'javascript:window.location.href=\'' + @{/empleados/desactivar/{id}(id=${empleado.id})} + '\''">-->
+<!--                    </div>-->
+<!--                </td>-->
+
                 <td>
                     <div class="form-check form-switch">
-                        <a th:href="@{/empleados/agregar}">
-                            <input class="form-check-input" type="checkbox" role="switch" id="isActivo" th:checked="${empleado.activo}">
-                        </a>
+                        <input class="form-check-input" type="checkbox" role="switch" id="isActivo" th:checked="${empleado.activo}"
+                               th:onclick="'javascript:window.location.href=\'' + (${empleado.activo} ? @{/empleados/desactivar/{id}(id=${empleado.id})} : @{/empleados/activar/{id}(id=${empleado.id})}) + '\''">
+
                     </div>
                 </td>
+                <!--                               th:onclick="'javascript:window.location.href=\'' + (@{/empleados/desactivar/{id}(id=${empleado.id})} + ( ${empleado.activo} ? '' : '/activar' ) ) + '\''">-->
                 <td>
                     <a th:href="@{/empleados/{id}(id=${ empleado.id })}">
                         <img th:src="@{/img/detalle.png}" width="30" height="30" alt="detalleIcon">
                     </a>
                     <a href="" style="font-size: 1.5rem">
                         <i class="bi bi-pencil-square"></i>
-                    </a>
-                    <a href="" style="font-size: 1.5rem">
-                        <i class="bi bi-x-lg"></i>
                     </a>
                 </td>
             </tr>
