@@ -144,43 +144,6 @@ public class EmpleadosController {
         }
     }
 
-    @GetMapping("/personas")
-    public ModelAndView getPersona() {
-        ModelAndView mav = new ModelAndView("personas");
-
-        mav.addObject("persona", new PersonaRequest());
-        mav.addObject("hayErrorInsertar", false);
-        mav.addObject("estadosciviles", empleadoService.getEstadosCiviles());
-        return mav;
-    }
-
-    // si sabes hacer el postmapping con model and view le haces pue (io no se)
-    @PostMapping("/personas")
-    public String addPersona(@Valid @ModelAttribute("persona") PersonaRequest personaRequest, BindingResult result, Model model) {
-        try {
-            // || personaRequest.getEstadoCivil() == null
-            if (result.hasErrors()) {
-                if (personaRequest.getEstadoCivil() == null) {
-                    result.rejectValue("estadoCivil", "error.estadoCivil.notnull", "El Estado Civil es requerido.");
-                }
-                if (personaRequest.getFechaNacimiento() == null) {
-                    result.rejectValue("fechaNacimiento", "error.fechaNacimiento.notnull", "La fecha de nacimiento es requerida.");
-                }
-                model.addAttribute("hayErrorInsertar", true);
-                model.addAttribute("estadosciviles", empleadoService.getEstadosCiviles());
-                return "personas";
-            }
-            System.out.println("nombre = " + personaRequest.getNombre());
-            System.out.println("estado civil = " + personaRequest.getEstadoCivil().getNombre());
-            System.out.println("fecha nac = " + personaRequest.getFechaNacimiento());
-            model.addAttribute("hayErrorInsertar", false);
-        } catch (Exception e) {
-            System.out.println("addPersona() -> " + e.getMessage());
-        }
-        return "redirect:/empleados/personas";
-    }
-
-
     /* Editar */
 
     @GetMapping("/editar/{id}")
@@ -204,10 +167,17 @@ public class EmpleadosController {
         return "";
     }
 
-    @PatchMapping("/desactivar/{id}")
+    /* desactivar */
+
+    @GetMapping("/desactivar/{id}") /*es un PATCH, pero por efectos practicos GET*/
     public String deasctivar(@PathVariable int id) {
         empleadoService.desactivar(id);
+        return "redirect:/empleados";
+    }
 
+    @GetMapping("/activar/{id}") /*es un PATCH, pero por efectos practicos GET*/
+    public String activar(@PathVariable int id) {
+        empleadoService.activar(id);
         return "redirect:/empleados";
     }
     

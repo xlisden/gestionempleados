@@ -8,6 +8,7 @@ import com.unu.entity.dto.EmpleadoDetalleDto;
 import com.unu.entity.dto.EmpleadoDto;
 import com.unu.repository.*;
 import com.unu.service.EmpleadoService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -144,8 +145,15 @@ public class EmpleadoServiceimpl implements EmpleadoService {
     }
 
     @Override
+    @Transactional
     public void desactivar(int id) {
         empleadoRepository.desactivar(id);
+    }
+
+    @Override
+    @Transactional
+    public void activar(int id) {
+        empleadoRepository.activar(id);
     }
 
     // para no instanciar otro servicio, solo el de empleados
