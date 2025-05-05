@@ -1,18 +1,14 @@
 package com.unu;
 
-import com.unu.entity.Area;
-import com.unu.entity.EstadoCivil;
-import com.unu.entity.JornadaLaboral;
-import com.unu.entity.ModalidadContrato;
-import com.unu.service.AreaService;
-import com.unu.service.EstadoCivilService;
-import com.unu.service.JornadaLaboralService;
-import com.unu.service.ModalidadContratoService;
+import com.unu.entity.*;
+import com.unu.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.time.LocalTime;
 
 @SpringBootApplication
 public class GestionempleadosApplication implements CommandLineRunner {
@@ -32,6 +28,10 @@ public class GestionempleadosApplication implements CommandLineRunner {
     @Autowired
     @Qualifier("jornadaservice")
     private JornadaLaboralService jornadaService;
+
+    @Autowired
+    @Qualifier("loginservice")
+    private LoginService loginService;
 
     public static void main(String[] args) {
         SpringApplication.run(GestionempleadosApplication.class, args);
@@ -61,6 +61,11 @@ public class GestionempleadosApplication implements CommandLineRunner {
         if (jornadaService.listAllJornadas().isEmpty()) {
             jornadaService.addJord(new JornadaLaboral("Tiempo Completo"));
             jornadaService.addJord(new JornadaLaboral("Tiempo Parcial"));
+        }
+
+        if (loginService.listAllLogin("").isEmpty()) {
+            Login login = new Login(0, "sa", "SA%123", null, true, LocalTime.now());
+            loginService.addLogin(login);
         }
     }
 
