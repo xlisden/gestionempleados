@@ -14,19 +14,19 @@
             <i class="bi bi-plus-circle"></i> Agregar Empleado
         </a>
 
-        <form action="" class="d-flex flex-grow-1 align-items-center">
+        <form th:action="@{/empleados}" class="d-flex flex-grow-1 align-items-center" method="GET">
             <div class="col-sm-3 ms-auto" style="margin-right: 8px">
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="floatBuscar" placeholder="buscar">
+                    <input type="text" class="form-control" id="floatBuscar" placeholder="buscar" th:value="${nombre}" name="nombre">
                     <label for="floatBuscar">Buscar por DNI, código o nombre...</label>
                 </div>
             </div>
 
             <div id="selectArea" class="col-sm-2">
                 <div class="form-floating">
-                    <select id="floatArea" class="form-select">
+                    <select id="floatArea" name="areaa" class="form-select">
                         <option value="">Seleccione...</option>
-                        <option th:each="area : ${ areas }" th:value="${ area.id }" th:text="${ area.nombre }"></option>
+                        <option th:each="area : ${ areas }" th:value="${ area.id }" th:text="${ area.nombre }" th:selected="${ area.id == areaa }"></option>
                     </select>
                     <label for="floatArea">Buscar por Área</label>
                 </div>
@@ -34,9 +34,9 @@
 
             <div id="selectJornada" class="col-sm-2 " style="margin-left: 8px">
                 <div class="form-floating">
-                    <select id="floatJornada" class="form-select">
+                    <select id="floatJornada" name="jornad" class="form-select">
                         <option value="">Seleccione...</option>
-                        <option th:each="jornada : ${ jornadas }" th:value="${ jornada.id }" th:text="${ jornada.nombre }"></option>
+                        <option th:each="jornada : ${ jornadas }" th:value="${ jornada.id }" th:text="${ jornada.nombre }" th:selected="${ jornada.id == jornad }" ></option>
                     </select>
                     <label for="floatJornada">Buscar por Jornada</label>
                 </div>
@@ -78,7 +78,7 @@
                     </div>
                 </td>
                 <td>
-                    <a th:href="@{/temp/list }">
+                    <a th:href="@{/empleados/{id}(id=${ empleado.id })}">
                         <img th:src="@{/img/detalle.png}" width="30" height="30" alt="detalleIcon">
                     </a>
                     <a href="" style="font-size: 1.5rem">

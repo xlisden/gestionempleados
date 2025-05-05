@@ -1,12 +1,15 @@
 package com.unu.serviceimpl;
 
+import com.unu.controller.request.InsertarEmpleadoRequest;
 import com.unu.entity.Contrato;
+import com.unu.entity.Empleado;
 import com.unu.repository.ContratoRepository;
 import com.unu.service.ContratoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service("contratoservice")
@@ -44,6 +47,13 @@ public class ContratoServiceImpl implements ContratoService {
     public Contrato findByEmpleado(int idEmpleado) {
         return contratoRepository.findByEmpleado(idEmpleado);
     }
+
+	@Override
+	public Contrato contratoEnBruto(InsertarEmpleadoRequest e,Empleado empleado) {
+		Contrato nuevo = new Contrato(0,empleado, e.getArea(),e.getFechaEmision() 
+				,e.getModalidadContrato(), LocalDate.now(), null,e.getJornadaLaboral());
+		return nuevo;
+	}
 
 
 }

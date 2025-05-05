@@ -1,6 +1,8 @@
 package com.unu.serviceimpl;
 
+import com.unu.controller.request.InsertarEmpleadoRequest;
 import com.unu.entity.CuentaBancaria;
+import com.unu.entity.Empleado;
 import com.unu.repository.CuentaBancariaRepository;
 import com.unu.service.CuentaBancariaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,6 @@ public class CuentaBancariaImpl implements CuentaBancariaService {
 
     @Override
     public List<CuentaBancaria> listAllCuentas() {
-        // TODO Auto-generated method stub
         return datosrepo.findAll();
     }
 
@@ -47,6 +48,11 @@ public class CuentaBancariaImpl implements CuentaBancariaService {
     public CuentaBancaria getByEmpleado(int id) throws Exception {
         return datosrepo.findByEmpleado(id);
     }
+
+	@Override // por las 
+	public CuentaBancaria cuentaBancariaEnBruto(InsertarEmpleadoRequest e, Empleado empleado) {
+		return new CuentaBancaria(0,e.getBanco(),e.getCci(),empleado);
+	}
 
 
 }

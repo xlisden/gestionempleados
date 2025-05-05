@@ -8,7 +8,7 @@ INSERT INTO `gestionempleados`.`banco` (`BancoId`, `BancoNombre`) VALUES
 INSERT INTO `gestionempleados`.`empleado`
 (`EmpId`, `EmpActivo`, `EmpApMaterno`, `EmpApPaterno`, `EmpCod`, `EmpDni`, `EmpFechaNac`, `EmpFoto`, `EmpGenero`, `EmpNombre`, `EmpEstadoCivil`)
 VALUES
-(1, 1, 'Vargas', 'Pérez', 'E0001', '1710001', '1990-05-15', 'foto1.jpg', 0, 'Juan', 1), -- Soltero
+(1, 1, 'Vargas', 'Pérez', 'E0001', '1710001', '1990-05-15', 'foto1.png', 0, 'Juan', 1), -- Soltero
 (2, 1, 'López', 'García', 'E0002', '1720002', '1985-12-01', 'foto2.jpg', 1, 'María', 2), -- Casado
 (3, 0, 'Torres', 'Ruiz', 'E0003', '1730003', '1992-08-22', 'foto3.jpg', 0, 'Carlos', 3), -- Divorciado (inactivo)
 (4, 1, 'Castro', 'Díaz', 'E0004', '1740004', '1988-03-10', 'foto4.jpg', 1, 'Ana', 4), -- Viudo
@@ -31,4 +31,9 @@ VALUES
 (3, '11223344556677880099', 3, 3), -- Banco 3, Empleado 3
 (4, '00998877665544332211', 4, 4), -- Banco 4, Empleado 4
 (5, '22334455667788990011', 5, 5); -- Banco 5, Empleado 5
+
+INSERT INTO `gestionempleados`.`login`
+(`IdLogin`,`Contrasena`,`Estado`,`Horas`,`Usuario`,`IdEmpleado`)
+VALUES
+(0,123,false,null,'sa',3);
 

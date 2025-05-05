@@ -1,6 +1,8 @@
 package com.unu.service;
 
+import com.unu.controller.request.InsertarEmpleadoRequest;
 import com.unu.entity.CuentaBancaria;
+import com.unu.entity.Empleado;
 
 import java.util.List;
 
@@ -17,5 +19,7 @@ public interface CuentaBancariaService {
     public abstract void deleteDatos(long id);
 
     public abstract CuentaBancaria getByEmpleado(int id) throws Exception;
+    
+    public abstract CuentaBancaria cuentaBancariaEnBruto(InsertarEmpleadoRequest e,Empleado empleado);
 
 }
