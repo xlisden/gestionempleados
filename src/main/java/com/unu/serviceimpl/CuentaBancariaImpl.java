@@ -49,10 +49,6 @@ public class CuentaBancariaImpl implements CuentaBancariaService {
         return datosrepo.findByEmpleado(id);
     }
 
-	@Override // por las 
-	public CuentaBancaria cuentaBancariaEnBruto(InsertarEmpleadoRequest e, Empleado empleado) {
-		return new CuentaBancaria(0,e.getBanco(),e.getCci(),empleado);
-	}
-
+	
 
 }
