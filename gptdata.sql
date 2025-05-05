@@ -8,11 +8,11 @@ INSERT INTO `gestionempleados`.`banco` (`BancoId`, `BancoNombre`) VALUES
 INSERT INTO `gestionempleados`.`empleado`
 (`EmpId`, `EmpActivo`, `EmpApMaterno`, `EmpApPaterno`, `EmpCod`, `EmpDni`, `EmpFechaNac`, `EmpFoto`, `EmpGenero`, `EmpNombre`, `EmpEstadoCivil`)
 VALUES
-(1, 1, 'Vargas', 'Pérez', 'E0001', '1710001', '1990-05-15', 'foto1.png', 0, 'Juan', 1), -- Soltero
-(2, 1, 'López', 'García', 'E0002', '1720002', '1985-12-01', 'foto2.jpg', 1, 'María', 2), -- Casado
-(3, 0, 'Torres', 'Ruiz', 'E0003', '1730003', '1992-08-22', 'foto3.jpg', 0, 'Carlos', 3), -- Divorciado (inactivo)
-(4, 1, 'Castro', 'Díaz', 'E0004', '1740004', '1988-03-10', 'foto4.jpg', 1, 'Ana', 4), -- Viudo
-(5, 1, 'Guerrero', 'Sanchez', 'E0005', '1750005', '1995-07-04', 'foto5.jpg', 0, 'Luis', 1);
+(1, 1, 'Vargas', 'Pérez', 'E0001', '1710001', '1990-05-15', 'E0001.png', 0, 'Juan', 1), -- Soltero
+(2, 1, 'López', 'García', 'E0002', '1720002', '1985-12-01', 'E0002.png', 1, 'María', 2), -- Casado
+(3, 0, 'Torres', 'Ruiz', 'E0003', '1730003', '1992-08-22', 'E0003.jpg', 0, 'Carlos', 3), -- Divorciado (inactivo)
+(4, 1, 'Castro', 'Díaz', 'E0004', '1740004', '1988-03-10', 'E0004.png', 1, 'Ana', 4), -- Viudo
+(5, 1, 'Guerrero', 'Sanchez', 'E0005', '1750005', '1995-07-04', 'E0005.png', 0, 'Luis', 1);
 
 INSERT INTO `gestionempleados`.`contrato`
 (`ContId`, `fechaEmision`, `fechaFin`, `fechaInicio`, `ContArea`, `ContEmpleado`, `ContJLaboral`, `ContModalidadCont`)

@@ -20,6 +20,5 @@ public interface ContratoService {
 
     public abstract Contrato findByEmpleado(int idEmpleado);
     
-    public abstract Contrato contratoEnBruto(InsertarEmpleadoRequest e,Empleado empleado);
-
+  
 }

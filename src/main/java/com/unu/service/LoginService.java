@@ -17,5 +17,5 @@ public interface LoginService {
 
     public abstract boolean validacion(String us, String ps);
 
-    public abstract boolean tiempoSesion();
+    public abstract boolean tiempoSesion()throws Exception;
 }

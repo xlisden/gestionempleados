@@ -7,7 +7,7 @@ import java.time.Month;
 
 public class Bonificacion {
 
-    public static double bonitificacion = 5000.0;
+    public static double bonitificacion = 500.0;
 
     public static boolean isBonificacion(){
         LocalDate date  = LocalDate.now();
