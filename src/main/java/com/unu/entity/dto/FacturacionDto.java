@@ -2,16 +2,16 @@ package com.unu.entity.dto;
 
 public class FacturacionDto {
 
-    private int id;
+    private int idEmpleado;
+    private String cod;
+    private String dni;
     private String empleado;
     private String fechaPago;
+    private double sueldoBruto;
+    private double bonificaciones;
     private double sueldoNeto;
 
     public FacturacionDto() {
-    }
-
-    public int getId() {
-        return this.id;
     }
 
     public String getEmpleado() {
@@ -26,10 +26,6 @@ public class FacturacionDto {
         return this.sueldoNeto;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public void setEmpleado(String empleado) {
         this.empleado = empleado;
     }
@@ -40,5 +36,45 @@ public class FacturacionDto {
 
     public void setSueldoNeto(double sueldoNeto) {
         this.sueldoNeto = sueldoNeto;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
+    public double getSueldoBruto() {
+        return sueldoBruto;
+    }
+
+    public void setSueldoBruto(double sueldoBruto) {
+        this.sueldoBruto = sueldoBruto;
+    }
+
+    public double getBonificaciones() {
+        return bonificaciones;
+    }
+
+    public void setBonificaciones(double bonificaciones) {
+        this.bonificaciones = bonificaciones;
+    }
+
+    public int getIdEmpleado() {
+        return idEmpleado;
+    }
+
+    public void setIdEmpleado(int idEmpleado) {
+        this.idEmpleado = idEmpleado;
+    }
+
+    public String getCod() {
+        return cod;
+    }
+
+    public void setCod(String cod) {
+        this.cod = cod;
     }
 }

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head th:replace="~{shared/head :: head() }"></head>
+<div th:replace="~{shared/header/header :: header() }"></div>
+
+<body>
+
+<!--Nombre completo-->
+<!--DNI-->
+<!--Fecha de ingreso-->
+<!--Salario básico-->
+<!--Beneficios adicionales-->
+<!--Total recibido-->
+
+<div class="container px-4">
+
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/empleados/">Empleados</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Agregar</li>
+        </ol>
+    </nav>
+
+    <form th:action="@{/empleados/emitir-recibo/{id}(id = ${facturacion.idEmpleado})}" th:object="${facturacion}" method="POST" enctype="multipart/form-data">
+
+        <h1 class="mt-4 mb-4">Emitir Recibo</h1>
+
+        <div class="card mb-3 col-12 col-md-5" >
+            <div class="card-body ">
+                <h4 class="mb-3">Datos personales</h4>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatDni" placeholder="dni" th:field="*{dni}">
+                    <label for="floatDni">DNI</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatEmpleado" placeholder="nombres" th:field="*{empleado}">
+                    <label for="floatEmpleado">Nombres</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="date" class="form-control" id="floatFechaPago" placeholder="fechapago" th:field="*{fechaPago}" th:value="*{fechaPago}">
+                    <label for="floatFechaPago">Fecha</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="number" class="form-control" id="floatSueldo" placeholder="nombres" th:field="*{sueldoBruto}">
+                    <label for="floatSueldo">Sueldo Bruto</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox"  id="idBonificacion" th:checked="${bonificacion}">
+                    <label class="form-check-label" for="idBonificacion">
+                        Bonificación
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row pt-3">
+            <div class="col-12 col-md-5 d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary mb-5">Emitir</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

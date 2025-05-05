@@ -2,10 +2,8 @@ package com.unu.serviceimpl;
 
 import com.unu.controller.request.InsertarEmpleadoRequest;
 import com.unu.entity.*;
-import com.unu.entity.dto.ContratoDto;
-import com.unu.entity.dto.CuentaBancariaDto;
-import com.unu.entity.dto.EmpleadoDetalleDto;
-import com.unu.entity.dto.EmpleadoDto;
+import com.unu.entity.dto.*;
+import com.unu.entity.enums.Bonificacion;
 import com.unu.repository.*;
 import com.unu.service.EmpleadoService;
 import jakarta.transaction.Transactional;
@@ -52,8 +50,15 @@ public class EmpleadoServiceimpl implements EmpleadoService {
     @Qualifier("bancorepository")
     private BancoRepository bancoRepository;
 
+    @Autowired
+    @Qualifier("facturacionrepository")
+    private FacturacionRepository factrepo;
+
+    @Autowired
+    private FacturacionRepository facturacionrepository;
+
     @Override
-    public List<EmpleadoDto> listAllEmpleados(String texto , String idArea,String idJornada) {
+    public List<EmpleadoDto> listAllEmpleados(String texto, String idArea, String idJornada) {
         List<Empleado> lista = empleadoRepository.listaxFiltro(isNull(texto), isNull(idArea), isNull(idJornada));
         List<EmpleadoDto> empleados = new ArrayList<EmpleadoDto>();
         for (Empleado emp : lista) {
@@ -122,7 +127,7 @@ public class EmpleadoServiceimpl implements EmpleadoService {
     }
 
     @Override
-    public ContratoDto getContrato(int id) throws Exception {
+    public ContratoDto getContratoDto(int id) throws Exception {
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         Contrato contrato = contratoRepository.findByEmpleado(id);
         ContratoDto dto = new ContratoDto();
@@ -135,6 +140,59 @@ public class EmpleadoServiceimpl implements EmpleadoService {
         dto.setArea(contrato.getArea().getNombre());
         dto.setSueldoBasico(contrato.getArea().getSueldoBasico());
         dto.setJornadaLaboral(contrato.getJornadaLaboral().getNombre());
+
+        return dto;
+    }
+
+    @Override
+    public FacturacionDto emitirRecibo(int id, boolean bonificacion) throws Exception {
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        Contrato contrato = contratoRepository.findByEmpleado(id);
+
+        if (contrato == null)
+            throw new Exception("El contrato no existe.");
+        Empleado empleado = contrato.getEmpleado();
+        if (empleado == null)
+            throw new Exception("El empleado no existe.");
+
+        double sueldo = (bonificacion) ? contrato.getArea().getSueldoBasico() + Bonificacion.bonitificacion : contrato.getArea().getSueldoBasico();
+
+        Facturacion facturacion = new Facturacion(LocalDate.now(), sueldo, empleado);
+        facturacionrepository.save(facturacion);
+
+        FacturacionDto dto = new FacturacionDto();
+
+        dto.setIdEmpleado(empleado.getId());
+        dto.setCod(empleado.getCod());
+        dto.setDni(empleado.getDni());
+        dto.setEmpleado(empleado.getNombre() + " " + empleado.getApPaterno().toUpperCase() + " " + empleado.getApMaterno().toUpperCase());
+        dto.setFechaPago(format.format(Date.valueOf(LocalDate.now())));
+        dto.setSueldoNeto(sueldo);
+
+        return dto;
+    }
+
+    public FacturacionDto getDatosEmitirRecibo(int id) throws Exception {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Contrato contrato = contratoRepository.findByEmpleado(id);
+
+        if (contrato == null)
+            throw new Exception("El contrato no existe.");
+        Empleado empleado = contrato.getEmpleado();
+        if (empleado == null)
+            throw new Exception("El empleado no existe.");
+
+        double sueldo = contrato.getArea().getSueldoBasico();
+        FacturacionDto dto = new FacturacionDto();
+
+        dto.setIdEmpleado(empleado.getId());
+        dto.setCod(empleado.getCod());
+        dto.setDni(empleado.getDni());
+        dto.setEmpleado(empleado.getNombre() + " " + empleado.getApPaterno().toUpperCase() + " " + empleado.getApMaterno().toUpperCase());
+        dto.setFechaPago(format.format(Date.valueOf(LocalDate.now())));
+        dto.setSueldoBruto(sueldo);
+        dto.setBonificaciones(0.0);
+        dto.setSueldoNeto(sueldo);
 
         return dto;
     }
@@ -157,7 +215,7 @@ public class EmpleadoServiceimpl implements EmpleadoService {
     }
 
     // para no instanciar otro servicio, solo el de empleados
-    public List<EstadoCivil> getEstadosCiviles(){
+    public List<EstadoCivil> getEstadosCiviles() {
         return estCivilRepository.findAll();
     }
 
@@ -204,53 +262,51 @@ public class EmpleadoServiceimpl implements EmpleadoService {
 
         return periodo.getYears();
     }
-    
-    
-    public String isNull(String tex) { // reemplazar vacio por null sino devuelve lo mismo
-    	if(tex==null || tex.equals("")) return null;
-    	else return tex;
-    }
-    
-    
-    public Empleado empleadoBruto(InsertarEmpleadoRequest e, MultipartFile foto) {
-    	Empleado nuevo = addEmple(new Empleado(0, null, e.getDni(),e.getNombre(), e.getApPaterno(),
-    			e.getApMaterno(),e.isGenero(),e.getEstadoCivil(),e.getFechaNacimiento(),null,true));
 
-    	nuevo.setCod(String.format("E%04d", nuevo.getId()));
-    	nuevo.setFoto(nombreFoto(foto, nuevo));
-    	return nuevo;
+
+    public String isNull(String tex) { // reemplazar vacio por null sino devuelve lo mismo
+        if (tex == null || tex.equals("")) return null;
+        else return tex;
     }
-    
-    
-    
-    public String nombreFoto(MultipartFile foto,Empleado empleado) {
-    	
-    	if (!foto.isEmpty()) {
-	    	try {
-				String originalFilename = foto.getOriginalFilename();
-		        String extension = "";
-		        int i = originalFilename.lastIndexOf('.');
-		        if (i > 0) {
-		            extension = originalFilename.substring(i);
-		        }
-		        if(extension.equals(".jpg")||extension.equals(".png")||extension.equals(".webp")||extension.equals(".svg")) {
-		        	Path filePath = Paths.get("src/main/resources/static/img/" + empleado.getCod()+extension);
-		        	Files.copy(foto.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-		        	return empleado.getCod()+extension;
-		        }else {
-		        	System.out.println("formato no valida");
-		        	return "ddd.png";
-		        }	    		
-			} catch (Exception e) {
-				System.out.println("error al cargar la foto: "+e.getMessage());
-				return "ddd.png";
-			}
-    	}else {
-    		System.out.println("foto por deafault asignada");
-    		return "ddd.png";
-    	}
+
+
+    public Empleado empleadoBruto(InsertarEmpleadoRequest e, MultipartFile foto) {
+        Empleado nuevo = addEmple(new Empleado(0, null, e.getDni(), e.getNombre(), e.getApPaterno(),
+                e.getApMaterno(), e.isGenero(), e.getEstadoCivil(), e.getFechaNacimiento(), null, true));
+
+        nuevo.setCod(String.format("E%04d", nuevo.getId()));
+        nuevo.setFoto(nombreFoto(foto, nuevo));
+        return nuevo;
     }
-    
-    
-    
+
+
+    public String nombreFoto(MultipartFile foto, Empleado empleado) {
+
+        if (!foto.isEmpty()) {
+            try {
+                String originalFilename = foto.getOriginalFilename();
+                String extension = "";
+                int i = originalFilename.lastIndexOf('.');
+                if (i > 0) {
+                    extension = originalFilename.substring(i);
+                }
+                if (extension.equals(".jpg") || extension.equals(".png") || extension.equals(".webp") || extension.equals(".svg")) {
+                    Path filePath = Paths.get("src/main/resources/static/img/" + empleado.getCod() + extension);
+                    Files.copy(foto.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+                    return empleado.getCod() + extension;
+                } else {
+                    System.out.println("formato no valida");
+                    return "ddd.png";
+                }
+            } catch (Exception e) {
+                System.out.println("error al cargar la foto: " + e.getMessage());
+                return "ddd.png";
+            }
+        } else {
+            System.out.println("foto por deafault asignada");
+            return "ddd.png";
+        }
+    }
+
+
 }	
