@@ -42,7 +42,7 @@ public class InsertarEmpleadoRequest {
     @NotNull()
     private ModalidadContrato modalidadContrato;
 
-    @NotNull()
+    @NotNull()  //  no se ingreo  
     private LocalDate fechaInicio;
 
     @NotNull()
@@ -58,6 +58,10 @@ public class InsertarEmpleadoRequest {
 
     @Size(min = 1, max = 20)
     private String cci;
+    
+    
+    
+    
 
     public InsertarEmpleadoRequest() {
     }

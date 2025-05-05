@@ -15,14 +15,12 @@
         <label th:text="${ empleado.apPaterno }"></label><br>
         <label th:text="${ empleado.apMaterno }"></label><br>
         <label th:text="${ empleado.dni }"></label><br>
-        <label th:text="${ empleado.estado }"></label><br>
+        <label th:text="${ empleado.estadoCivil }"></label><br>
         <label th:text="${ empleado.edad }"></label><br>
         <label th:text="${ empleado.genero }"></label><br>
-        <!--			<div class="image">-->
-        <!--				<img th:src="@{/img/{image}(image=${datosPer[7]})}" width="80px">-->
-        <!--			</div>-->
-        <!--			si vale, nomas que lo puse en la carpeta correspondiente-->
-        <!--			a implementa la fotito, pofavor >c -->
+        <div class="image">
+        	<img th:src="@{/img/{image}(image=${ empleado.foto })}" width="80px">
+        </div>-->
     </div>
 </section>
 

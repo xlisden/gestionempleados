@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Repository("empleadorepository")
 public interface EmpleadoRepository extends JpaRepository<Empleado, Serializable> {
@@ -16,12 +17,24 @@ public interface EmpleadoRepository extends JpaRepository<Empleado, Serializable
     @Query("UPDATE Empleado e SET e.activo = false WHERE e.id = ?1")
     public void desactivar(int id);
 
-    //falta por nombre, dni, y codigo
+
+    /*SELECT e.* FROM empleado AS e, contrato AS c
+				WHERE e.EmpId = c.ContId AND
+					((null is null or LOWER(e.EmpNombre) LIKE '%173%')  OR 
+					(null is null or LOWER(e.EmpDni) LIKE '%173%') OR 
+					(null is null or LOWER(e.EmpApPaterno) LIKE '%173%')) AND
+					(2 is null or c.ContArea = 2) AND
+                    (2 is null or c.ContJLaboral = 2)
+*/
+    
+    @Query("SELECT e,c from Empleado e, Contrato c where e.id=c.empleado.id "
+    		+ "and ((?1 is null or lower(e.nombre) like  %?1%)"
+    		+ "or (?1 is null or lower(e.dni) like  %?1%)"
+    		+ "or (?1 is null or lower(e.apPaterno) like  %?1%)"
+    		+ "or (?1 is null or lower(e.apMaterno) like  %?1%)"
+    		+ "or (?1 is null or lower(e.cod) like  %?1%))"
+    		+ "and (?2 is null or c.area.id=?2)"
+    		+ "and (?3 is null or c.jornadaLaboral.id=?3)")
+    public List<Empleado> listaxFiltro(String texto,String idArea,String jornada);
 
 }
-/*
-@Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM Company c WHERE c.name = :companyName")
-
-    @Query("SELECT c FROM Contrato c WHERE c.empleado.id = ?1")
-    public Contrato findByEmpleado(int idEmpleado);
-*/
