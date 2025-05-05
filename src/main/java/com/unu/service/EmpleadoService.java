@@ -1,5 +1,6 @@
 package com.unu.service;
 
+import com.unu.controller.request.InsertarEmpleadoRequest;
 import com.unu.entity.Banco;
 import com.unu.entity.Empleado;
 import com.unu.entity.EstadoCivil;
@@ -11,9 +12,11 @@ import com.unu.entity.dto.EmpleadoDto;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public interface EmpleadoService {
 
-    public abstract List<EmpleadoDto> listAllEmpleados();
+	public abstract List<EmpleadoDto> listAllEmpleados(String texto , String idArea,String idJornada);
 
     public abstract Empleado addEmple(Empleado emple);
 
@@ -36,5 +39,7 @@ public interface EmpleadoService {
     public abstract List<ModalidadContrato> getModalidadesContrato();
 
     public abstract List<Banco> getBancos();
+    
+    public abstract Empleado empleadoBruto(InsertarEmpleadoRequest e, MultipartFile foto);
 
 }

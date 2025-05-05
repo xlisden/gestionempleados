@@ -3,11 +3,15 @@ package com.unu.controller;
 import com.unu.controller.request.EditarEmpleadoRequest;
 import com.unu.controller.request.InsertarEmpleadoRequest;
 import com.unu.controller.request.PersonaRequest;
+import com.unu.entity.CuentaBancaria;
+import com.unu.entity.Empleado;
 import com.unu.entity.dto.ContratoDto;
 import com.unu.entity.dto.CuentaBancariaDto;
 import com.unu.entity.dto.EmpleadoDetalleDto;
 import com.unu.entity.dto.EmpleadoDto;
 import com.unu.service.*;
+import com.unu.serviceimpl.CuentaBancariaImpl;
+
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,9 +19,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.time.LocalDate;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,39 +36,50 @@ public class EmpleadosController {
     @Autowired
     @Qualifier("loginservice")
     private LoginService logiservice;
-
     @Autowired
     @Qualifier("areaservice")
     private AreaService areaService;
-
     @Autowired
     @Qualifier("jornadaservice")
     private JornadaLaboralService jornadaService;
-
     @Autowired
     @Qualifier("estadosservice")
     private EstadoCivilService estaservice;
-
     @Autowired
     @Qualifier("modalidadcontratoservice")
     private ModalidadContratoService modalidadservice;
-
     @Autowired
     @Qualifier("datosservice")
     private CuentaBancariaService datosservice;
-
     @Autowired
     @Qualifier("empleadosservice")
     private EmpleadoService empleadoService;
-
+    
+    
+    @Autowired
+    @Qualifier("contratoservice")
+    private ContratoService controtoService;
+    
+    @Autowired
+    @Qualifier("datosservice")
+    private CuentaBancariaImpl cuentaService;
+    
+    
+    
+    
     @GetMapping({"/", ""})
-    public ModelAndView listEmpleados() {
-//		if(logiservice.tiempoSesion()){
+    public ModelAndView empleados(@RequestParam(required = false) String nombre,
+    							  @RequestParam(required = false) String jornad,
+    							  @RequestParam(required = false) String areaa){
+    	//System.out.println("nombre:  "+nombre);
+    	//System.out.println("jornada: "+jornad);
+    	//System.out.println("area:    "+areaa);
+		if(logiservice.tiempoSesion()){
         ModelAndView mav = new ModelAndView("empleados/EmpleadosList");
 
         List<EmpleadoDto> empleados = new ArrayList<>();
         try {
-            empleados = empleadoService.listAllEmpleados();
+            empleados = empleadoService.listAllEmpleados(nombre,areaa,jornad);
         } catch (Exception e) {
             System.out.println("listEmpleados() -> " + e.getMessage());
         }
@@ -70,13 +89,13 @@ public class EmpleadosController {
         mav.addObject("jornadas", jornadaService.listAllJornadas());
 
         return mav;
-//		}
-//		return new LoginController().login();
+		}
+		return new LoginController().login();
     }
 
     @GetMapping("/{id}")
-    public ModelAndView detalle(@PathVariable int id) { // falta mandarle argumento ID
-//		if(logiservice.tiempoSesion()){
+    public ModelAndView detalle(@PathVariable int id) { 
+		if(logiservice.tiempoSesion()){
         ModelAndView mav = new ModelAndView("empleados/EmpleadoDetalle");
         EmpleadoDetalleDto empleado = new EmpleadoDetalleDto();
         CuentaBancariaDto cuenta = new CuentaBancariaDto();
@@ -95,8 +114,8 @@ public class EmpleadosController {
         mav.addObject("contrato", contrato);
 
         return mav;
-//		}
-//		return new LoginController().login();
+		}
+		return new LoginController().login();
     }
 
     /* Insertar */
@@ -104,13 +123,33 @@ public class EmpleadosController {
     @GetMapping("/agregar")
     public ModelAndView insertarGetDatos(Model model){
         ModelAndView mav = new ModelAndView("empleados/AgregarEmpleado");
-
+        if(logiservice.tiempoSesion()){
         mav.addObject("estadosciviles", empleadoService.getEstadosCiviles());
         mav.addObject("areas", areaService.listAllAreas());
         mav.addObject("jornadas", jornadaService.listAllJornadas());
         mav.addObject("modalidades", empleadoService.getModalidadesContrato());
         mav.addObject("bancos", empleadoService.getBancos());
+        mav.addObject("empleado", new InsertarEmpleadoRequest());
         return mav;
+		}
+		return new LoginController().login();
+    }
+    
+    @PostMapping("/agregar")
+    public String insertarPostDatos(@ModelAttribute InsertarEmpleadoRequest empleado,
+    								@RequestParam(name="file",required = false)MultipartFile foto){
+
+    	try {
+			Empleado nuevoEmpleado=empleadoService.empleadoBruto(empleado, foto);
+	    		    	
+	    	controtoService.addTipoM(controtoService.contratoEnBruto(empleado, nuevoEmpleado));
+	    	cuentaService.addDatos(new CuentaBancaria(0,empleado.getBanco(),empleado.getCci(),nuevoEmpleado));
+	    	System.out.println("funciono el insertar");
+	    	return "redirect:/empleados";
+		} catch (Exception e) {
+			System.out.println(" nada master: "+e.getMessage());
+			return "redirect:/empleados/agregar";
+		}
     }
 
     @GetMapping("/personas")
@@ -179,58 +218,23 @@ public class EmpleadosController {
 
         return "redirect:/empleados";
     }
+    
+    /*
+    	
+    	if(!foto.isEmpty()) {
+    		String ruta="static/img";
+    		
+    		try {
+				byte[] bytes = foto.getBytes();
+				Path rutaAbsoluta = Paths.get(ruta+"//"+foto.getOriginalFilename());
+				Files.write(rutaAbsoluta, bytes);
+				
+			} catch (Exception e) {
+				System.out.println("foto no subida: "+e.getMessage());
+			}
+    	}else {
+    		System.out.println("foto vacia 2");
+		}*/
 
-
-    //seccion de funciones extras
-
-
-    public String calcularTiempo(LocalDate ingreso) {
-        int anio = LocalDate.now().getYear() - ingreso.getYear();
-        int mes = LocalDate.now().getMonthValue() - ingreso.getMonthValue();
-        int dia = LocalDate.now().getDayOfMonth() - ingreso.getDayOfMonth();
-
-        return anio + " años   " + mes + " meses   " + dia + " dias ";
-    }
-
-    public String modalidad(int idemple) {
-        String modalidad = "no-se-encontro";
-        try {
-//			modalidad=modalidadservice.getModalidad(idemple).getTipomodalidad().getNombre();
-        } catch (Exception e) {
-            System.out.println("Modalidad no encontrada: " + e.getMessage());
-        }
-        return modalidad;
-    }
-
-    public String calcularAnio(LocalDate antes) {
-        LocalDate actual = LocalDate.now();
-        if (antes.getMonthValue() < actual.getMonthValue() || (antes.getMonthValue() == actual.getMonthValue()) && antes.getDayOfMonth() < actual.getDayOfMonth()) {
-            return actual.getYear() - (antes.getYear() + 1) + " años ";
-        } else {
-            return actual.getYear() - antes.getYear() + " años ";
-        }
-    }
-
-    public String genero(boolean genero) {
-        if (genero) return "M";
-        return "F";
-    }
-
-
-    // borrador prueba 1 , no lo borre me da pena xd
-    @GetMapping("/list")
-    public ModelAndView inicial() {
-        if (logiservice.tiempoSesion()) {
-            ModelAndView mav = new ModelAndView("borrar");
-            mav.addObject("login", logiservice.listAllLogin("sd"));
-            return mav;
-        }
-        return new LoginController().login();
-    }
-
-    private void borrar() {
-        InsertarEmpleadoRequest request = new InsertarEmpleadoRequest();
-        request.getApMaterno();
-    }
 
 }

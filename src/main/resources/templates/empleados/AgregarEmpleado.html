@@ -7,47 +7,58 @@
 <body>
 <div class="container">
 
-  <form action="">
+  <form th:action="@{/empleados/agregar}" th:object="${empleado}" method="POST" enctype="multipart/form-data">
 
     <div class="card"> <!--sin border-dark si no se quiere tan notiorio-->
       <div class="card-body">
         <h5>Datos personales</h5>
 
         <div class="form-floating">
-          <input type="text" class="form-control" id="floatDni" placeholder="dni">
+          <input type="text" class="form-control" id="floatDni" placeholder="dni" th:field="*{dni}" required>
           <label for="floatDni">Nro de DNI</label>
         </div>
         <div class="form-floating">
-          <input type="text" class="form-control" id="floatNombre" placeholder="nombres">
+          <input type="text" class="form-control" id="floatNombre" placeholder="nombres" th:field="*{nombre}"required>
           <label for="floatNombre">Nombres</label>
         </div>
         <div class="form-floating">
-          <input type="text" class="form-control" id="floatApPaterno" placeholder="appaterno">
+          <input type="text" class="form-control" id="floatApPaterno" placeholder="appaterno"th:field="*{apPaterno}"required>
           <label for="floatApPaterno">Ap. Paterno</label>
         </div>
         <div class="form-floating">
-          <input type="text" class="form-control" id="floatApMaterno" placeholder="apmaterno">
+          <input type="text" class="form-control" id="floatApMaterno" placeholder="apmaterno"th:field="*{apMaterno}"required>
           <label for="floatApMaterno">Ap. Materno</label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="radioDefault" id="masculino">
+          <input class="form-check-input" type="radio" name="radioDefault" id="masculino" th:value="false" th:field="*{genero}">
           <label class="form-check-label" for="masculino"> Masculino </label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="radioDefault" id="femenino">
+          <input class="form-check-input" type="radio" name="radioDefault" id="femenino" th:value="true" th:field="*{genero}">
           <label class="form-check-label" for="femenino"> Femenino </label>
         </div>
         <div class="form-floating">
-          <select id="floatEstCivil" class="form-select">
+          <select id="floatEstCivil" class="form-select" th:field="*{estadoCivil}" required>
             <option value="">Seleccione...</option>
             <option th:each="estCivil : ${ estadosciviles }" th:value="${ estCivil.id }" th:text="${ estCivil.nombre }"></option>
           </select>
           <label for="floatEstCivil">Estado Civil</label>
         </div>
         <div class="form-floating">
-          <input type="date" class="form-control" id="floatFechaNac" placeholder="fechanac">
+          <input type="date" class="form-control" id="floatFechaNac" placeholder="fechanac" th:field="*{fechaNacimiento}"required>
           <label for="floatFechaNac">Fecha Nac.</label>
         </div>
+        
+        
+        
+        <div class="form-floating">
+          <input type="file" name="file" class="form-control" id="floatFoto" >
+          <label for="floatFoto">Foto del Empleado</label>
+        </div>
+        
+        
+        
+        
       </div>
     </div>
 
@@ -56,29 +67,29 @@
         <h5>Datos laborales</h5>
 
         <div class="form-floating">
-          <select id="floatArea" class="form-select">
+          <select id="floatArea" class="form-select" th:field="*{area}" required>
             <option value="">Seleccione...</option>
             <option th:each="area : ${ areas }" th:value="${ area.id }" th:text="${ area.nombre }"></option>
           </select>
           <label for="floatArea">Área</label>
         </div>
         <div class="form-floating">
-          <select id="floatJornada" class="form-select">
+          <select id="floatJornada" class="form-select" th:field="*{jornadaLaboral}"required>
             <option value="">Seleccione...</option>
             <option th:each="jornada : ${ jornadas }" th:value="${ jornada.id }" th:text="${ jornada.nombre }"></option>
           </select>
           <label for="floatJornada">Jornada</label>
         </div>
         <div class="form-floating">
-          <select id="floatModalidad" class="form-select">
+          <select id="floatModalidad" class="form-select" th:field="*{modalidadContrato}"required>
             <option value="">Seleccione...</option>
             <option th:each="modalidad : ${ modalidades }" th:value="${ modalidad.id }" th:text="${ modalidad.nombre }"></option>
           </select>
           <label for="floatModalidad">Modalidad</label>
         </div>
         <div class="form-floating">
-          <input type="date" class="form-control" id="fechaEmision" placeholder="fechaems">
-          <label for="fechaEmision">Fecha Emisión.</label>
+          <input type="date" class="form-control" id="fechaEmision" placeholder="fechaems" th:field="*{fechaEmision}"required>
+          <label for="fechaEmision">Fecha Emisión</label>
         </div>
       </div>
     </div>
@@ -88,14 +99,20 @@
         <h5>Datos bancarios</h5>
 
         <div class="form-floating">
-          <select id="floatBanco" class="form-select">
+          <select id="floatBanco" class="form-select" th:field="*{banco}"required>
             <option value="">Seleccione...</option>
-            <option th:each="area : ${ areas }" th:value="${ area.id }" th:text="${ area.nombre }"></option>
+            <option th:each="banco : ${ bancos }" th:value="${ banco.id }" th:text="${ banco.nombre }"></option>
           </select>
-          <label for="floatBanco">Área</label>
+          <label for="floatBanco">Banco</label>
         </div>
+        <div class="form-floating">
+          <input type="text" class="form-control" id="floatCci" placeholder="CCI" th:field="*{cci}" required>
+          <label for="floatCci">CCI de su Cuenta</label>
+        </div>	
       </div>
     </div>
+    
+    <button type="submit"> Agregar </button>
 
   </form>
 

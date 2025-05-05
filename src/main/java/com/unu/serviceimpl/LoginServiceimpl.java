@@ -57,7 +57,7 @@ public class LoginServiceimpl implements LoginService {
         }
         return false;
     }
-
+    @Override
     public boolean tiempoSesion() {
         try {
             LocalTime sesion = getLogin(1).getHoras();
@@ -65,7 +65,7 @@ public class LoginServiceimpl implements LoginService {
 
             int diferencia = (ahora.getHour() - sesion.getHour()) * 60 - (sesion.getMinute() - ahora.getMinute());
             System.out.println("minutos en sesion: " + diferencia);
-            if (diferencia < 15 && getLogin(1).isEstado()) {
+            if (diferencia < 45 && getLogin(1).isEstado()) {
                 Login log = getLogin(1);
                 updateLogin(new Login(1, log.getUsurio(), log.getContraseña(), log.getEmpleado(), true, log.getHoras()));
                 return true;
