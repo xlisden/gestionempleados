@@ -183,17 +183,20 @@ public class EmpleadosController {
     }
 
     @PostMapping("/emitir-recibo/{id}")
-    public String emitirRecibo(@PathVariable int id, @ModelAttribute("facturacion") FacturacionDto facturacionDto, RedirectAttributes redirectAttributes) throws Exception {
+    public ModelAndView emitirRecibo(@PathVariable int id, @ModelAttribute("facturacion") FacturacionDto facturacionDto) throws Exception {
+        ModelAndView mav = new ModelAndView("empleados/EmitirRecibo");
         try {
             FacturacionDto facturacion = empleadoService.emitirRecibo(id, Bonificacion.isBonificacion());
 
-            System.out.println("Recibo emitido exitosamente a " + facturacion.getEmpleado() + " (S/." + facturacion.getSueldoNeto() + ").");
-            redirectAttributes.addFlashAttribute("mensaje", "Recibo emitido exitosamente a " +facturacion.getEmpleado() + " (S/." + facturacion.getSueldoNeto() + ").");
+            mav.addObject("facturacion", facturacion);
+            mav.addObject("bonificacion", Bonificacion.isBonificacion());
+            mav.addObject("mensaje", "Recibo emitido exitosamente a " +facturacion.getEmpleado() + " (S/." + facturacion.getSueldoNeto() + ").");
         } catch (Exception e) {
             System.out.println("getEmitirRecibo() => " + e.getMessage());
-            redirectAttributes.addFlashAttribute("error", "Error al emitir el recibo a " + facturacionDto.getEmpleado() + " (S/." + facturacionDto.getSueldoNeto() + ").");
+            mav.addObject("error", "Error al emitir el recibo a " + facturacionDto.getEmpleado() + " (S/." + facturacionDto.getSueldoNeto() + ").");
         }
-        return "redirect:/empleados";
+//        return "redirect:/empleados";
+        return mav;
     }
 
     /* desactivar */
