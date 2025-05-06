@@ -75,9 +75,9 @@ public class EmpleadosController {
 
             try {
                 empleados = empleadoService.listAllEmpleados(nombre, areaa, jornad);
-                if (hoy.getDayOfMonth() == FacturacionHelper.diaPago){
+                if (hoy.getDayOfMonth() >= FacturacionHelper.diaPago){
                     for (EmpleadoDto e : empleados){
-                        if (e.isActivo() && !facturacionService.empleadoPagado(e.getId(), hoy)){
+                        if (e.isActivo() && !facturacionService.empleadoPagado(e.getId())){
                             empleadoService.emitirRecibo(e.getId(), FacturacionHelper.isBonificacion(hoy));
                         }
                     }

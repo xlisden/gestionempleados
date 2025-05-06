@@ -15,7 +15,7 @@ public interface FacturacionRepository extends JpaRepository<Facturacion, Serial
     @Query("SELECT f FROM Facturacion f WHERE f.empleado.id = ?1")
     public List<Facturacion> findByEmpleado(int idEmpleado);
 
-    @Query("SELECT CASE WHEN COUNT(f) > 0 THEN true ELSE false END FROM Facturacion f WHERE f.empleado.id = ?1 AND f.fechaPago = ?2")
-    public boolean empleadoPagado(int idEmpleado, LocalDate fecha);
+    @Query("SELECT CASE WHEN COUNT(f) > 0 THEN true ELSE false END FROM Facturacion f WHERE f.empleado.id = ?1 AND YEAR(f.fechaPago) = YEAR(CURRENT_DATE()) AND MONTH(f.fechaPago) = MONTH(CURRENT_DATE())")
+    public boolean empleadoPagado(int idEmpleado);
 
 }
