@@ -2,13 +2,14 @@ package com.unu.entity.dto;
 
 public class FacturacionDto {
 
+    private int id;
     private int idEmpleado;
     private String cod;
     private String dni;
     private String empleado;
     private String fechaPago;
     private double sueldoBruto;
-    private double bonificaciones;
+    private double bonificacion;
     private double sueldoNeto;
 
     public FacturacionDto() {
@@ -54,12 +55,12 @@ public class FacturacionDto {
         this.sueldoBruto = sueldoBruto;
     }
 
-    public double getBonificaciones() {
-        return bonificaciones;
+    public double getBonificacion() {
+        return bonificacion;
     }
 
-    public void setBonificaciones(double bonificaciones) {
-        this.bonificaciones = bonificaciones;
+    public void setBonificacion(double bonificacion) {
+        this.bonificacion = bonificacion;
     }
 
     public int getIdEmpleado() {
@@ -76,5 +77,13 @@ public class FacturacionDto {
 
     public void setCod(String cod) {
         this.cod = cod;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
