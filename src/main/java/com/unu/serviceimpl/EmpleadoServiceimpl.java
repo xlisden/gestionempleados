@@ -188,8 +188,8 @@ public class EmpleadoServiceimpl implements EmpleadoService {
         Empleado empleado = contrato.getEmpleado();
         if (empleado == null)
             throw new Exception("El empleado no existe.");
-        if (!empleado.isActivo())
-            throw new Exception("El empleado no tiene un contrato activo.");
+//        if (!empleado.isActivo())
+//            throw new Exception("El empleado no tiene un contrato activo.");
 
         double sueldo = contrato.getArea().getSueldoBasico();
         FacturacionDto dto = new FacturacionDto();
