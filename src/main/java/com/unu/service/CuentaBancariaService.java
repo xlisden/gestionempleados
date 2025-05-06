@@ -20,6 +20,5 @@ public interface CuentaBancariaService {
 
     public abstract CuentaBancaria getByEmpleado(int id) throws Exception;
     
-    public abstract CuentaBancaria cuentaBancariaEnBruto(InsertarEmpleadoRequest e,Empleado empleado);
 
 }

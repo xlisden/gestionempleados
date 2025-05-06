@@ -48,12 +48,6 @@ public class ContratoServiceImpl implements ContratoService {
         return contratoRepository.findByEmpleado(idEmpleado);
     }
 
-	@Override
-	public Contrato contratoEnBruto(InsertarEmpleadoRequest e,Empleado empleado) {
-		Contrato nuevo = new Contrato(0,empleado, e.getArea(),e.getFechaEmision() 
-				,e.getModalidadContrato(), LocalDate.now(), null,e.getJornadaLaboral());
-		return nuevo;
-	}
 
 
 }

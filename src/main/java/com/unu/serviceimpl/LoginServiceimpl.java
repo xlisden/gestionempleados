@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -48,7 +50,7 @@ public class LoginServiceimpl implements LoginService {
         try {
             if (logrepo.user_contra(us, ps) != null) {
                 Login log = getLogin(1);
-                logrepo.save(new Login(1, us, ps, log.getEmpleado(), true, LocalTime.now()));
+                logrepo.save(new Login(1, us, ps, log.getEmpleado(), true, LocalDateTime.now()));
                 System.out.println("------ sesion iniciada bien-----");
                 return true;
             }
@@ -58,23 +60,24 @@ public class LoginServiceimpl implements LoginService {
         return false;
     }
     @Override
-    public boolean tiempoSesion() {
+    public boolean tiempoSesion() throws Exception {
         try {
-            LocalTime sesion = getLogin(1).getHoras();
-            LocalTime ahora = LocalTime.now();
+        	LocalDateTime sesion = getLogin(1).getHoras();
+        	LocalDateTime ahora = LocalDateTime.now();
 
-            int diferencia = (ahora.getHour() - sesion.getHour()) * 60 - (sesion.getMinute() - ahora.getMinute());
+        	 int diferencia = (int) Math.abs(Duration.between(sesion, ahora).toMinutes());
             System.out.println("minutos en sesion: " + diferencia);
-            if (diferencia < 45 && getLogin(1).isEstado()) {
-                Login log = getLogin(1);
-                updateLogin(new Login(1, log.getUsurio(), log.getContraseña(), log.getEmpleado(), true, log.getHoras()));
+            if (diferencia <= 15 && getLogin(1).isEstado()) {
+            	getLogin(1).setHoras(ahora);
                 return true;
             }
         } catch (Exception e) {
-            System.out.println("---- CERRAR SESION| HAY ERROR  ---- : " + e.getMessage());
+            System.out.println("---- CERRAR SESION-------< HAY ERROR : " + e.getMessage());
+            getLogin(1).setEstado(false);
             return false;
         }
-        System.out.println("---- CERRAR SESION  ----");
+        System.out.println("---- CERRAR SESION  ----< paso el tiempo");
+        getLogin(1).setEstado(false);
         return false;
     }
 }

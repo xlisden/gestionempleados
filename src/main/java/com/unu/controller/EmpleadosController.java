@@ -2,6 +2,7 @@ package com.unu.controller;
 
 import com.unu.controller.request.EditarEmpleadoRequest;
 import com.unu.controller.request.InsertarEmpleadoRequest;
+import com.unu.entity.Contrato;
 import com.unu.entity.CuentaBancaria;
 import com.unu.entity.Empleado;
 import com.unu.entity.dto.*;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +64,7 @@ public class EmpleadosController {
     @GetMapping({"/", ""})
     public ModelAndView empleados(@RequestParam(required = false) String nombre,
                                   @RequestParam(required = false) String jornad,
-                                  @RequestParam(required = false) String areaa) {
+                                  @RequestParam(required = false) String areaa) throws Exception {
 
         if (logiservice.tiempoSesion()) {
             ModelAndView mav = new ModelAndView("empleados/EmpleadosList");
@@ -84,7 +86,7 @@ public class EmpleadosController {
     }
 
     @GetMapping("/{id}")
-    public ModelAndView detalle(@PathVariable int id) {
+    public ModelAndView detalle(@PathVariable int id)throws Exception  {
         if (logiservice.tiempoSesion()) {
             ModelAndView mav = new ModelAndView("empleados/EmpleadoDetalle");
             EmpleadoDetalleDto empleado = new EmpleadoDetalleDto();
@@ -111,7 +113,7 @@ public class EmpleadosController {
     /* Insertar */
 
     @GetMapping("/agregar")
-    public ModelAndView insertarGetDatos() {
+    public ModelAndView insertarGetDatos() throws Exception {
         ModelAndView mav = new ModelAndView("empleados/AgregarEmpleado");
         if (logiservice.tiempoSesion()) {
             mav.addObject("estadosciviles", empleadoService.getEstadosCiviles());
@@ -131,10 +133,11 @@ public class EmpleadosController {
                                     @RequestParam(name = "file", required = false) MultipartFile foto) {
 
         try {
-            Empleado nuevoEmpleado = empleadoService.empleadoBruto(empleado, foto);
-
-            controtoService.addTipoM(controtoService.contratoEnBruto(empleado, nuevoEmpleado));
-            cuentaService.addDatos(new CuentaBancaria(0, empleado.getBanco(), empleado.getCci(), nuevoEmpleado));
+        	Empleado nuevoEmpleado=empleadoService.empleadoBruto(empleado, foto);
+	    	
+	    	controtoService.addTipoM(new Contrato(0,nuevoEmpleado, empleado.getArea(),empleado.getFechaEmision() 
+					,empleado.getModalidadContrato(), LocalDate.now(), null,empleado.getJornadaLaboral()));
+	    	cuentaService.addDatos(new CuentaBancaria(0,empleado.getBanco(),empleado.getCci(),nuevoEmpleado));
 
             return "redirect:/empleados";
         } catch (Exception e) {
@@ -146,25 +149,55 @@ public class EmpleadosController {
     /* Editar */
 
     @GetMapping("/editar/{id}")
-    public ModelAndView editarGetDatos(@PathVariable int id) {
+    public ModelAndView editarGetDatos(@PathVariable int id) throws Exception {
         if (logiservice.tiempoSesion()) {
-            ModelAndView mav = new ModelAndView("editar");
-			/*
-			mav.addObject("areas", areaservice.listAllAreas(""));
-			mav.addObject("jornadas", jorservice.listAllJornada(""));
-			mav.addObject("estados", estaservice.listAllEstados(""));
-			mav.addObject("modalidad", modalidadservice.l);
-			mav.addObject("empleado",new Empleado());
-			*/
+            ModelAndView mav = new ModelAndView("empleados/EditarEmpleado");
+            
+            mav.addObject("idEmpleado",id);
+            mav.addObject("idContrato",controtoService.findByEmpleado(id).getId());
+            mav.addObject("idCuenta",cuentaService.getByEmpleado(id).getId());
+			
+        	mav.addObject("estadosciviles", empleadoService.getEstadosCiviles());
+            mav.addObject("areas", areaService.listAllAreas());
+            mav.addObject("jornadas", jornadaService.listAllJornadas());
+            mav.addObject("modalidades", empleadoService.getModalidadesContrato());
+            mav.addObject("bancos", empleadoService.getBancos());
+            mav.addObject("empleado", empleadoService.empleadoEditar(empleadoService.getEmpleadoNormal(id),
+            														 controtoService.findByEmpleado(id),
+            														 cuentaService.getByEmpleado(id)));
             return mav;
         }
         return new LoginController().login();
     }
+    
+    @PostMapping("/editar")
+    public String editarPostDatos(@ModelAttribute EditarEmpleadoRequest empleado,
+                                    @RequestParam(name = "file", required = false) MultipartFile foto,
+                                    @RequestParam (required = false)int idEmpleado,
+                                    @RequestParam ( required = false)int idContrato,
+                                    @RequestParam ( required = false)int idCuenta) {
+        try {
+        	Empleado nuevoEmpleado=empleadoService.empleadoEditarPost(empleado, foto,idEmpleado);
+	    	
+	    	controtoService.updateTipoM(new Contrato(idContrato,nuevoEmpleado, empleado.getArea(),empleado.getFechaEmision() 
+					,empleado.getModalidadContrato(), LocalDate.now(), null,empleado.getJornadaLaboral()));
+	    	cuentaService.updateDatos(new CuentaBancaria(idCuenta,empleado.getBanco(),empleado.getCci(),nuevoEmpleado));
 
-    @PutMapping("/editar/{id}")
-    private String editar(@PathVariable int id, @Valid @ModelAttribute EditarEmpleadoRequest empleadoRequest, BindingResult bindingResult, Model model) {
-        return "";
+            return "redirect:/empleados";
+        } catch (Exception e) {
+            System.out.println(" nada master: " + e.getMessage());
+            return "redirect:/empleados";
+        }
     }
+    
+    /*@PutMapping("/editar") //PutMapping que es eso?
+    private String editar(@ModelAttribute EditarEmpleadoRequest empleadoRequest, BindingResult bindingResult) {
+        return "";
+    }*/
+    
+    
+    
+    
 
     /* pagar al empleado */
 
@@ -209,23 +242,6 @@ public class EmpleadosController {
         empleadoService.activar(id);
         return "redirect:/empleados";
     }
-    
-    /*
-    	
-    	if(!foto.isEmpty()) {
-    		String ruta="static/img";
-    		
-    		try {
-				byte[] bytes = foto.getBytes();
-				Path rutaAbsoluta = Paths.get(ruta+"//"+foto.getOriginalFilename());
-				Files.write(rutaAbsoluta, bytes);
-				
-			} catch (Exception e) {
-				System.out.println("foto no subida: "+e.getMessage());
-			}
-    	}else {
-    		System.out.println("foto vacia 2");
-		}*/
 
 
 }

@@ -8,6 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @SpringBootApplication
@@ -35,6 +36,11 @@ public class GestionempleadosApplication implements CommandLineRunner {
 
     public static void main(String[] args) {
         SpringApplication.run(GestionempleadosApplication.class, args);
+        
+        
+    
+    
+        
         System.out.println("READY!");
     }
 
@@ -64,7 +70,7 @@ public class GestionempleadosApplication implements CommandLineRunner {
         }
 
         if (loginService.listAllLogin("").isEmpty()) {
-            Login login = new Login(0, "sa", "SA%123", null, true, LocalTime.now());
+            Login login = new Login(0, "sa", "SA%123", null, true,null);
             loginService.addLogin(login);
         }
     }

@@ -92,7 +92,7 @@
                     <a th:href="@{/empleados/{id}(id=${ empleado.id })}">
                         <img th:src="@{/img/detalle.png}" width="30" height="30" alt="detalleIcon">
                     </a>
-                    <a href="" style="font-size: 1.5rem">
+                    <a th:href="@{/empleados/editar/{id}(id=${ empleado.id })}" style="font-size: 1.5rem">
                         <img src="/icons/edit.svg" alt="editsvg" width="30" height="30">
                     </a>
                     <a th:href="@{/empleados/emitir-recibo/{id}(id=${ empleado.id })}">
