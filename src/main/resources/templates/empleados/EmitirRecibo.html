@@ -118,6 +118,14 @@
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
 
+<<<<<<< HEAD
+=======
+        console.log("ID de la facturación:", facturacion.idEmpleado);  // Acceder al id
+        console.log("DNI del empleado:", facturacion.dni);        // Acceder al dni
+        console.log("Fecha de pago:", facturacion.fechaPago);    // Acceder a la fecha de pago
+        console.log("Sueldo bruto:", facturacion.sueldoBruto);    // Acceder al sueldo bruto
+
+>>>>>>> f998ff9658110661c76690932e7d8dc16089ac62
         doc.text("Hello pdf!", 10, 10);
         doc.save("Recibo .pdf");
     }

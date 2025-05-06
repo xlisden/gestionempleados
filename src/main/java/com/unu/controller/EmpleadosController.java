@@ -24,6 +24,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
+import com.google.gson.Gson;
 
 @Controller
 @RequestMapping("/empleados")
@@ -177,7 +178,10 @@ public class EmpleadosController {
         try {
             FacturacionDto facturacion = empleadoService.getDatosEmitirRecibo(id);
 
+            String facturacionJson = new Gson().toJson(facturacion);
+
             mav.addObject("facturacion", facturacion);
+            mav.addObject("facturacionJson", facturacionJson);
             mav.addObject("bonificacion", Bonificacion.isBonificacion());
         } catch (Exception e) {
             System.out.println("getEmitirRecibo() => " + e.getMessage());
@@ -191,7 +195,10 @@ public class EmpleadosController {
         try {
             FacturacionDto facturacion = empleadoService.emitirRecibo(id, Bonificacion.isBonificacion());
 
+            String facturacionJson = new Gson().toJson(facturacion);
+
             mav.addObject("facturacion", facturacion);
+            mav.addObject("facturacionJson", facturacionJson);
             mav.addObject("bonificacion", Bonificacion.isBonificacion());
             mav.addObject("mensaje", "Recibo emitido exitosamente a " +facturacion.getEmpleado() + " (S/." + facturacion.getSueldoNeto() + ").");
         } catch (Exception e) {
