@@ -151,9 +151,12 @@ public class EmpleadoServiceimpl implements EmpleadoService {
 
         if (contrato == null)
             throw new Exception("El contrato no existe.");
+
         Empleado empleado = contrato.getEmpleado();
         if (empleado == null)
             throw new Exception("El empleado no existe.");
+        if (!empleado.isActivo())
+            throw new Exception("El empleado no tiene un contrato activo.");
 
         double sueldo = (bonificacion) ? contrato.getArea().getSueldoBasico() + Bonificacion.bonitificacion : contrato.getArea().getSueldoBasico();
 
@@ -168,7 +171,7 @@ public class EmpleadoServiceimpl implements EmpleadoService {
         dto.setEmpleado(empleado.getNombre() + " " + empleado.getApPaterno().toUpperCase() + " " + empleado.getApMaterno().toUpperCase());
         dto.setFechaPago(format.format(Date.valueOf(LocalDate.now())));
         dto.setSueldoBruto(sueldo);
-        dto.setBonificaciones(0.0);
+        dto.setBonificacion(0.0);
         dto.setSueldoNeto(sueldo);
 
         return dto;
@@ -180,9 +183,12 @@ public class EmpleadoServiceimpl implements EmpleadoService {
 
         if (contrato == null)
             throw new Exception("El contrato no existe.");
+
         Empleado empleado = contrato.getEmpleado();
         if (empleado == null)
             throw new Exception("El empleado no existe.");
+        if (!empleado.isActivo())
+            throw new Exception("El empleado no tiene un contrato activo.");
 
         double sueldo = contrato.getArea().getSueldoBasico();
         FacturacionDto dto = new FacturacionDto();
@@ -193,7 +199,7 @@ public class EmpleadoServiceimpl implements EmpleadoService {
         dto.setEmpleado(empleado.getNombre() + " " + empleado.getApPaterno().toUpperCase() + " " + empleado.getApMaterno().toUpperCase());
         dto.setFechaPago(format.format(Date.valueOf(LocalDate.now())));
         dto.setSueldoBruto(sueldo);
-        dto.setBonificaciones(0.0);
+        dto.setBonificacion(0.0);
         dto.setSueldoNeto(sueldo);
 
         return dto;

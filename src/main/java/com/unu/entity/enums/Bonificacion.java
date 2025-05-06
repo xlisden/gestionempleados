@@ -16,4 +16,10 @@ public class Bonificacion {
         return false;
     }
 
+    public static boolean isBonificacion(LocalDate date){
+        if (date.getMonth() == Month.JULY || date.getMonth() == Month.DECEMBER)
+            return true;
+        return false;
+    }
+
 }

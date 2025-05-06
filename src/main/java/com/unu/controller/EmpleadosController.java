@@ -9,6 +9,7 @@ import com.unu.entity.dto.*;
 import com.unu.entity.enums.Bonificacion;
 import com.unu.service.*;
 import com.unu.serviceimpl.CuentaBancariaImpl;
+import com.unu.serviceimpl.FacturacionServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -60,6 +61,10 @@ public class EmpleadosController {
     @Autowired
     @Qualifier("datosservice")
     private CuentaBancariaImpl cuentaService;
+
+    @Autowired
+    @Qualifier("facturacionservice")
+    private FacturacionServiceImpl facturacionService;
 
 
     @GetMapping({"/", ""})
@@ -177,10 +182,12 @@ public class EmpleadosController {
         ModelAndView mav = new ModelAndView("empleados/EmitirRecibo");
         try {
             FacturacionDto facturacion = empleadoService.getDatosEmitirRecibo(id);
+            List<FacturacionDto> facturas = facturacionService.listByEmpleado(id);
 
             String facturacionJson = new Gson().toJson(facturacion);
 
             mav.addObject("facturacion", facturacion);
+            mav.addObject("facturas", facturas);
             mav.addObject("facturacionJson", facturacionJson);
             mav.addObject("bonificacion", Bonificacion.isBonificacion());
         } catch (Exception e) {
