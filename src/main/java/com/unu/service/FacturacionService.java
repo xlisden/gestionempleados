@@ -3,6 +3,7 @@ package com.unu.service;
 import com.unu.entity.Facturacion;
 import com.unu.entity.dto.FacturacionDto;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface FacturacionService {
@@ -17,4 +18,6 @@ public interface FacturacionService {
     public abstract void deleteFact(long id);
 
     public abstract List<FacturacionDto> listByEmpleado(int idEmpleado);
+
+    public abstract boolean empleadoPagado(int idEmpleado, LocalDate date);
 }
