@@ -43,7 +43,8 @@ public interface EmpleadoRepository extends JpaRepository<Empleado, Serializable
     		+ "or (?1 is null or lower(e.apMaterno) like  %?1%)"
     		+ "or (?1 is null or lower(e.cod) like  %?1%))"
     		+ "and (?2 is null or c.area.id=?2)"
-    		+ "and (?3 is null or c.jornadaLaboral.id=?3)")
+    		+ "and (?3 is null or c.jornadaLaboral.id=?3)"
+            + "ORDER BY e.activo DESC")
     public List<Empleado> listaxFiltro(String texto,String idArea,String jornada);
 
 }

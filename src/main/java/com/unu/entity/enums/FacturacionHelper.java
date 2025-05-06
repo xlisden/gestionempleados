@@ -1,13 +1,13 @@
 package com.unu.entity.enums;
 
-import org.springframework.cglib.core.Local;
-
 import java.time.LocalDate;
 import java.time.Month;
 
-public class Bonificacion {
+public class FacturacionHelper {
 
     public static double bonitificacion = 500.0;
+
+    public static int diaPago = 6;
 
     public static boolean isBonificacion(){
         LocalDate date  = LocalDate.now();

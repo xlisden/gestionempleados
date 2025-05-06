@@ -1,8 +1,7 @@
 package com.unu.serviceimpl;
 
-import com.unu.entity.Facturacion;
 import com.unu.entity.dto.FacturacionDto;
-import com.unu.entity.enums.Bonificacion;
+import com.unu.entity.enums.FacturacionHelper;
 import com.unu.repository.EmpleadoRepository;
 import com.unu.repository.FacturacionRepository;
 import com.unu.service.FacturacionService;
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,23 +27,23 @@ public class FacturacionServiceImpl implements FacturacionService {
     private EmpleadoRepository empleadoRepository;
 
     @Override
-    public List<Facturacion> listAllFact() {
+    public List<com.unu.entity.Facturacion> listAllFact() {
         // TODO Auto-generated method stub
         return factrepo.findAll();
     }
 
     @Override
-    public Facturacion addFact(Facturacion fact) {
+    public com.unu.entity.Facturacion addFact(com.unu.entity.Facturacion fact) {
         return factrepo.save(fact);
     }
 
     @Override
-    public Facturacion getFact(long id) throws Exception {
+    public com.unu.entity.Facturacion getFact(long id) throws Exception {
         return factrepo.findById(id).orElseThrow(() -> new Exception("La Factura no existe."));
     }
 
     @Override
-    public void updateFact(Facturacion fact) {
+    public void updateFact(com.unu.entity.Facturacion fact) {
         factrepo.save(fact);
     }
 
@@ -54,17 +54,17 @@ public class FacturacionServiceImpl implements FacturacionService {
 
     @Override
     public List<FacturacionDto> listByEmpleado(int idEmpleado) {
-        List<Facturacion> lista = factrepo.findByEmpleado(idEmpleado);
+        List<com.unu.entity.Facturacion> lista = factrepo.findByEmpleado(idEmpleado);
         List<FacturacionDto> facturas = new ArrayList<FacturacionDto>();
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
-        for(Facturacion f: lista) {
+        for(com.unu.entity.Facturacion f: lista) {
             FacturacionDto dto = new FacturacionDto();
 
-            boolean bonificacion = Bonificacion.isBonificacion(f.getFechaPago());
-            double montoBonificacion = (bonificacion) ? Bonificacion.bonitificacion : 0.0;
-            double sueldoBruto = (bonificacion) ? f.getSueldoNeto() - Bonificacion.bonitificacion : f.getSueldoNeto();
+            boolean bonificacion = FacturacionHelper.isBonificacion(f.getFechaPago());
+            double montoBonificacion = (bonificacion) ? FacturacionHelper.bonitificacion : 0.0;
+            double sueldoBruto = (bonificacion) ? f.getSueldoNeto() - FacturacionHelper.bonitificacion : f.getSueldoNeto();
 
             dto.setId(f.getId());
             dto.setFechaPago(format.format(Date.valueOf(f.getFechaPago())));
@@ -75,6 +75,12 @@ public class FacturacionServiceImpl implements FacturacionService {
             facturas.add(dto);
         }
         return facturas;
+    }
+
+    @Override
+    public boolean empleadoPagado(int idEmpleado, LocalDate date) {
+        System.out.println(date);
+        return factrepo.empleadoPagado(idEmpleado, date);
     }
 
 }

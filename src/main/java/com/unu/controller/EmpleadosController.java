@@ -5,24 +5,20 @@ import com.unu.controller.request.InsertarEmpleadoRequest;
 import com.unu.entity.Contrato;
 import com.unu.entity.CuentaBancaria;
 import com.unu.entity.Empleado;
+import com.unu.entity.Facturacion;
 import com.unu.entity.dto.*;
-import com.unu.entity.enums.Bonificacion;
+import com.unu.entity.enums.FacturacionHelper;
 import com.unu.service.*;
 import com.unu.serviceimpl.CuentaBancariaImpl;
 import com.unu.serviceimpl.FacturacionServiceImpl;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.Gson;
@@ -74,10 +70,19 @@ public class EmpleadosController {
 
         if (logiservice.tiempoSesion()) {
             ModelAndView mav = new ModelAndView("empleados/EmpleadosList");
-
+            LocalDate hoy = LocalDate.now();
             List<EmpleadoDto> empleados = new ArrayList<>();
+
             try {
-                empleados = empleadoService.listAllEmpleados(nombre, areaa, jornad); //listAllEmpleadosOrdenActivo
+                empleados = empleadoService.listAllEmpleados(nombre, areaa, jornad);
+                if (hoy.getDayOfMonth() == FacturacionHelper.diaPago){
+                    for (EmpleadoDto e : empleados){
+                        if (e.isActivo() && !facturacionService.empleadoPagado(e.getId(), hoy)){
+                            empleadoService.emitirRecibo(e.getId(), FacturacionHelper.isBonificacion(hoy));
+                        }
+                    }
+                }
+
             } catch (Exception e) {
                 System.out.println("listEmpleados() -> " + e.getMessage());
             }
@@ -219,7 +224,7 @@ public class EmpleadosController {
             mav.addObject("facturacion", facturacion);
             mav.addObject("facturas", facturas);
             mav.addObject("facturacionJson", facturacionJson);
-            mav.addObject("bonificacion", Bonificacion.isBonificacion());
+            mav.addObject("bonificacion", FacturacionHelper.isBonificacion());
         } catch (Exception e) {
             System.out.println("getEmitirRecibo() => " + e.getMessage());
         }
@@ -230,13 +235,13 @@ public class EmpleadosController {
     public ModelAndView emitirRecibo(@PathVariable int id, @ModelAttribute("facturacion") FacturacionDto facturacionDto) throws Exception {
         ModelAndView mav = new ModelAndView("empleados/EmitirRecibo");
         try {
-            FacturacionDto facturacion = empleadoService.emitirRecibo(id, Bonificacion.isBonificacion());
+            FacturacionDto facturacion = empleadoService.emitirRecibo(id, FacturacionHelper.isBonificacion());
 
             String facturacionJson = new Gson().toJson(facturacion);
 
             mav.addObject("facturacion", facturacion);
             mav.addObject("facturacionJson", facturacionJson);
-            mav.addObject("bonificacion", Bonificacion.isBonificacion());
+            mav.addObject("bonificacion", FacturacionHelper.isBonificacion());
             mav.addObject("mensaje", "Recibo emitido exitosamente a " +facturacion.getEmpleado() + " (S/." + facturacion.getSueldoNeto() + ").");
         } catch (Exception e) {
             System.out.println("getEmitirRecibo() => " + e.getMessage());

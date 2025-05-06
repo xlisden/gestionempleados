@@ -4,7 +4,7 @@ import com.unu.controller.request.EditarEmpleadoRequest;
 import com.unu.controller.request.InsertarEmpleadoRequest;
 import com.unu.entity.*;
 import com.unu.entity.dto.*;
-import com.unu.entity.enums.Bonificacion;
+import com.unu.entity.enums.FacturacionHelper;
 import com.unu.repository.*;
 import com.unu.service.EmpleadoService;
 import jakarta.transaction.Transactional;
@@ -159,9 +159,9 @@ public class EmpleadoServiceimpl implements EmpleadoService {
         if (!empleado.isActivo())
             throw new Exception("El empleado no tiene un contrato activo.");
 
-        double sueldo = (bonificacion) ? contrato.getArea().getSueldoBasico() + Bonificacion.bonitificacion : contrato.getArea().getSueldoBasico();
+        double sueldo = (bonificacion) ? contrato.getArea().getSueldoBasico() + FacturacionHelper.bonitificacion : contrato.getArea().getSueldoBasico();
 
-        Facturacion facturacion = new Facturacion(LocalDate.now(), sueldo, empleado);
+        com.unu.entity.Facturacion facturacion = new com.unu.entity.Facturacion(LocalDate.now(), sueldo, empleado);
         facturacionrepository.save(facturacion);
 
         FacturacionDto dto = new FacturacionDto();
@@ -188,8 +188,8 @@ public class EmpleadoServiceimpl implements EmpleadoService {
         Empleado empleado = contrato.getEmpleado();
         if (empleado == null)
             throw new Exception("El empleado no existe.");
-        if (!empleado.isActivo())
-            throw new Exception("El empleado no tiene un contrato activo.");
+//        if (!empleado.isActivo())
+//            throw new Exception("El empleado no tiene un contrato activo.");
 
         double sueldo = contrato.getArea().getSueldoBasico();
         FacturacionDto dto = new FacturacionDto();
