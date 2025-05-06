@@ -1,5 +1,6 @@
 package com.unu.serviceimpl;
 
+import com.unu.controller.request.EditarEmpleadoRequest;
 import com.unu.controller.request.InsertarEmpleadoRequest;
 import com.unu.entity.*;
 import com.unu.entity.dto.*;
@@ -296,7 +297,7 @@ public class EmpleadoServiceimpl implements EmpleadoService {
                 String extension = "";
                 int i = originalFilename.lastIndexOf('.');
                 if (i > 0) {
-                    extension = originalFilename.substring(i);
+                	extension = originalFilename.substring(i);
                 }
                 if (extension.equals(".jpg") || extension.equals(".png") || extension.equals(".webp") || extension.equals(".svg")) {
                     Path filePath = Paths.get("src/main/resources/static/img/" + empleado.getCod() + extension);
@@ -315,6 +316,46 @@ public class EmpleadoServiceimpl implements EmpleadoService {
             return "ddd.png";
         }
     }
+
+	@Override
+	public Empleado getEmpleadoNormal(int id) throws Exception {
+		return  empleadoRepository.findById(id).orElseThrow(() -> new Exception("El Empleado no existe."));
+	}
+
+	@Override
+	public EditarEmpleadoRequest empleadoEditar(Empleado empe, Contrato contrato, CuentaBancaria cuenta) {
+		EditarEmpleadoRequest e = new EditarEmpleadoRequest();
+		e.setApMaterno(empe.getApMaterno());
+		e.setApPaterno(empe.getApPaterno());
+		e.setArea(contrato.getArea());
+		e.setBanco(cuenta.getBanco());
+		e.setCci(cuenta.getCci());
+		e.setDni(empe.getDni());
+		e.setEstadoCivil(empe.getEstadoCivil());
+		e.setFechaEmision(contrato.getFechaEmision());
+		e.setFechaNacimiento(empe.getFechaNac());
+		//e.setFoto(empe.);
+		e.setGenero(empe.isGenero());
+		e.setJornadaLaboral(contrato.getJornadaLaboral()); 
+		e.setModalidadContrato(contrato.getModalidadCont());
+		e.setNombre(empe.getNombre());
+		return e;
+	}
+
+	@Override
+	public Empleado empleadoEditarPost(EditarEmpleadoRequest empe, MultipartFile foto,int id) {
+		Empleado actualizado= null;
+		try {
+			 actualizado = new Empleado(id,getEmpleado(id).getCod(),empe.getDni(),empe.getNombre(),empe.getApPaterno(),empe.getApMaterno(),empe.isGenero(),
+				empe.getEstadoCivil(),empe.getFechaNacimiento(),getEmpleado(id).getFoto(),empe.isGenero());
+			 if(!foto.isEmpty())
+				 actualizado.setFoto(nombreFoto(foto, actualizado));
+			 return actualizado;
+		} catch (Exception e) {
+			System.out.println(" no se nada ya ,FALLO EDITAR EMPLEADO POST: "+e.getMessage());
+			return actualizado;
+		}		
+	}
 
 
 }	

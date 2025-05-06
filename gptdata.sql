@@ -35,5 +35,5 @@ VALUES
 INSERT INTO `gestionempleados`.`login`
 (`IdLogin`,`Contrasena`,`Estado`,`Horas`,`Usuario`,`IdEmpleado`)
 VALUES
-(0,123,false,null,'sa',3);
+(0,123,false,null,'sa',1);
 

@@ -67,15 +67,16 @@ public class LoginServiceimpl implements LoginService {
 
         	 int diferencia = (int) Math.abs(Duration.between(sesion, ahora).toMinutes());
             System.out.println("minutos en sesion: " + diferencia);
-            if (diferencia <= 45 && getLogin(1).isEstado()) {
+            if (diferencia <= 15 && getLogin(1).isEstado()) {
+            	getLogin(1).setHoras(ahora);
                 return true;
             }
         } catch (Exception e) {
-            System.out.println("---- CERRAR SESION| HAY ERROR  ---- : " + e.getMessage());
+            System.out.println("---- CERRAR SESION-------< HAY ERROR : " + e.getMessage());
             getLogin(1).setEstado(false);
             return false;
         }
-        System.out.println("---- CERRAR SESION  ----");
+        System.out.println("---- CERRAR SESION  ----< paso el tiempo");
         getLogin(1).setEstado(false);
         return false;
     }

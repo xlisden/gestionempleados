@@ -35,4 +35,18 @@ public class LoginController {
 		 else
 		 	return "redirect:/sis/login";
 	}
+	
+	
+	@GetMapping("/cerrarsesion")
+	public String cerrarSesion() {
+		Login lg;
+		try {
+			lg=logiservice.getLogin(1);
+			logiservice.updateLogin(new Login(1, lg.getUsurio(), lg.getContraseña(), lg.getEmpleado(), false, null));
+			return "redirect:/sis/login";
+		} catch (Exception e) {
+			return "redirect:/sis/login";
+		}	
+		
+	}
 }

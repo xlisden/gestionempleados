@@ -1,5 +1,6 @@
 package com.unu.service;
 
+import com.unu.controller.request.EditarEmpleadoRequest;
 import com.unu.controller.request.InsertarEmpleadoRequest;
 import com.unu.entity.*;
 import com.unu.entity.dto.*;
@@ -15,6 +16,8 @@ public interface EmpleadoService {
     public abstract Empleado addEmple(Empleado emple);
 
     public abstract EmpleadoDetalleDto getEmpleado(int id) throws Exception;
+    
+    public abstract Empleado getEmpleadoNormal(int id) throws Exception;
 
     public abstract void updateEmple(Empleado emple);
 
@@ -43,5 +46,10 @@ public interface EmpleadoService {
     public abstract Empleado empleadoBruto(InsertarEmpleadoRequest e, MultipartFile foto);
 
     public abstract List<EmpleadoDto> listAllEmpleadosOrdenActivo();
+    
+    public abstract EditarEmpleadoRequest empleadoEditar(Empleado empe,Contrato contrato, CuentaBancaria cuenta);
+    
+    public abstract Empleado empleadoEditarPost(EditarEmpleadoRequest empe,MultipartFile foto,int id);
+    
 
 }
