@@ -65,6 +65,8 @@
                 <button id="btnGenerar" type="submit" class="btn btn-primary mb-5" onclick="borrar()">Emitir</button>
             </div>
         </div>
+
+        <input type="text" id="facturacionJson">
     </form>
 </div>
 
@@ -116,8 +118,8 @@
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
 
-        doc.text("Hello world!", 10, 10);
-        doc.save("a4.pdf");
+        doc.text("Hello pdf!", 10, 10);
+        doc.save("Recibo .pdf");
     }
 </script>
 <!--<script src="/js/generatePdf.js"></script>-->
