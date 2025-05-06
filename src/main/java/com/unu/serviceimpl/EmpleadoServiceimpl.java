@@ -146,7 +146,7 @@ public class EmpleadoServiceimpl implements EmpleadoService {
 
     @Override
     public FacturacionDto emitirRecibo(int id, boolean bonificacion) throws Exception {
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Contrato contrato = contratoRepository.findByEmpleado(id);
 
         if (contrato == null)
@@ -167,6 +167,8 @@ public class EmpleadoServiceimpl implements EmpleadoService {
         dto.setDni(empleado.getDni());
         dto.setEmpleado(empleado.getNombre() + " " + empleado.getApPaterno().toUpperCase() + " " + empleado.getApMaterno().toUpperCase());
         dto.setFechaPago(format.format(Date.valueOf(LocalDate.now())));
+        dto.setSueldoBruto(sueldo);
+        dto.setBonificaciones(0.0);
         dto.setSueldoNeto(sueldo);
 
         return dto;
