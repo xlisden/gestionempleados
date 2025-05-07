@@ -262,23 +262,30 @@ public class EmpleadosController {
     @PostMapping("/emitir-recibo/{id}")
     public ModelAndView emitirRecibo(@PathVariable int id, @ModelAttribute("facturacion") FacturacionDto facturacionDto) throws Exception {
         ModelAndView mav = new ModelAndView("empleados/EmitirRecibo");
+        FacturacionDto facturacion = new FacturacionDto();
+        List<FacturacionDto> facturas = new ArrayList<>();
+        String facturacionJson = new Gson().toJson("");
         try {
-            FacturacionDto facturacion = empleadoService.emitirRecibo(facturacionDto, id, FacturacionHelper.isBonificacion());
-            List<FacturacionDto> facturas = facturacionService.listByEmpleado(id);
+            facturas = facturacionService.listByEmpleado(id);
 
-            String facturacionJson = new Gson().toJson(facturacion);
+            if (facturacionService.empleadoPagado(id)) {
+                throw new Exception("El empleado ya fue pagado.");
+            }
 
-            mav.addObject("facturacion", facturacion);
-            mav.addObject("facturas", facturas);
-            mav.addObject("facturacionJson", facturacionJson);
-            mav.addObject("bonificacion", FacturacionHelper.isBonificacion());
+            facturacion = empleadoService.emitirRecibo(facturacionDto, id, FacturacionHelper.isBonificacion());
+            facturacionJson = new Gson().toJson(facturacion);
             mav.addObject("mensaje", "Recibo emitido exitosamente a " + facturacion.getEmpleado() + " (S/." + facturacion.getSueldoNeto() + ").");
 
         } catch (Exception e) {
             System.out.println("getEmitirRecibo() => " + e.getMessage());
             mav.addObject("error", "Error al emitir el recibo a " + facturacionDto.getEmpleado() + " (S/." + facturacionDto.getSueldoNeto() + ").");
         }
-//        return "redirect:/empleados";
+
+        mav.addObject("facturacionJson", facturacionJson);
+        mav.addObject("facturacion", facturacionDto);
+        mav.addObject("facturas", facturas);
+        mav.addObject("bonificacion", FacturacionHelper.isBonificacion());
+
         return mav;
     }
 

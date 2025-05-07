@@ -120,6 +120,26 @@ public class AreasController {
         return mav;
     }
 
+    @GetMapping("/add-contrato/{idarea}")
+    public ModelAndView agregarContratoGetArea(@PathVariable int idarea) {
+        ModelAndView mav = new ModelAndView("contratos/AgregarContrato");
+        try {
+            Area area = areaService.getArea(idarea);
+            ContratoRequest contrato = new ContratoRequest();
+
+            contrato.setArea(area);
+            mav.addObject("hayErrores", false);
+            mav.addObject("contrato", contrato);
+            mav.addObject("empleados", empleadoService.getAll());
+            mav.addObject("areas", areaService.listAllAreas());
+            mav.addObject("jornadas", jornadaService.listAllJornadas());
+            mav.addObject("modalidades", empleadoService.getModalidadesContrato());
+        } catch (Exception e) {
+            System.out.println("agregarContratoGetArea() => " + e.getMessage());
+        }
+        return mav;
+    }
+
     @PostMapping("/agregar-contrato")
     public String agregarContrato(@Valid @ModelAttribute("contrato") ContratoRequest request, BindingResult result, Model model) {
         try {

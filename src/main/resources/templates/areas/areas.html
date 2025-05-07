@@ -36,6 +36,9 @@
                     <a th:href="@{/areas/editar/{id}(id=${ area.id })}" style="font-size: 1.5rem">
                         <img src="/icons/edit.svg" alt="editsvg" width="30" height="30">
                     </a>
+                    <a th:href="@{/areas/add-contrato/{idarea}(idarea = ${ area.id })}">
+                        <img src="/icons/pay.svg" alt="editsvg" width="30" height="30">
+                    </a>
                 </td>
             </tr>
             </tbody>
