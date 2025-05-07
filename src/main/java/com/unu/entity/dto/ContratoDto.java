@@ -3,8 +3,11 @@ package com.unu.entity.dto;
 public class ContratoDto {
 
     private int id;
+    private int idEmpleado;
+    private String empleado;
     private String antiguedad;
     private String modalidadContrato;
+    private String fechaEmision;
     private String fechaInicio;
     private String fechaFin;
     private String area;
@@ -76,5 +79,29 @@ public class ContratoDto {
 
     public void setJornadaLaboral(String jornadaLaboral) {
         this.jornadaLaboral = jornadaLaboral;
+    }
+
+    public int getIdEmpleado() {
+        return idEmpleado;
+    }
+
+    public void setIdEmpleado(int idEmpleado) {
+        this.idEmpleado = idEmpleado;
+    }
+
+    public String getEmpleado() {
+        return empleado;
+    }
+
+    public void setEmpleado(String empleado) {
+        this.empleado = empleado;
+    }
+
+    public String getFechaEmision() {
+        return fechaEmision;
+    }
+
+    public void setFechaEmision(String fechaEmision) {
+        this.fechaEmision = fechaEmision;
     }
 }

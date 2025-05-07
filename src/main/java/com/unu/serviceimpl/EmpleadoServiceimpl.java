@@ -22,6 +22,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Service("empleadosservice")
@@ -61,6 +63,7 @@ public class EmpleadoServiceimpl implements EmpleadoService {
     @Override
     public List<EmpleadoDto> listAllEmpleados(String texto, String idArea, String idJornada) {
         List<Empleado> lista = empleadoRepository.listaxFiltro(isNull(texto), isNull(idArea), isNull(idJornada));
+
         List<EmpleadoDto> empleados = new ArrayList<EmpleadoDto>();
         for (Empleado emp : lista) {
             Contrato contrato = contratoRepository.findByEmpleado(emp.getId());
@@ -72,7 +75,7 @@ public class EmpleadoServiceimpl implements EmpleadoService {
             dto.setArea((contrato.getArea() == null) ? "" : contrato.getArea().getNombre());
             dto.setModalidadContrato((contrato.getModalidadCont() == null) ? "" : contrato.getModalidadCont().getNombre());
             dto.setJornadaLaboral((contrato.getJornadaLaboral() == null) ? "" : contrato.getJornadaLaboral().getNombre());
-            dto.setAntiguedad(calcularAnitguedad(contrato.getFechaInicio()));
+            dto.setAntiguedad(calcularAnitguedad(contrato.getFechaInicio(), emp.isActivo()));
             dto.setActivo(emp.isActivo());
 
             empleados.add(dto);
@@ -134,7 +137,7 @@ public class EmpleadoServiceimpl implements EmpleadoService {
         ContratoDto dto = new ContratoDto();
 
         dto.setId(contrato.getId());
-        dto.setAntiguedad(calcularAnitguedad(contrato.getFechaEmision()));
+        dto.setAntiguedad(calcularAnitguedad(contrato.getFechaEmision(), contrato.getEmpleado().isActivo()));
         dto.setModalidadContrato(contrato.getModalidadCont().getNombre());
         dto.setFechaInicio(format.format(Date.valueOf(contrato.getFechaInicio())));
         dto.setFechaFin(null);//dto.setFechaFin(format.format(Date.valueOf(contrato.getFechaFin())));
@@ -214,6 +217,9 @@ public class EmpleadoServiceimpl implements EmpleadoService {
     @Override
     @Transactional
     public void desactivar(int id) {
+        Contrato contrato = contratoRepository.findByEmpleado(id);
+        contrato.setFechaFin(LocalDate.now());
+        contratoRepository.save(contrato);
         empleadoRepository.desactivar(id);
     }
 
@@ -250,7 +256,7 @@ public class EmpleadoServiceimpl implements EmpleadoService {
             dto.setArea((contrato.getArea() == null) ? "" : contrato.getArea().getNombre());
             dto.setModalidadContrato((contrato.getModalidadCont() == null) ? "" : contrato.getModalidadCont().getNombre());
             dto.setJornadaLaboral((contrato.getJornadaLaboral() == null) ? "" : contrato.getJornadaLaboral().getNombre());
-            dto.setAntiguedad(calcularAnitguedad(contrato.getFechaInicio()));
+            dto.setAntiguedad(calcularAnitguedad(contrato.getFechaInicio(), emp.isActivo()));
             dto.setActivo(emp.isActivo());
 
             empleados.add(dto);
@@ -258,8 +264,12 @@ public class EmpleadoServiceimpl implements EmpleadoService {
         return empleados;
     }
 
-    public String calcularAnitguedad(LocalDate inicio) {
+    public String calcularAnitguedad(LocalDate inicio, boolean activo) {
+        if (!activo)
+            return "—";
+
         Period periodo = Period.between(inicio, LocalDate.now());
+        System.out.println("inicio = " + inicio);
         int anios = periodo.getYears();
         int meses = periodo.getMonths();
 
@@ -356,6 +366,21 @@ public class EmpleadoServiceimpl implements EmpleadoService {
 			return actualizado;
 		}		
 	}
+
+    public List<EmpleadoDtoSelect> getAll(){
+        List<EmpleadoDtoSelect> empleados = new ArrayList<>();
+        List<Empleado> lista = empleadoRepository.getAllOrdenActivo();
+
+        for (Empleado e: lista){
+            EmpleadoDtoSelect dto = new EmpleadoDtoSelect();
+
+            dto.setId(e.getId());
+            dto.setNombreCompleto(e.getNombre() + " " + e.getApPaterno().toUpperCase() + " " + e.getApMaterno().toUpperCase());
+            empleados.add(dto);
+        }
+
+        return empleados;
+    }
 
 
 }	

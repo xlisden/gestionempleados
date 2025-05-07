@@ -7,26 +7,30 @@
     a {
         text-decoration: none;
     }
+    .form-select option:hover {
+        background-color: #0d6efd;
+        color: white;
+    }
 </style>
 <body>
 
 <div class="container px-5">
     <h1 class="pb-3">Empleados</h1>
 
-    <div class="d-flex justify-content-between align-items-center pb-3">
-        <a href="/empleados/agregar" class="btn btn-primary col-sm-2" style="font-size: 1.10rem">
+    <div class="d-flex justify-content-between align-items-center pb-3 flex-wrap">
+        <a href="/empleados/agregar" class="btn btn-primary col-sm-2 mb-2 mb-sm-0" style="font-size: 1.10rem">
             <i class="bi bi-plus-circle"></i> Agregar Empleado
         </a>
 
-        <form th:action="@{/empleados}" class="d-flex flex-grow-1 align-items-center" method="GET">
-            <div class="col-sm-3 ms-auto" style="margin-right: 8px">
+        <form th:action="@{/empleados}" class="d-flex flex-grow-1 align-items-center flex-wrap" method="GET">
+            <div class="col-sm-3 ms-auto mb-2 mb-sm-0" style="margin-right: 8px">
                 <div class="form-floating">
                     <input type="text" class="form-control" id="floatBuscar" placeholder="buscar" th:value="${nombre}" name="nombre">
                     <label for="floatBuscar">Buscar por DNI, código o nombre...</label>
                 </div>
             </div>
 
-            <div id="selectArea" class="col-sm-2">
+            <div id="selectArea" class="col-sm-2 mb-2 mb-sm-0">
                 <div class="form-floating">
                     <select id="floatArea" name="areaa" class="form-select">
                         <option value="">Seleccione...</option>
@@ -36,7 +40,7 @@
                 </div>
             </div>
 
-            <div id="selectJornada" class="col-sm-2 " style="margin-left: 8px">
+            <div id="selectJornada" class="col-sm-2 mb-2 mb-sm-0" style="margin-left: 8px">
                 <div class="form-floating">
                     <select id="floatJornada" name="jornad" class="form-select">
                         <option value="">Seleccione...</option>
@@ -75,7 +79,7 @@
                 <td>
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" role="switch" id="isActivo" th:checked="${empleado.activo}"
-                               th:onclick="'javascript:window.location.href=\'' + (${empleado.activo} ? @{/empleados/desactivar/{id}(id=${empleado.id})} : @{/empleados/activar/{id}(id=${empleado.id})}) + '\''">
+                               th:onclick="'javascript:window.location.href=\'' + (${empleado.activo} ? @{/empleados/desactivar/{id}(id=${empleado.id})} : @{/areas/agregar-contrato/{id}(id=${empleado.id})}) + '\''">
 
                     </div>
                 </td>

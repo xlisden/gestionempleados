@@ -50,6 +50,8 @@ public interface EmpleadoService {
     public abstract EditarEmpleadoRequest empleadoEditar(Empleado empe,Contrato contrato, CuentaBancaria cuenta);
     
     public abstract Empleado empleadoEditarPost(EditarEmpleadoRequest empe,MultipartFile foto,int id);
+
+    public abstract List<EmpleadoDtoSelect> getAll();
     
 
 }
