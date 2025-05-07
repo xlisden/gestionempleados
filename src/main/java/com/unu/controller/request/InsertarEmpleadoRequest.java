@@ -4,13 +4,14 @@ import com.unu.entity.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 public class InsertarEmpleadoRequest {
 
     /* Personal */
 
-    @Size(min = 1, max = 8)
+//    @Size(min = 1, max = 8)
     private String dni;
 
     @Size(min = 1, max = 20)
@@ -58,15 +59,12 @@ public class InsertarEmpleadoRequest {
 
     @Size(min = 1, max = 20)
     private String cci;
-    
-    
-    
-    
+
 
     public InsertarEmpleadoRequest() {
     }
 
-    public @Size(min = 1, max = 8) String getDni() {
+    public String getDni() {
         return this.dni;
     }
 
@@ -91,6 +89,8 @@ public class InsertarEmpleadoRequest {
     }
 
     public @NotNull() LocalDate getFechaNacimiento() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
         return this.fechaNacimiento;
     }
 
@@ -126,7 +126,7 @@ public class InsertarEmpleadoRequest {
         return this.cci;
     }
 
-    public void setDni(@Size(min = 1, max = 8) String dni) {
+    public void setDni(String dni) {
         this.dni = dni;
     }
 

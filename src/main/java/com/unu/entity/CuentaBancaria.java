@@ -63,4 +63,14 @@ public class CuentaBancaria {
     public void setEmpleado(Empleado empleado) {
         this.empleado = empleado;
     }
+
+    @Override
+    public String toString() {
+        return "CuentaBancaria{" +
+                "id=" + id +
+                ", banco=" + banco +
+                ", cci='" + cci + '\'' +
+                ", empleado=" + empleado +
+                '}';
+    }
 }

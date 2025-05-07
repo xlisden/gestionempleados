@@ -27,7 +27,7 @@ public interface EmpleadoService {
 
     public abstract ContratoDto getContratoDto(int id) throws Exception;
 
-    public abstract FacturacionDto emitirRecibo(int id, boolean bonificacion) throws Exception;
+    public abstract FacturacionDto emitirRecibo(FacturacionDto facturacionDto, int id, boolean bonificacion) throws Exception;
 
     public abstract FacturacionDto getDatosEmitirRecibo(int id) throws Exception;
 
