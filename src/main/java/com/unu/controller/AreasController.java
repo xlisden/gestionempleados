@@ -1,6 +1,7 @@
 package com.unu.controller;
 
 import com.unu.controller.request.ContratoRequest;
+import com.unu.entity.Area;
 import com.unu.entity.Contrato;
 import com.unu.entity.Empleado;
 import com.unu.service.AreaService;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/areas")
@@ -37,6 +40,49 @@ public class AreasController {
     @Autowired
     @Qualifier("jornadaservice")
     private JornadaLaboralService jornadaService;
+
+
+    @GetMapping({"", "/"})
+    public ModelAndView getAreas(){
+        ModelAndView mav = new ModelAndView("areas/areas");
+        List<Area> areas = new ArrayList<>();
+        try {
+            areas = areaService.listAllAreas();
+        } catch (Exception e) {
+
+        }
+
+        mav.addObject("areas", areas);
+        return mav;
+    }
+
+    @GetMapping("/editar/{id}")
+    public ModelAndView editAreaGet(@PathVariable int id){
+        ModelAndView mav = new ModelAndView("areas/editarArea");
+        Area area = new Area();
+        try {
+            area = areaService.getArea(id);
+        } catch (Exception e) {
+
+        }
+
+        mav.addObject("area", area);
+        return mav;
+    }
+
+    @PostMapping("/editar/{id}")
+    public String editArea(@PathVariable int id, @ModelAttribute Area area, Model model){
+        try {
+            areaService.updateArea(area);
+            System.err.println("me voy al diablo");
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        }
+
+        model.addAttribute("area", area);
+        return "redirect:/areas";
+    }
 
     @GetMapping("/agregar-contrato")
     public ModelAndView agregarContratoGet() {
@@ -127,4 +173,6 @@ public class AreasController {
         }
         return "redirect:/empleados";
     }
+
+
 }
