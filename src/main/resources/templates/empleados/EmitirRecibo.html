@@ -2,7 +2,6 @@
 <html lang="es">
 
 <head th:replace="~{shared/head :: head() }"></head>
-<div th:replace="~{shared/header/header :: header() }"></div>
 <style>
     a {
         text-decoration: none;
@@ -21,6 +20,10 @@
 </style>
 
 <body>
+
+<div th:replace="~{shared/header/header :: header() }"></div>
+<div class="wrapper">
+    <div th:replace="~{shared/sidebar/sidebar :: sidebar() }"></div>
 
 <div class="container px-4">
 
@@ -121,7 +124,7 @@
         </div>
     </div>
 
-
+</div>
 </div>
 
 <!--toasts-->
@@ -217,5 +220,7 @@
     }
 </script>
 </body>
+
+
 
 </html>
