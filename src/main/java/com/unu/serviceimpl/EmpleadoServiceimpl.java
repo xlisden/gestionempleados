@@ -270,7 +270,6 @@ public class EmpleadoServiceimpl implements EmpleadoService {
             return "—";
 
         Period periodo = Period.between(inicio, LocalDate.now());
-        System.out.println("inicio = " + inicio);
         int anios = periodo.getYears();
         int meses = periodo.getMonths();
 

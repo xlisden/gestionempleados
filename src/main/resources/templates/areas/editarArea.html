@@ -2,11 +2,14 @@
 <html lang="en">
 
 <head th:replace="~{shared/head :: head() }"></head>
-<div th:replace="~{shared/header/header :: header() }"></div>
 
 <body>
+<div th:replace="~{shared/header/header :: header() }"></div>
 
-<div class="container">
+<div class="wrapper">
+  <div th:replace="~{shared/sidebar/sidebar :: sidebar() }"></div>
+
+  <div class="container">
 
   <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -44,6 +47,7 @@
       </div>
     </div>
   </form>
+</div>
 </div>
 
 </body>

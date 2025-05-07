@@ -2,9 +2,14 @@
 <html lang="es">
 
 <head th:replace="~{shared/head :: head() }"></head>
-<div th:replace="~{shared/header/header :: header() }"></div>
 
 <body>
+
+<div th:replace="~{shared/header/header :: header() }"></div>
+
+<div class="wrapper">
+	<div th:replace="~{shared/sidebar/sidebar :: sidebar() }"></div>
+
 
 	<div class="container">
 	<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
@@ -18,7 +23,6 @@
 		<div class="container mt-2">
 		
 		<h1 class="mt-2 mb-4">Detalle Empleados</h1>
-			
 		
 			<div class="row">
 				<div class="col-12 col-md-5">
@@ -139,5 +143,7 @@
 		</div>
 	</div>
 	</div>
+
+</div>
 </body>
 </html>
