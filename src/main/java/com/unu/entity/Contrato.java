@@ -116,4 +116,18 @@ public class Contrato {
     public void setJornadaLaboral(JornadaLaboral jornadaLaboral) {
         this.jornadaLaboral = jornadaLaboral;
     }
+
+    @Override
+    public String toString() {
+        return "Contrato{" +
+                "id=" + id +
+                ", empleado=" + empleado +
+                ", area=" + area +
+                ", fechaEmision=" + fechaEmision +
+                ", modalidadCont=" + modalidadCont +
+                ", fechaInicio=" + fechaInicio +
+                ", fechaFin=" + fechaFin +
+                ", jornadaLaboral=" + jornadaLaboral +
+                '}';
+    }
 }

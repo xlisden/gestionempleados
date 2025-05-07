@@ -156,4 +156,22 @@ public class Empleado {
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
+
+    @Override
+    public String toString() {
+        return "Empleado{" +
+                "id=" + id +
+                ", cod='" + cod + '\'' +
+                ", dni='" + dni + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", apPaterno='" + apPaterno + '\'' +
+                ", apMaterno='" + apMaterno + '\'' +
+                ", genero=" + genero +
+                ", estadoCivil=" + estadoCivil +
+                ", fechaNac=" + fechaNac +
+                ", foto='" + foto + '\'' +
+                ", activo=" + activo +
+                ", contratos=" + contratos +
+                '}';
+    }
 }

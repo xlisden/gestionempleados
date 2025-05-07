@@ -78,7 +78,7 @@ public class AreasController {
     public String agregarContrato(@Valid @ModelAttribute("contrato") ContratoRequest request, BindingResult result, Model model) {
         try {
             if (request.getEmpleado() == null) {
-                result.rejectValue("empleado", null, "El empleado es requerido."); // Usa rejectValue
+                result.rejectValue("empleado", null, "El empleado es requerido.");
             }
             if (request.getArea() == null) {
                 result.rejectValue("area", null, "El area es requerido.");
@@ -97,7 +97,6 @@ public class AreasController {
             }
 
             if (result.hasErrors()){
-                System.out.println("is errores");
                 model.addAttribute("hayErrores", true);
                 model.addAttribute("contrato", request);
                 model.addAttribute("empleados", empleadoService.getAll());

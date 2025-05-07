@@ -29,6 +29,7 @@
                                 <div class="form-floating mb-2">
                                     <input type="text" class="form-control" id="floatDni" placeholder="dni" th:field="*{dni}" required>
                                     <label for="floatDni">Nro de DNI</label>
+                                    <p th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}" class="text-danger"></p>
                                 </div>
                                 <div class="form-floating mb-2">
                                     <input type="text" class="form-control" id="floatNombre" placeholder="nombres" th:field="*{nombre}"

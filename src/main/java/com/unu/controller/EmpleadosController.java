@@ -14,6 +14,10 @@ import com.unu.serviceimpl.FacturacionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -77,7 +81,7 @@ public class EmpleadosController {
                 if (hoy.getDayOfMonth() >= FacturacionHelper.diaPago) {
                     for (EmpleadoDto e : empleados) {
                         if (e.isActivo() && !facturacionService.empleadoPagado(e.getId())) {
-                            empleadoService.emitirRecibo(e.getId(), FacturacionHelper.isBonificacion(hoy));
+                            empleadoService.emitirRecibo(null, e.getId(), FacturacionHelper.isBonificacion(hoy));
                         }
                     }
                 }
@@ -133,6 +137,7 @@ public class EmpleadosController {
             mav.addObject("modalidades", empleadoService.getModalidadesContrato());
             mav.addObject("bancos", empleadoService.getBancos());
             mav.addObject("empleado", new InsertarEmpleadoRequest());
+            mav.addObject("hayErrores", false);
 
             return mav;
         }
@@ -141,14 +146,28 @@ public class EmpleadosController {
 
     @PostMapping("/agregar")
     public String insertarPostDatos(@ModelAttribute InsertarEmpleadoRequest empleado,
-                                    @RequestParam(name = "file", required = false) MultipartFile foto) {
+                                    @RequestParam(name = "file", required = false) MultipartFile foto, BindingResult result, Model model) {
 
         try {
-            Empleado nuevoEmpleado = empleadoService.empleadoBruto(empleado, foto);
+            if (empleadoService.dniExists(empleado.getDni())) {
+//                result.addError(new ObjectError("dni", "El DNI ya le pertenece a otro empleado."));
+//                result.rejectValue("dni", "error.dni", "El DNI ya le pertenece a otro empleado.");
+                result.addError(new FieldError("dni", "dni", empleado.getDni(), false, null, null, "El DNI ya le pertenece a otro empleado."));
+                System.err.println(empleado.getDni() + " ya existe.");
+                model.addAttribute("estadosciviles", empleadoService.getEstadosCiviles());
+                model.addAttribute("areas", areaService.listAllAreas());
+                model.addAttribute("jornadas", jornadaService.listAllJornadas());
+                model.addAttribute("modalidades", empleadoService.getModalidadesContrato());
+                model.addAttribute("bancos", empleadoService.getBancos());
+                model.addAttribute("empleado", empleado);
+                model.addAttribute("hayErrores", true);
+                return "empleados/AgregarEmpleado";
+            }
 
-            contratoService.addTipoM(new Contrato(0, nuevoEmpleado, empleado.getArea(), empleado.getFechaEmision()
+            Empleado nuevoEmpleado = empleadoService.empleadoBruto(empleado, foto);
+            Contrato contrato = contratoService.addTipoM(new Contrato(0, nuevoEmpleado, empleado.getArea(), empleado.getFechaEmision()
                     , empleado.getModalidadContrato(), LocalDate.now(), null, empleado.getJornadaLaboral()));
-            cuentaService.addDatos(new CuentaBancaria(0, empleado.getBanco(), empleado.getCci(), nuevoEmpleado));
+            CuentaBancaria cuentaBancaria = cuentaService.addDatos(new CuentaBancaria(0, empleado.getBanco(), empleado.getCci(), nuevoEmpleado));
 
             return "redirect:/empleados";
         } catch (Exception e) {
@@ -164,18 +183,26 @@ public class EmpleadosController {
         if (logiservice.tiempoSesion()) {
             ModelAndView mav = new ModelAndView("empleados/EditarEmpleado");
 
-            mav.addObject("idEmpleado", id);
-            mav.addObject("idContrato", contratoService.findByEmpleado(id).getId());
-            mav.addObject("idCuenta", cuentaService.getByEmpleado(id).getId());
+            try {
+                mav.addObject("idEmpleado", id);
+                mav.addObject("idContrato", contratoService.findByEmpleado(id).getId());
+                mav.addObject("idCuenta", cuentaService.getByEmpleado(id).getId());
 
-            mav.addObject("estadosciviles", empleadoService.getEstadosCiviles());
-            mav.addObject("areas", areaService.listAllAreas());
-            mav.addObject("jornadas", jornadaService.listAllJornadas());
-            mav.addObject("modalidades", empleadoService.getModalidadesContrato());
-            mav.addObject("bancos", empleadoService.getBancos());
-            mav.addObject("empleado", empleadoService.empleadoEditar(empleadoService.getEmpleadoNormal(id),
-                    contratoService.findByEmpleado(id),
-                    cuentaService.getByEmpleado(id)));
+                mav.addObject("estadosciviles", empleadoService.getEstadosCiviles());
+                mav.addObject("areas", areaService.listAllAreas());
+                mav.addObject("jornadas", jornadaService.listAllJornadas());
+                mav.addObject("modalidades", empleadoService.getModalidadesContrato());
+                mav.addObject("bancos", empleadoService.getBancos());
+                mav.addObject("empleado", empleadoService.empleadoEditar(empleadoService.getEmpleadoNormal(id),
+                                                                                        contratoService.findByEmpleado(id),
+                                                                                        cuentaService.getByEmpleado(id)));
+            } catch (Exception e) {
+                System.out.println("editarGetDatos() => " + e.getMessage());
+                e.printStackTrace();
+
+                mav.addObject("idContrato", new Contrato());
+                mav.addObject("idCuenta", new CuentaBancaria());
+            }
             return mav;
         }
         return new LoginController().login();
@@ -236,14 +263,17 @@ public class EmpleadosController {
     public ModelAndView emitirRecibo(@PathVariable int id, @ModelAttribute("facturacion") FacturacionDto facturacionDto) throws Exception {
         ModelAndView mav = new ModelAndView("empleados/EmitirRecibo");
         try {
-            FacturacionDto facturacion = empleadoService.emitirRecibo(id, FacturacionHelper.isBonificacion());
+            FacturacionDto facturacion = empleadoService.emitirRecibo(facturacionDto, id, FacturacionHelper.isBonificacion());
+            List<FacturacionDto> facturas = facturacionService.listByEmpleado(id);
 
             String facturacionJson = new Gson().toJson(facturacion);
 
             mav.addObject("facturacion", facturacion);
+            mav.addObject("facturas", facturas);
             mav.addObject("facturacionJson", facturacionJson);
             mav.addObject("bonificacion", FacturacionHelper.isBonificacion());
             mav.addObject("mensaje", "Recibo emitido exitosamente a " + facturacion.getEmpleado() + " (S/." + facturacion.getSueldoNeto() + ").");
+
         } catch (Exception e) {
             System.out.println("getEmitirRecibo() => " + e.getMessage());
             mav.addObject("error", "Error al emitir el recibo a " + facturacionDto.getEmpleado() + " (S/." + facturacionDto.getSueldoNeto() + ").");

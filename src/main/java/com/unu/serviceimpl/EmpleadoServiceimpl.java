@@ -149,7 +149,7 @@ public class EmpleadoServiceimpl implements EmpleadoService {
     }
 
     @Override
-    public FacturacionDto emitirRecibo(int id, boolean bonificacion) throws Exception {
+    public FacturacionDto emitirRecibo(FacturacionDto facturacionDto, int id, boolean bonificacion) throws Exception {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Contrato contrato = contratoRepository.findByEmpleado(id);
 
@@ -163,8 +163,9 @@ public class EmpleadoServiceimpl implements EmpleadoService {
             throw new Exception("El empleado no tiene un contrato activo.");
 
         double sueldo = (bonificacion) ? contrato.getArea().getSueldoBasico() + FacturacionHelper.bonitificacion : contrato.getArea().getSueldoBasico();
+        LocalDate fecha = (facturacionDto == null) ? LocalDate.now() : LocalDate.parse(facturacionDto.getFechaPago());
 
-        com.unu.entity.Facturacion facturacion = new com.unu.entity.Facturacion(LocalDate.now(), sueldo, empleado);
+        Facturacion facturacion = new Facturacion(fecha, sueldo, empleado);
         facturacionrepository.save(facturacion);
 
         FacturacionDto dto = new FacturacionDto();
@@ -173,7 +174,7 @@ public class EmpleadoServiceimpl implements EmpleadoService {
         dto.setCod(empleado.getCod());
         dto.setDni(empleado.getDni());
         dto.setEmpleado(empleado.getNombre() + " " + empleado.getApPaterno().toUpperCase() + " " + empleado.getApMaterno().toUpperCase());
-        dto.setFechaPago(format.format(Date.valueOf(LocalDate.now())));
+        dto.setFechaPago(format.format(Date.valueOf(fecha)));
         dto.setSueldoBruto(sueldo);
         dto.setBonificacion(0.0);
         dto.setSueldoNeto(sueldo);

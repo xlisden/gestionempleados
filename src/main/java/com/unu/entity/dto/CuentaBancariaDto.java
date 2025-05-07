@@ -7,6 +7,7 @@ public class CuentaBancariaDto {
     private String cci;
 
     public CuentaBancariaDto() {
+        this.id = 0;
     }
 
     public int getId() {
