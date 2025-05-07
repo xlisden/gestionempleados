@@ -36,7 +36,7 @@ public interface EmpleadoRepository extends JpaRepository<Empleado, Serializable
                     (2 is null or c.ContJLaboral = 2);
     */
     
-    @Query("SELECT e,c from Empleado e, Contrato c where e.id=c.empleado.id "
+    @Query("SELECT DISTINCT e from Empleado e, Contrato c where e.id=c.empleado.id "
     		+ "and ((?1 is null or lower(e.nombre) like  %?1%)"
     		+ "or (?1 is null or lower(e.dni) like  %?1%)"
     		+ "or (?1 is null or lower(e.apPaterno) like  %?1%)"

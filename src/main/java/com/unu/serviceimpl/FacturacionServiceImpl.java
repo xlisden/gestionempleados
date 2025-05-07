@@ -78,9 +78,8 @@ public class FacturacionServiceImpl implements FacturacionService {
     }
 
     @Override
-    public boolean empleadoPagado(int idEmpleado, LocalDate date) {
-        System.out.println(date);
-        return factrepo.empleadoPagado(idEmpleado, date);
+    public boolean empleadoPagado(int idEmpleado) {
+        return factrepo.empleadoPagado(idEmpleado);
     }
 
 }

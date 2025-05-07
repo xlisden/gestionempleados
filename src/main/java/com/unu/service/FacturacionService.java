@@ -19,5 +19,5 @@ public interface FacturacionService {
 
     public abstract List<FacturacionDto> listByEmpleado(int idEmpleado);
 
-    public abstract boolean empleadoPagado(int idEmpleado, LocalDate date);
+    public abstract boolean empleadoPagado(int idEmpleado);
 }
