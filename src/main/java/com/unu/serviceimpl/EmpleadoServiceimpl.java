@@ -267,13 +267,13 @@ public class EmpleadoServiceimpl implements EmpleadoService {
 
     public String calcularAnitguedad(LocalDate inicio, boolean activo) {
         if (!activo)
-            return "—";
+            return "";
 
         Period periodo = Period.between(inicio, LocalDate.now());
         int anios = periodo.getYears();
         int meses = periodo.getMonths();
 
-        return anios + " años, " + meses + " meses";
+        return " - " + anios + " años, " + meses + " meses";
     }
 
     public int calcularEdad(LocalDate fechaNac) {
