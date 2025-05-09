@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head th:replace="~{shared/head :: head() }"></head>
+<style>
+    a {
+        text-decoration: none;
+    }
+
+    .form-select {
+        background-color: #F5F7FC;
+        appearance: none;
+        border: none;
+        color: black;
+
+        border-radius: 0;
+        box-shadow: none;
+        outline: none;
+    }
+
+    .form-select:focus {
+        outline: none !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
+
+    .profile-card {
+        border-radius: 1rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        padding-top: 1.25rem;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+        padding-bottom: 1rem;
+        background-color: #ffffff;
+        max-width: 360px;
+        /*margin: auto;*/
+    }
+
+    .profile-img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+    .active-class {
+        background-color: #4caf50;
+        color: #fff;
+        font-weight: bold;
+        padding: 0.35rem 0.65rem;
+        font-size: 0.75rem;
+        border-radius: 0.5rem;
+    }
+
+    .inactive-class {
+        background-color: #c0373b;
+        color: #fff;
+        font-weight: bold;
+        padding: 0.35rem 0.65rem;
+        font-size: 0.75rem;
+        border-radius: 0.5rem;
+    }
+
+    .tag-badge {
+        font-size: 0.65rem;
+        padding: 0.35rem 0.65rem;
+        margin-right: 0.25rem;
+        margin-bottom: 0.25rem;
+    }
+</style>
+<script>
+    window.onload = function () {
+      setTimeout(function () {
+    	  window.location.href = /*[[ @{/empleados/{cod}(cod=${id})} ]]*/ '';
+        alert("¡El tiempo sesion a acabado por inactividad!");
+      }, 920000); // 900,000 ms = 15 minutos
+    };
+  </script>
+<body>
+
+<div th:replace="~{shared/menu :: menu()}"></div>
+<div th:replace="~{shared/header :: header() }"></div>
+
+<h1 class="pb-3" style="font-size: 2.25rem; font-weight: bold">Empleados</h1>
+
+<div class="d-flex justify-content-between align-items-center pb-3 flex-wrap">
+    <a href="/empleados/agregar" class="btn btn-primary col-sm-2 mb-2 mb-sm-0 mt-4"
+       style="font-size: 1.10rem; ">
+        <i class="bi bi-plus-circle"></i> Agregar Empleado
+    </a>
+
+    <form th:action="@{/empleados}" class="d-flex flex-grow-1 align-items-center flex-wrap" method="GET">
+        <div class="col-sm-3 col-md-4 ms-auto mb-2 mb-sm-0 mt-4" style="margin-right: 8px">
+            <div class="form-floating">
+                <input type="text" class="form-control" id="floatBuscar" placeholder="buscar" th:value="${nombre}"
+                       name="nombre">
+                <label for="floatBuscar">Buscar por DNI, código o nombre...</label>
+            </div>
+        </div>
+
+        <div id="selectArea" class="col-sm-2 mb-2 mb-sm-0 mt-4">
+            <select id="floatArea" name="areaa" class="form-select">
+                <option value="">Área</option>
+                <option th:each="area : ${ areas }" th:value="${ area.id }" th:text="${ area.nombre }"
+                        th:selected="${ area.id == areaa }"></option>
+            </select>
+            <!--                <div class="form-floating">-->
+            <!--                    <label for="floatArea">Buscar por Área</label>-->
+            <!--                </div>-->
+        </div>
+
+        <div id="selectJornada" class="col-sm-2 mb-3 mb-sm-0 mt-4" style="margin-left: 8px">
+            <select id="floatJornada" name="jornad" class="form-select">
+                <option value="">Jornada</option>
+                <option th:each="jornada : ${ jornadas }" th:value="${ jornada.id }"
+                        th:text="${ jornada.nombre }" th:selected="${ jornada.id == jornad }"></option>
+            </select>
+            <!--                <div class="form-floating">-->
+            <!--                    <label for="floatJornada" class="form-label">Buscar por Jornada</label>-->
+            <!--                </div>-->
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-4 col-md-1 col-sm-2"
+                style="margin-left: 15px; margin-right: 40px;">Buscar
+        </button>
+    </form>
+</div>
+
+<div class="row" style="margin-top: 30px">
+    <div th:each="empleado : ${ empleados }" class="col-4 pt-4 pb-3">
+        <div class="profile-card">
+            <div class="d-flex align-items-start mb-3">
+                <div class="d-flex flex-column align-items-center me-3">
+                    <img src="" alt="empleado_imagen" class="profile-img mb-1">
+                    <span th:text="${empleado.activo} ? 'Activo' : 'Inactivo'" th:class="${empleado.activo} ? 'active-class' : 'inactive-class'" class="small"></span>
+                </div>
+                <div>
+                    <h6 th:text="${ empleado.nombreCompleto }" class="mb-0 fw-bold"></h6>
+                    <small th:text="${ empleado.area }" class="text-muted"></small>
+                    <small th:text="${ empleado.antiguedad }" class="text-muted"></small><br>
+
+                    <div class="mb-3 mt-3 d-flex flex-wrap">
+                        <span th:text="${ empleado.modalidadContrato }" class="badge bg-light text-dark rounded-pill tag-badge"></span>
+                        <span th:text="${ empleado.jornadaLaboral  }" class="badge bg-light text-dark rounded-pill tag-badge"></span>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a th:href="@{/empleados/{id}(id=${ empleado.id })}" class="btn btn-sm float-end">
+                            <i class="bi bi-info-circle"></i>
+                            Info
+                        </a>
+                        <a th:href="@{/empleados/emitir-recibo/{id}(id=${ empleado.id })}" class="btn btn-primary btn-sm float-end">
+                            <i class="bi bi-currency-dollar"></i>
+                            Facturas
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

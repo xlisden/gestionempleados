@@ -6,6 +6,7 @@ import com.unu.controller.request.InsertarEmpleadoRequest;
 import com.unu.entity.Contrato;
 import com.unu.entity.CuentaBancaria;
 import com.unu.entity.Empleado;
+import com.unu.entity.Login;
 import com.unu.entity.dto.*;
 import com.unu.entity.enums.FacturacionHelper;
 import com.unu.service.*;
@@ -72,7 +73,8 @@ public class EmpleadosController {
                                   @RequestParam(required = false) String areaa) throws Exception {
 
         if (logiservice.tiempoSesion()) {
-            ModelAndView mav = new ModelAndView("empleados/EmpleadosList");
+//            ModelAndView mav = new ModelAndView("empleados/EmpleadosList");
+            ModelAndView mav = new ModelAndView("empleados/empleados");
             LocalDate hoy = LocalDate.now();
             List<EmpleadoDto> empleados = new ArrayList<>();
 
@@ -97,7 +99,7 @@ public class EmpleadosController {
 
             return mav;
         }
-        return new LoginController().login();
+        return new ModelAndView("Logeo").addObject("login", new Login());
     }
 
     @GetMapping("/{id}")
@@ -115,14 +117,14 @@ public class EmpleadosController {
             } catch (Exception e) {
                 System.out.println("fallo en la captura de datos: " + e.getMessage());
             }
-
+            mav.addObject("id",id);
             mav.addObject("empleado", empleado);
             mav.addObject("cuentaBancaria", cuenta);
             mav.addObject("contrato", contrato);
 
             return mav;
         }
-        return new LoginController().login();
+        return new ModelAndView("Logeo").addObject("login", new Login());
     }
 
     /* Insertar */
@@ -141,7 +143,7 @@ public class EmpleadosController {
 
             return mav;
         }
-        return new LoginController().login();
+        return new ModelAndView("Logeo").addObject("login", new Login());
     }
 
     @PostMapping("/agregar")
@@ -205,7 +207,7 @@ public class EmpleadosController {
             }
             return mav;
         }
-        return new LoginController().login();
+        return new ModelAndView("Logeo").addObject("login", new Login());
     }
 
     @PostMapping("/editar")
@@ -218,7 +220,7 @@ public class EmpleadosController {
             Empleado nuevoEmpleado = empleadoService.empleadoEditarPost(empleado, foto, idEmpleado);
 
             contratoService.updateContrato(new Contrato(idContrato, nuevoEmpleado, empleado.getArea(), empleado.getFechaEmision()
-                    , empleado.getModalidadContrato(), LocalDate.now(), null, empleado.getJornadaLaboral()));
+                    , empleado.getModalidadContrato(),empleado.getFechaInicio(), null, empleado.getJornadaLaboral()));
             cuentaService.updateDatos(new CuentaBancaria(idCuenta, empleado.getBanco(), empleado.getCci(), nuevoEmpleado));
 
             return "redirect:/empleados";

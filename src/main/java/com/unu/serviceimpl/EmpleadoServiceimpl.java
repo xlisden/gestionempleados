@@ -267,13 +267,13 @@ public class EmpleadoServiceimpl implements EmpleadoService {
 
     public String calcularAnitguedad(LocalDate inicio, boolean activo) {
         if (!activo)
-            return "—";
+            return "";
 
         Period periodo = Period.between(inicio, LocalDate.now());
         int anios = periodo.getYears();
         int meses = periodo.getMonths();
 
-        return anios + " años, " + meses + " meses";
+        return " - " + anios + " años, " + meses + " meses";
     }
 
     public int calcularEdad(LocalDate fechaNac) {
@@ -344,7 +344,7 @@ public class EmpleadoServiceimpl implements EmpleadoService {
 		e.setEstadoCivil(empe.getEstadoCivil());
 		e.setFechaEmision(contrato.getFechaEmision());
 		e.setFechaNacimiento(empe.getFechaNac());
-		//e.setFoto(empe.);
+		e.setFoto(empe.getFoto());
 		e.setGenero(empe.isGenero());
 		e.setJornadaLaboral(contrato.getJornadaLaboral()); 
 		e.setModalidadContrato(contrato.getModalidadCont());
@@ -360,6 +360,7 @@ public class EmpleadoServiceimpl implements EmpleadoService {
 				empe.getEstadoCivil(),empe.getFechaNacimiento(),getEmpleado(id).getFoto(),empe.isGenero());
 			 if(!foto.isEmpty())
 				 actualizado.setFoto(nombreFoto(foto, actualizado));
+			 updateEmple(actualizado);
 			 return actualizado;
 		} catch (Exception e) {
 			System.out.println(" no se nada ya ,FALLO EDITAR EMPLEADO POST: "+e.getMessage());
