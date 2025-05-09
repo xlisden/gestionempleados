@@ -72,7 +72,8 @@ public class EmpleadosController {
                                   @RequestParam(required = false) String areaa) throws Exception {
 
         if (logiservice.tiempoSesion()) {
-            ModelAndView mav = new ModelAndView("empleados/EmpleadosList");
+//            ModelAndView mav = new ModelAndView("empleados/EmpleadosList");
+            ModelAndView mav = new ModelAndView("empleados/empleados");
             LocalDate hoy = LocalDate.now();
             List<EmpleadoDto> empleados = new ArrayList<>();
 
