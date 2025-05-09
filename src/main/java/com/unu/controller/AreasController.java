@@ -194,5 +194,11 @@ public class AreasController {
         return "redirect:/empleados";
     }
 
+    @GetMapping("/prueba")
+    public ModelAndView aunnoborrar(){
+        ModelAndView mav = new ModelAndView("aunoborrar");
+        return mav;
+    }
+
 
 }
