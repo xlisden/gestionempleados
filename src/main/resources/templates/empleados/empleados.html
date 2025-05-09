@@ -79,9 +79,9 @@
 <body>
 
 <div th:replace="~{shared/menu :: menu()}"></div>
-<div th:replace="~{shared/header :: header() }"></div>
+<div th:replace="~{shared/header :: header(titulo = 'Empleados') }"></div>
 
-<h1 class="pb-3" style="font-size: 2.25rem; font-weight: bold">Empleados</h1>
+<!--<h1 class="pb-3" style="font-size: 2.25rem; font-weight: bold">Empleados</h1>-->
 
 <div class="d-flex justify-content-between align-items-center pb-3 flex-wrap">
     <a href="/empleados/agregar" class="btn btn-primary col-sm-2 mb-2 mb-sm-0 mt-4"
