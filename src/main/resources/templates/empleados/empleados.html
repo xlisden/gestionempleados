@@ -6,6 +6,15 @@
     a {
         text-decoration: none;
     }
+    select {
+        border: none;
+        color: white;
+    }
+    .form-select {
+        appearance: none;
+        border: none;
+        color: black;
+    }
 </style>
 <body>
 
@@ -31,25 +40,25 @@
             </div>
 
             <div id="selectArea" class="col-sm-2 mb-2 mb-sm-0 mt-4">
-                <div class="form-floating">
-                    <select id="floatArea" name="areaa" class="form-select">
-                        <option value="">Seleccione...</option>
-                        <option th:each="area : ${ areas }" th:value="${ area.id }" th:text="${ area.nombre }"
-                                th:selected="${ area.id == areaa }"></option>
-                    </select>
-                    <label for="floatArea">Buscar por Área</label>
-                </div>
+                <select id="floatArea" name="areaa" class="form-select">
+                    <option value="">Área</option>
+                    <option th:each="area : ${ areas }" th:value="${ area.id }" th:text="${ area.nombre }"
+                            th:selected="${ area.id == areaa }"></option>
+                </select>
+<!--                <div class="form-floating">-->
+<!--                    <label for="floatArea">Buscar por Área</label>-->
+<!--                </div>-->
             </div>
 
-            <div id="selectJornada" class="col-sm-2 mb-2 mb-sm-0 mt-4" style="margin-left: 8px">
-                <div class="form-floating">
-                    <select id="floatJornada" name="jornad" class="form-select">
-                        <option value="">Seleccione...</option>
-                        <option th:each="jornada : ${ jornadas }" th:value="${ jornada.id }"
-                                th:text="${ jornada.nombre }" th:selected="${ jornada.id == jornad }"></option>
-                    </select>
-                    <label for="floatJornada" class="form-label">Buscar por Jornada</label>
-                </div>
+            <div id="selectJornada" class="col-sm-2 mb-3 mb-sm-0 mt-4" style="margin-left: 8px">
+                <select id="floatJornada" name="jornad" class="form-select">
+                    <option value="">Jornada</option>
+                    <option th:each="jornada : ${ jornadas }" th:value="${ jornada.id }"
+                            th:text="${ jornada.nombre }" th:selected="${ jornada.id == jornad }"></option>
+                </select>
+<!--                <div class="form-floating">-->
+<!--                    <label for="floatJornada" class="form-label">Buscar por Jornada</label>-->
+<!--                </div>-->
             </div>
 
             <button type="submit" class="btn btn-primary mt-4 col-md-1 col-sm-2"
