@@ -1,0 +1,22 @@
+<div th:fragment="header()">
+  <header class="p-3">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center w-100">
+        <div class="dropdown text-end ms-auto">
+          <a href="" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownLogout" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-person-circle fs-2"></i>
+          </a>
+          <ul class="dropdown-menu text-small" aria-labelledby="dropdownLogout">
+            <li>
+              <a class="dropdown-item d-flex align-items-center gap-2" th:href="@{/sis/cerrarsesion}">
+                <img src="/icons/logout.svg" alt="log out svg" width="20" height="20">
+                <span>Cerrar sesión</span>
+              </a>
+            </li>            
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </header>
+</div>

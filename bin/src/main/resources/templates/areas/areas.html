@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{shared/head :: head() }"></head>
+<style>
+    a {
+        text-decoration: none;
+    }
+</style>
+
+<body>
+
+<div th:replace="~{shared/header/header :: header() }"></div>
+
+<div class="wrapper">
+    <div th:replace="~{shared/sidebar/sidebar :: sidebar() }"></div>
+
+<div class="container col-12 col-md-7">
+    <h1 class="pb-3">Áreas</h1>
+
+    <div class="table-responsive">
+        <table class="table align-middle">
+            <thead class="table">
+            <tr>
+                <th>Cod.</th>
+                <th>Area</th>
+                <th>Sueldo</th>
+                <th>Operaciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="area : ${ areas }" th:object="${area}">
+                <td th:text="${ area.id }"></td>
+                <td th:text="${ area.nombre }"></td>
+                <td th:text="${ area.sueldoBasico }"></td>
+                <td>
+<!--                    <a th:href="@{/empleados/{id}(id=${ empleado.id })}">-->
+<!--                        <img th:src="@{/img/detalle.png}" width="30" height="30" alt="detalleIcon">-->
+<!--                    </a>-->
+                    <a th:href="@{/areas/editar/{id}(id=${ area.id })}" style="font-size: 1.5rem">
+                        <img src="/icons/edit.svg" alt="editsvg" width="30" height="30">
+                    </a>
+                    <a th:href="@{/areas/add-contrato/{idarea}(idarea = ${ area.id })}">
+                        <img src="/icons/pay.svg" alt="editsvg" width="30" height="30">
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+
+</body>
+</html>

@@ -7,6 +7,14 @@
         text-decoration: none;
     }
 </style>
+<script>
+    window.onload = function () {
+      setTimeout(function () {
+    	  window.location.href = /*[[ @{/empleados/{cod}(cod=${id})} ]]*/ '';
+        alert("¡El tiempo sesion a acabado por inactividad!");
+      }, 920000); // 900,000 ms = 15 minutos
+    };
+  </script>
 <body>
 
 <div th:replace="~{shared/menu :: menu()}"></div>
@@ -90,7 +98,7 @@
                 </td>
                 <td>
                     <a th:href="@{/empleados/{id}(id=${ empleado.id })}">
-                        <img th:src="@{/img/detalle.png}" width="25" height="25" alt="detalleIcon">
+                        <img th:src="@{/img/detalle.svg}" width="30" height="30" alt="detalleIcon">
                     </a>
                     <a th:href="@{/empleados/editar/{id}(id=${ empleado.id })}" style="font-size: 1.5rem">
                         <img src="/icons/edit.svg" alt="editsvg" width="25" height="25">
