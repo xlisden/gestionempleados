@@ -6,6 +6,7 @@
     a {
         text-decoration: none;
     }
+
     .form-select {
         background-color: #F5F7FC;
         appearance: none;
@@ -16,10 +17,55 @@
         box-shadow: none;
         outline: none;
     }
+
     .form-select:focus {
         outline: none !important;
         box-shadow: none !important;
         border: none !important;
+    }
+
+    .profile-card {
+        border-radius: 1rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        padding-top: 1.25rem;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+        padding-bottom: 1rem;
+        background-color: #ffffff;
+        max-width: 360px;
+        /*margin: auto;*/
+    }
+
+    .profile-img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+    .active-class {
+        background-color: #4caf50;
+        color: #fff;
+        font-weight: bold;
+        padding: 0.35rem 0.65rem;
+        font-size: 0.75rem;
+        border-radius: 0.5rem;
+    }
+
+    .inactive-class {
+        background-color: #c0373b;
+        color: #fff;
+        font-weight: bold;
+        padding: 0.35rem 0.65rem;
+        font-size: 0.75rem;
+        border-radius: 0.5rem;
+    }
+
+    .tag-badge {
+        font-size: 0.65rem;
+        padding: 0.35rem 0.65rem;
+        margin-right: 0.25rem;
+        margin-bottom: 0.25rem;
     }
 </style>
 <body>
@@ -72,190 +118,40 @@
     </form>
 </div>
 
-<div class="row" style="margin-left: 2px; margin-top: 30px">
-    <div class="card" style="width: 450px; margin-right: 20px;">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-2">
-                    <div class="d-flex align-items-center mb-3">
-                        <img src="https://i.pravatar.cc/48" alt="imagen" class="profile-img me-3">
-                    </div>
-                    <span class="rating-badge me-2">Activo</span>
+<div class="row" style="margin-top: 30px">
+    <div th:each="empleado : ${ empleados }" class="col-4 pt-4 pb-3">
+        <div class="profile-card">
+            <div class="d-flex align-items-start mb-3">
+                <div class="d-flex flex-column align-items-center me-3">
+                    <img src="" alt="empleado_imagen" class="profile-img mb-1">
+                    <span th:text="${empleado.activo} ? 'Activo' : 'Inactivo'" th:class="${empleado.activo} ? 'active-class' : 'inactive-class'" class="small"></span>
                 </div>
-                <div class="col-9">
-                    <h5 class="card-title" style="font-weight: bold; margin-top: 10px;">Hola SOY UN GATO</h5>
-                    <p class="card-text">Finanzas - 3 años, 2 meses</p>
-                    <div class="mb-3 mt-3 d-flex flex-wrap">
-                        <span class="badge bg-light text-dark rounded-pill tag-badge">Modalidad</span>
-                        <span class="badge bg-light text-dark rounded-pill tag-badge">Jornada</span>
-                    </div>
-                    <a href="" class="btn btn-primary float-end">
-                        <i class="bi bi-currency-dollar"></i>
-                        Facturas
-                    </a>
-                </div>
+                <div>
+                    <h6 th:text="${ empleado.nombreCompleto }" class="mb-0 fw-bold"></h6>
+                    <small th:text="${ empleado.area }" class="text-muted"></small>
+                    <small th:text="${ empleado.antiguedad }" class="text-muted"></small><br>
 
+                    <div class="mb-3 mt-3 d-flex flex-wrap">
+                        <span th:text="${ empleado.modalidadContrato }" class="badge bg-light text-dark rounded-pill tag-badge"></span>
+                        <span th:text="${ empleado.jornadaLaboral  }" class="badge bg-light text-dark rounded-pill tag-badge"></span>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a th:href="@{/empleados/{id}(id=${ empleado.id })}" class="btn btn-sm float-end">
+                            <i class="bi bi-info-circle"></i>
+                            Info
+                        </a>
+                        <a th:href="@{/empleados/emitir-recibo/{id}(id=${ empleado.id })}" class="btn btn-primary btn-sm float-end">
+                            <i class="bi bi-currency-dollar"></i>
+                            Facturas
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
-<hr>
-
-
-<!--<div class="panel mt-3 mb-2">-->
-<!--    <div class="table-responsive"-->
-<!--         style="margin-left: 60px; margin-right: 50px; margin-top: 20px; padding-bottom: 30px;">-->
-<!--        <table class="table align-middle">-->
-<!--            <thead class="table">-->
-<!--            <tr>-->
-<!--                <th>Cod.</th>-->
-<!--                <th>Nombre Completo</th>-->
-<!--                <th>Area</th>-->
-<!--                <th>Antiguedad</th>-->
-<!--                <th>Modalidad Cont.</th>-->
-<!--                <th>Jornada Lab.</th>-->
-<!--                <th>Activo</th>-->
-<!--                <th>Operaciones</th>-->
-<!--            </tr>-->
-<!--            </thead>-->
-<!--            <tbody>-->
-<!--            <tr th:each="empleado : ${ empleados }" th:object="${empleado}">-->
-<!--                <td th:text="${ empleado.cod }"></td>-->
-<!--                <td th:text="${ empleado.nombreCompleto }"></td>-->
-<!--                <td th:text="${ empleado.area }"></td>-->
-<!--                <td th:text="${ empleado.antiguedad }"></td>-->
-<!--                <td th:text="${ empleado.modalidadContrato }"></td>-->
-<!--                <td th:text="${ empleado.jornadaLaboral  }"></td>-->
-<!--                <td>-->
-<!--                    <div class="form-check form-switch">-->
-<!--                        <input class="form-check-input" type="checkbox" role="switch" id="isActivo"-->
-<!--                               th:checked="${empleado.activo}"-->
-<!--                               th:onclick="'javascript:window.location.href=\'' + (${empleado.activo} ? @{/empleados/desactivar/{id}(id=${empleado.id})} : @{/areas/agregar-contrato/{id}(id=${empleado.id})}) + '\''">-->
-<!--                    </div>-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                    <a th:href="@{/empleados/{id}(id=${ empleado.id })}">-->
-<!--                        <img th:src="@{/img/detalle.png}" width="25" height="25" alt="detalleIcon">-->
-<!--                    </a>-->
-<!--                    <a th:href="@{/empleados/editar/{id}(id=${ empleado.id })}" style="font-size: 1.5rem">-->
-<!--                        <img src="/icons/edit.svg" alt="editsvg" width="25" height="25">-->
-<!--                    </a>-->
-<!--                    <a th:href="@{/empleados/emitir-recibo/{id}(id=${ empleado.id })}">-->
-<!--                        <img src="/icons/pay.svg" alt="editsvg" width="25" height="25">-->
-<!--                    </a>-->
-<!--                </td>-->
-<!--            </tr>-->
-<!--            </tbody>-->
-<!--        </table>-->
-<!--    </div>-->
-<!--</div>-->
-
-<hr>
-
 
 </body>
-
-    <style>
-        .profile-card {
-            border-radius: 1rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            padding: 1.5rem;
-            background-color: #ffffff;
-            max-width: 360px;
-            margin: auto;
-        }
-
-        .profile-img {
-            width: 48px;
-            height: 48px;
-            object-fit: cover;
-            border-radius: 50%;
-        }
-
-        .rating-badge {
-            background-color: #4caf50;
-            color: #fff;
-            font-weight: bold;
-            padding: 0.35rem 0.65rem;
-            font-size: 0.85rem;
-            border-radius: 0.5rem;
-        }
-
-        .tag-badge {
-            font-size: 0.75rem;
-            padding: 0.35rem 0.65rem;
-            margin-right: 0.25rem;
-            margin-bottom: 0.25rem;
-        }
-    </style>
-</head>
-<div class="bg-light py-5">
-
-<div class="profile-card">
-    <div class="d-flex align-items-center mb-3">
-        <div>
-            <img src="https://i.pravatar.cc/48" alt="Dr. Sam Wallfolk" class="profile-img me-3">
-            <br>
-            <span class="rating-badge me-2">Activo</span>
-        </div>
-        <div>
-            <h6 class="mb-0 fw-bold">Dr. Sam Wallfolk</h6>
-            <small class="mb-1 text-muted">Clinical psychologist</small>
-            <span class="mb-1 text-muted small">
-                <i class="bi bi-geo-alt"></i> New York, USA
-            </span>
-            <p class="mb-1 text-muted small">10 yrs of exp.</p>
-            <p class="mb-3 text-muted small">1000+ consultations</p>
-
-            <div class="mb-3 d-flex flex-wrap">
-                <span class="badge bg-light text-dark rounded-pill tag-badge">Abuse</span>
-                <span class="badge bg-light text-dark rounded-pill tag-badge">Depression</span>
-                <span class="badge bg-light text-dark rounded-pill tag-badge">PTSD</span>
-                <span class="badge bg-light text-dark rounded-pill tag-badge">+3</span>
-            </div>
-
-            <div class="d-flex justify-content-between align-items-center">
-                <span class="fw-bold">$80/h</span>
-                <a href="#" class="btn btn-primary btn-sm">Book Consultation</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="d-flex align-items-center mb-2">
-    </div>
-
-
-</div>
-
-</div>
-<div class="d-flex align-items-start mb-3">
-    <div class="d-flex flex-column align-items-center me-3">
-        <img src="https://i.pravatar.cc/48" alt="Dr. Sam Wallfolk" class="profile-img mb-1">
-        <span class="rating-badge">Activo</span>
-    </div>
-    <div>
-        <h6 class="mb-0 fw-bold">Dr. Sam Wallfolk</h6>
-        <small class="text-muted">Clinical psychologist</small><br>
-        <small class="text-muted">
-            <i class="bi bi-geo-alt"></i> New York, USA
-        </small>
-        <p class="mb-1 text-muted small">10 yrs of exp.</p>
-        <p class="mb-3 text-muted small">1000+ consultations</p>
-
-        <div class="mb-3 d-flex flex-wrap">
-            <span class="badge bg-light text-dark rounded-pill tag-badge">Abuse</span>
-            <span class="badge bg-light text-dark rounded-pill tag-badge">Depression</span>
-            <span class="badge bg-light text-dark rounded-pill tag-badge">PTSD</span>
-            <span class="badge bg-light text-dark rounded-pill tag-badge">+3</span>
-        </div>
-
-        <div class="d-flex justify-content-between align-items-center">
-            <span class="fw-bold">$80/h</span>
-            <a href="#" class="btn btn-primary btn-sm">Book Consultation</a>
-        </div>
-    </div>
-</div>
-
 </html>
 <!--font-size: 1.25rem;-->
