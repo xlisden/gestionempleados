@@ -35,20 +35,20 @@
                                 <h4 class="mb-3">Datos personales</h4>
 
                                 <div class="form-floating mb-2">
-                                    <input type="text" class="form-control" id="floatDni"  th:field="*{dni}" required>
+                                    <input type="text" class="form-control" id="floatDni"  th:field="*{dni}" pattern="[0-9]{8}$"required>
                                     <label for="floatDni">Nro de DNI</label> 
                                 </div>
                                 <div class="form-floating mb-2">
-                                    <input type="text" class="form-control" id="floatNombre" placeholder="nombres" th:field="*{nombre}"
+                                    <input type="text" class="form-control" id="floatNombre" placeholder="nombres" th:field="*{nombre}"pattern="[a-zA-ZÑnáéíúóÁÉÍÓÚ\s]*"
                                            required>
                                     <label for="floatNombre">Nombres</label>
                                 </div>
                                 <div class="form-floating mb-2">
-                                    <input type="text" class="form-control" id="floatApPaterno"  placeholder="appaterno" th:field="*{apPaterno}" required>
+                                    <input type="text" class="form-control" id="floatApPaterno"  placeholder="appaterno" th:field="*{apPaterno}"pattern="[a-zA-ZÑnáéíúóÁÉÍÓÚ\s]*" required>
                                     <label for="floatApPaterno">Ap. Paterno</label>
                                 </div>
                                 <div class="form-floating mb-2">
-                                    <input type="text" class="form-control" id="floatApMaterno"  placeholder="apmaterno" th:field="*{apMaterno}" required>
+                                    <input type="text" class="form-control" id="floatApMaterno"  placeholder="apmaterno" th:field="*{apMaterno}" pattern="[a-zA-ZÑnáéíúóÁÉÍÓÚ\s]*"required>
                                     <label for="floatApMaterno">Ap. Materno</label>
                                 </div>
                                 <div class="form-check form-check-inline mt-1 mb-3">
@@ -67,13 +67,18 @@
                                     <label for="floatEstCivil">Estado Civil</label>
                                 </div>
                                 <div class="form-floating mb-2">
-                                    <input type="date" class="form-control" id="floatFechaNac"  placeholder="fechanac" th:field="*{fechaNacimiento}" required>
+                                    <input type="date" class="form-control" id="floatFechaNac"  placeholder="fechanac" th:field="*{fechaNacimiento}"min="1925-01-01" max="2008-12-31" required>
                                     <label for="floatFechaNac">Fecha Nac.</label>
                                 </div>
-                                <div class="form-floating mb-2">
-                                    <input type="file" name="file" class="form-control" id="floatFoto">
-                                    <label for="floatFoto">Foto del Empleado</label>
-                                </div>
+                                <div class="mb-2 d-flex align-items-center">
+								    <div class="form-floating flex-grow-1">
+								        <input type="file" name="file" class="form-control" id="floatFoto">
+								        <label for="floatFoto">Foto del Empleado</label>
+								    </div>
+								    <a href="#" data-bs-toggle="modal" data-bs-target="#formatosModal" class="ms-2" title="Ver formatos permitidos">
+								        <i class="bi bi-info-circle fs-4"></i>
+								    </a>
+								</div>
                             </div>
                         </div>
                     </div>
@@ -106,8 +111,8 @@
                                             <label for="floatModalidad">Modalidad</label>
                                         </div>
                                         <div class="form-floating mb-2">
-                                            <input type="date" class="form-control" id="fechaEmision"  placeholder="fechaems"
-                                                   th:field="*{fechaEmision}" required>
+                                            <input type="date" class="form-control" id="fechaEmision"  placeholder="fechaems"min="2000-01-01" 
+                                                   th:field="*{fechaInicio}" required>
                                             <label for="fechaEmision">Fecha Inicio</label>
                                         </div>
                                     </div>
@@ -126,7 +131,7 @@
                                             <label for="floatBanco">Banco</label>
                                         </div>
                                         <div class="form-floating mb-2">
-                                            <input type="text" class="form-control" id="floatCci" placeholder="CCI" th:field="*{cci}" required>
+                                            <input type="text" class="form-control" id="floatCci" placeholder="CCI" th:field="*{cci}" pattern="[0-9]{20}$"required>
                                             <label for="floatCci">CCI de su Cuenta</label>
                                         </div>
                                     </div>
@@ -147,6 +152,27 @@
     </div>
 
 </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="formatosModal" tabindex="-1" aria-labelledby="formatosModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="formatosModalLabel">Formatos permitidos</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        -Formatos aceptados para la foto del empleado: <strong>.svg</strong>, <strong>.jpg</strong>, <strong>.png</strong>, <strong>.webp</strong>.
+        -Tampoco estara permitido archivos con un peso mayor a 2mb.
+        -Si la foto no cumple o no se sube ninguna, se asignará foto por  <strong>default.</strong>
+        -La imagen debe una tener un formato Carnet o cuadrado 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
 </div>
 </body>
 </html>

@@ -45,12 +45,12 @@
                     <div class="card-body">
                         <h4 class="mb-3">Datos personales</h4>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatDni" placeholder="dni"
+                            <input type="text" class="form-control" id="floatDni" placeholder="dni"pattern="[0-9]{8}$"
                                    th:field="*{dni}" readonly>
                             <label for="floatDni">DNI</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatEmpleado" placeholder="nombres"
+                            <input type="text" class="form-control" id="floatEmpleado" placeholder="nombres"pattern="[a-zA-ZÑnáéíúóÁÉÍÓÚ\s]*"
                                    th:field="*{empleado}" readonly>
                             <label for="floatEmpleado">Nombres</label>
                         </div>
@@ -60,7 +60,7 @@
                             <label for="floatFechaPago">Fecha</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="number" class="form-control" id="floatSueldo" placeholder="nombres"
+                            <input type="number" class="form-control" id="floatSueldo" placeholder="Sueldo base" pattern="^\d*\.?\d{0,2}$"
                                    th:field="*{sueldoBruto}" readonly>
                             <label for="floatSueldo">Sueldo Bruto</label>
                         </div>
