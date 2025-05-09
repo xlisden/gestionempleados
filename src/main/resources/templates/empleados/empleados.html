@@ -68,6 +68,14 @@
         margin-bottom: 0.25rem;
     }
 </style>
+<script>
+    window.onload = function () {
+      setTimeout(function () {
+    	  window.location.href = /*[[ @{/empleados/{cod}(cod=${id})} ]]*/ '';
+        alert("¡El tiempo sesion a acabado por inactividad!");
+      }, 920000); // 900,000 ms = 15 minutos
+    };
+  </script>
 <body>
 
 <div th:replace="~{shared/menu :: menu()}"></div>
@@ -154,4 +162,3 @@
 
 </body>
 </html>
-<!--font-size: 1.25rem;-->
