@@ -3,52 +3,135 @@
 
 <head th:replace="~{shared/head :: head() }"></head>
 <style>
-    a {
+    .job-card {
+        background-color: #fff;
+        border-radius: 1rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        padding: 1.5rem;
+        width: 340px;
+    }
+
+    .job-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .job-header img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+
+    .save-btn {
+        background: none;
+        border: 6px;
+        font-size: 0.9rem;
+        color: #555;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
         text-decoration: none;
     }
-</style>
 
+    .job-title {
+        margin-top: 1rem;
+    }
+
+    .company-name {
+        font-weight: bold;
+        font-size: 0.95rem;
+        color: #333;
+    }
+
+    .posted-time {
+        font-size: 0.75rem;
+        color: #888;
+    }
+
+    .position-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin: 0.5rem 0;
+        color: #111;
+    }
+
+    .tags {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .tag {
+        background-color: #f0f0f0;
+        padding: 0.3rem 0.6rem;
+        border-radius: 0.5rem;
+        font-size: 0.75rem;
+        color: #555;
+    }
+
+    .job-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 2rem;
+    }
+
+    .rate-location {
+        font-size: 0.95rem;
+        color: #000;
+    }
+
+    .location {
+        display: block;
+        font-size: 0.75rem;
+        color: #888;
+    }
+
+    .apply-btn {
+        background-color: #406ff3;
+        color: #fff;
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        font-size: 0.85rem;
+    }
+</style>
+<script>
+    window.onload = function () {
+        setTimeout(function () {
+            window.location.href = /*[[ @{/empleados/{cod}(cod=${id})} ]]*/ '';
+            alert("¡El tiempo sesion a acabado por inactividad!");
+        }, 920000); // 900,000 ms = 15 minutos
+    };
+</script>
 <body>
 
-<div th:replace="~{shared/header/header :: header() }"></div>
+<div th:replace="~{shared/menu :: menu()}"></div>
+<div th:replace="~{shared/header :: header(titulo = 'Áreas') }"></div>
 
-<div class="wrapper">
-    <div th:replace="~{shared/sidebar/sidebar :: sidebar() }"></div>
+<div class="row" style="margin-top: 30px">
+    <div th:each="area : ${ areas }" th:object="${area}" class="col-4 pt-4 pb-3">
+        <div class="job-card">
+            <div class="job-header">
+                <img th:src="@{${svgMap[area.id]}}" alt="svg">
+            </div>
 
-<div class="container col-12 col-md-7">
-    <h1 class="pb-3">Áreas</h1>
+            <div class="job-title">
+                <div th:text="${ area.nombre }" class="position-title"></div>
+            </div>
 
-    <div class="table-responsive">
-        <table class="table align-middle">
-            <thead class="table">
-            <tr>
-                <th>Cod.</th>
-                <th>Area</th>
-                <th>Sueldo</th>
-                <th>Operaciones</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="area : ${ areas }" th:object="${area}">
-                <td th:text="${ area.id }"></td>
-                <td th:text="${ area.nombre }"></td>
-                <td th:text="${ area.sueldoBasico }"></td>
-                <td>
-<!--                    <a th:href="@{/empleados/{id}(id=${ empleado.id })}">-->
-<!--                        <img th:src="@{/img/detalle.png}" width="30" height="30" alt="detalleIcon">-->
-<!--                    </a>-->
-                    <a th:href="@{/areas/editar/{id}(id=${ area.id })}" style="font-size: 1.5rem">
-                        <img src="/icons/edit.svg" alt="editsvg" width="30" height="30">
-                    </a>
-                    <a th:href="@{/areas/add-contrato/{idarea}(idarea = ${ area.id })}">
-                        <img src="/icons/pay.svg" alt="editsvg" width="30" height="30">
-                    </a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+
+            <div class="job-footer">
+                <div th:text="'S/.' + ${ area.sueldoBasico }" class="rate-location">
+                </div>
+                <button class="apply-btn">
+                    <i class="bi bi-pencil" style="margin-right: 5px"></i> Editar
+                </button>
+            </div>
+        </div>
     </div>
-</div>
 </div>
 
 </body>

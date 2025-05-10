@@ -3,10 +3,6 @@
 
 <head th:replace="~{shared/head :: head() }"></head>
 <style>
-    a {
-        text-decoration: none;
-    }
-
     .form-select {
         background-color: #F5F7FC;
         appearance: none;
@@ -70,20 +66,20 @@
 </style>
 <script>
     window.onload = function () {
-      setTimeout(function () {
-    	  window.location.href = /*[[ @{/empleados/{cod}(cod=${id})} ]]*/ '';
-        alert("¡El tiempo sesion a acabado por inactividad!");
-      }, 920000); // 900,000 ms = 15 minutos
+        setTimeout(function () {
+            window.location.href = /*[[ @{/empleados/{cod}(cod=${id})} ]]*/ '';
+            alert("¡El tiempo sesion a acabado por inactividad!");
+        }, 920000); // 900,000 ms = 15 minutos
     };
-  </script>
+</script>
 <body>
 
 <div th:replace="~{shared/menu :: menu()}"></div>
-<div th:replace="~{shared/header :: header() }"></div>
+<div th:replace="~{shared/header :: header(titulo = 'Empleados') }"></div>
 
-<h1 class="pb-3" style="font-size: 2.25rem; font-weight: bold">Empleados</h1>
+<!--<h1 class="pb-3" style="font-size: 2.25rem; font-weight: bold">Empleados</h1>-->
 
-<div class="d-flex justify-content-between align-items-center pb-3 flex-wrap">
+<div class="d-flex justify-content-between align-items-center flex-wrap">
     <a href="/empleados/agregar" class="btn btn-primary col-sm-2 mb-2 mb-sm-0 mt-4"
        style="font-size: 1.10rem; ">
         <i class="bi bi-plus-circle"></i> Agregar Empleado
@@ -132,7 +128,8 @@
             <div class="d-flex align-items-start mb-3">
                 <div class="d-flex flex-column align-items-center me-3">
                     <img src="" alt="empleado_imagen" class="profile-img mb-1">
-                    <span th:text="${empleado.activo} ? 'Activo' : 'Inactivo'" th:class="${empleado.activo} ? 'active-class' : 'inactive-class'" class="small"></span>
+                    <span th:text="${empleado.activo} ? 'Activo' : 'Inactivo'"
+                          th:class="${empleado.activo} ? 'active-class' : 'inactive-class'" class="small"></span>
                 </div>
                 <div>
                     <h6 th:text="${ empleado.nombreCompleto }" class="mb-0 fw-bold"></h6>
@@ -140,8 +137,10 @@
                     <small th:text="${ empleado.antiguedad }" class="text-muted"></small><br>
 
                     <div class="mb-3 mt-3 d-flex flex-wrap">
-                        <span th:text="${ empleado.modalidadContrato }" class="badge bg-light text-dark rounded-pill tag-badge"></span>
-                        <span th:text="${ empleado.jornadaLaboral  }" class="badge bg-light text-dark rounded-pill tag-badge"></span>
+                        <span th:text="${ empleado.modalidadContrato }"
+                              class="badge bg-light text-dark rounded-pill tag-badge"></span>
+                        <span th:text="${ empleado.jornadaLaboral  }"
+                              class="badge bg-light text-dark rounded-pill tag-badge"></span>
                     </div>
 
                     <div class="d-flex justify-content-between align-items-center">
@@ -149,7 +148,8 @@
                             <i class="bi bi-info-circle"></i>
                             Info
                         </a>
-                        <a th:href="@{/empleados/emitir-recibo/{id}(id=${ empleado.id })}" class="btn btn-primary btn-sm float-end">
+                        <a th:href="@{/empleados/emitir-recibo/{id}(id=${ empleado.id })}"
+                           class="btn btn-primary btn-sm float-end">
                             <i class="bi bi-currency-dollar"></i>
                             Facturas
                         </a>

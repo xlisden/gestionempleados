@@ -19,7 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/areas")
@@ -48,6 +50,14 @@ public class AreasController {
         List<Area> areas = new ArrayList<>();
         try {
             areas = areaService.listAllAreas();
+
+            Map<Integer, String> svgMap = new HashMap<>();
+            svgMap.put(areas.get(0).getId(), "/icons/pay.svg");
+            svgMap.put(areas.get(1).getId(), "/icons/customer.svg");
+            svgMap.put(areas.get(2).getId(), "/icons/graphics.svg");
+            svgMap.put(areas.get(3).getId(), "/icons/personlist.svg");
+
+            mav.addObject("svgMap", svgMap);
         } catch (Exception e) {
 
         }
