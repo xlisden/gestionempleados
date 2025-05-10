@@ -13,6 +13,7 @@ public class EmpleadoDetalleDto {
     private int edad;
     private String estado;
     private String foto;
+    private boolean isActivo;
 
     public EmpleadoDetalleDto() {
     }
@@ -103,5 +104,13 @@ public class EmpleadoDetalleDto {
 
     public void setFoto(String foto) {
         this.foto = foto;
+    }
+
+    public boolean isActivo() {
+        return isActivo;
+    }
+
+    public void setActivo(boolean activo) {
+        isActivo = activo;
     }
 }

@@ -2,49 +2,88 @@
 <html lang="en">
 
 <head th:replace="~{shared/head :: head() }"></head>
-
+<script>
+    window.onload = function () {
+        setTimeout(function () {
+            window.location.href = /*[[ @{/empleados/{cod}(cod=${id})} ]]*/ '';
+            alert("¡El tiempo sesion a acabado por inactividad!");
+        }, 920000); // 900,000 ms = 15 minutos
+    };
+</script>
 <body>
 
 <div th:replace="~{shared/menu :: menu()}"></div>
 <div th:replace="~{shared/header :: header(titulo = 'Editar Área') }"></div>
 
 
-  <div class="container">
+<div class="container">
 
-  <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="/areas">Áreas</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Editar</li>
-    </ol>
-  </nav>
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/areas">Áreas</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Editar</li>
+        </ol>
+    </nav>
 
-  <form th:action="@{/areas/editar/{id}(id = ${area.id})}" th:object="${area}" method="post">
+    <form th:action="@{/areas/editar/{id}(id = ${area.id})}" th:object="${area}" method="post">
 
-    <div class="card mb-3 col-12 col-md-5">
-      <div class="card-body">
-        <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="floatId" placeholder="dni" th:field="*{id}" readonly>
-          <label for="floatId">Cod.</label>
+        <div class="row">
+            <div class="card mb-3 col-12 col-md-5" style="padding-top: 1rem; margin-right: 2rem;">
+                <div class="card-body">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatId" placeholder="dni" th:field="*{id}"
+                               readonly>
+                        <label for="floatId">Cod.</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatNombre" placeholder="nombres"
+                               th:field="*{nombre}">
+                        <label for="floatNombre">Nombre</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="floatSueldo" placeholder="nombres"
+                               th:field="*{sueldoBasico}">
+                        <label for="floatSueldo">Sueldo Básico</label>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary mb-5 col-md-3">Editar</button>
+                </div>
+            </div>
+
+            <div class="card col-md-5 table-responsive" style="padding-top: 1rem;" >
+                <table class="table align-middle">
+                    <thead class="table">
+                    <tr>
+                        <th>Cod.</th>
+                        <th>Nombre Completo</th>
+                        <th>Operaciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="empleado : ${ empleados }" th:object="${empleado}">
+                        <td th:text="${ empleado.cod }"></td>
+                        <td th:text="${ empleado.nombreCompleto }"></td>
+                        <td>
+                            <a th:href="@{/empleados/{id}(id=${ empleado.id })}">
+                                <img th:src="@{/img/detalle.svg}" width="30" height="30" alt="detalleIcon">
+                            </a>
+                            <a th:href="@{/empleados/editar/{id}(id=${ empleado.id })}" style="font-size: 1.5rem">
+                                <img src="/icons/edit.svg" alt="editsvg" width="30" height="30">
+                            </a>
+                            <a th:href="@{/empleados/emitir-recibo/{id}(id=${ empleado.id })}">
+                                <img src="/icons/pay.svg" alt="editsvg" width="30" height="30">
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="floatNombre" placeholder="nombres"
-                 th:field="*{nombre}">
-          <label for="floatNombre">Nombre</label>
-        </div>
-        <div class="form-floating mb-3">
-          <input type="number" class="form-control" id="floatSueldo" placeholder="nombres"
-                 th:field="*{sueldoBasico}">
-          <label for="floatSueldo">Sueldo Básico</label>
-        </div>
-      </div>
-    </div>
+    </form>
 
-    <div class="row pt-3">
-      <div class="col-5 d-flex justify-content-center">
-        <button type="submit" class="btn btn-primary mb-5">Editar</button>
-      </div>
-    </div>
-  </form>
+
 </div>
 
 </body>

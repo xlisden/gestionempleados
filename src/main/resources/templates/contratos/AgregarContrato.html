@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <head th:replace="~{shared/head :: head() }"></head>
-</head>
+<head th:replace="~{shared/head :: head() }"></head>
+<script>
+  window.onload = function () {
+    setTimeout(function () {
+      window.location.href = /*[[ @{/empleados/{cod}(cod=${id})} ]]*/ '';
+      alert("¡El tiempo sesion a acabado por inactividad!");
+    }, 920000); // 900,000 ms = 15 minutos
+  };
+</script>
 <body>
 
 <div th:replace="~{shared/header/header :: header(titulo = '') }"></div>

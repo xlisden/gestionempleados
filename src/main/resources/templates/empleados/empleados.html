@@ -134,7 +134,7 @@
                 <div>
                     <h6 th:text="${ empleado.nombreCompleto }" class="mb-0 fw-bold"></h6>
                     <small th:text="${ empleado.area }" class="text-muted"></small>
-                    <small th:text="${ empleado.antiguedad }" class="text-muted"></small><br>
+                    <small th:text="' - ' + ${ empleado.antiguedad }" class="text-muted"></small><br>
 
                     <div class="mb-3 mt-3 d-flex flex-wrap">
                         <span th:text="${ empleado.modalidadContrato }"

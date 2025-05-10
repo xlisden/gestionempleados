@@ -103,6 +103,7 @@ public class EmpleadoServiceimpl implements EmpleadoService {
         dto.setEstadoCivil((emp.getEstadoCivil() == null) ? "" : emp.getEstadoCivil().getNombre());
         dto.setEdad(calcularEdad(emp.getFechaNac()));
         dto.setEstado(emp.isActivo() ? "Activo" : "Inactivo");
+        dto.setActivo(emp.isActivo());
         dto.setFoto(emp.getFoto());
 
         return dto;
@@ -273,7 +274,7 @@ public class EmpleadoServiceimpl implements EmpleadoService {
         int anios = periodo.getYears();
         int meses = periodo.getMonths();
 
-        return " - " + anios + " años, " + meses + " meses";
+        return anios + " años, " + meses + " meses";
     }
 
     public int calcularEdad(LocalDate fechaNac) {
