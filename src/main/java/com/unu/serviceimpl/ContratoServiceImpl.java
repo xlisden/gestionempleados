@@ -4,6 +4,7 @@ import com.unu.controller.request.ContratoRequest;
 import com.unu.entity.*;
 import com.unu.repository.ContratoRepository;
 import com.unu.service.ContratoService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -68,6 +69,12 @@ public class ContratoServiceImpl implements ContratoService {
     public boolean contratoIsActivo(int idEmpleado) {
         return contratoRepository.contratoIsActivo(idEmpleado);
     }
+
+    @Override
+    public void desactivar(int id) {
+        contratoRepository.desactivar(id);
+    }
+
 
 //    @Override
 //    public ContratoRequest findByEmpleadoRequest(int idEmpleado)  throws Exception{

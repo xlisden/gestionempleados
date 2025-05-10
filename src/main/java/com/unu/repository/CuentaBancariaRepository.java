@@ -13,4 +13,7 @@ public interface CuentaBancariaRepository extends JpaRepository<CuentaBancaria, 
     @Query("SELECT c FROM CuentaBancaria c WHERE c.empleado.id = ?1")
     public CuentaBancaria findByEmpleado(int id);
 
+    @Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM CuentaBancaria c WHERE c.cci = ?1")
+    public boolean cciExists(String cci);
+    
 }

@@ -1,8 +1,6 @@
 package com.unu.serviceimpl;
 
-import com.unu.controller.request.InsertarEmpleadoRequest;
 import com.unu.entity.CuentaBancaria;
-import com.unu.entity.Empleado;
 import com.unu.repository.CuentaBancariaRepository;
 import com.unu.service.CuentaBancariaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +15,8 @@ public class CuentaBancariaImpl implements CuentaBancariaService {
     @Autowired
     @Qualifier("cuentabancariarepository")
     private CuentaBancariaRepository datosrepo;
+    @Autowired
+    private CuentaBancariaRepository cuentabancariarepository;
 
 
     @Override
@@ -49,6 +49,10 @@ public class CuentaBancariaImpl implements CuentaBancariaService {
         return datosrepo.findByEmpleado(id);
     }
 
-	
+    @Override
+    public boolean cciExists(String cci) {
+        return cuentabancariarepository.cciExists(cci);
+    }
+
 
 }

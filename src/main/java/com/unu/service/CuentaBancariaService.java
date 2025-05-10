@@ -19,6 +19,8 @@ public interface CuentaBancariaService {
     public abstract void deleteDatos(long id);
 
     public abstract CuentaBancaria getByEmpleado(int id) throws Exception;
+
+    public abstract boolean cciExists(String cci);
     
 
 }

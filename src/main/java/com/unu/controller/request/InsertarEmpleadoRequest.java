@@ -52,6 +52,8 @@ public class InsertarEmpleadoRequest {
     @NotNull()
     private JornadaLaboral jornadaLaboral;
 
+    private LocalDate fechaFin;
+
     /* Bancario */
 
     @NotNull()
@@ -68,61 +70,61 @@ public class InsertarEmpleadoRequest {
         return this.dni;
     }
 
-    public @Size(min = 1, max = 20) String getNombre() {
+    public String getNombre() {
         return this.nombre;
     }
 
-    public @Size(min = 1, max = 20) String getApPaterno() {
+    public String getApPaterno() {
         return this.apPaterno;
     }
 
-    public @Size(min = 1, max = 20) String getApMaterno() {
+    public String getApMaterno() {
         return this.apMaterno;
     }
 
-    public @NotNull() boolean isGenero() {
+    public boolean isGenero() {
         return this.genero;
     }
 
-    public @NotNull() EstadoCivil getEstadoCivil() {
+    public EstadoCivil getEstadoCivil() {
         return this.estadoCivil;
     }
 
-    public @NotNull() LocalDate getFechaNacimiento() {
+    public LocalDate getFechaNacimiento() {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
         return this.fechaNacimiento;
     }
 
-    public @Size(min = 1, max = 30) String getFoto() {
+    public String getFoto() {
         return this.foto;
     }
 
-    public @NotNull() LocalDate getFechaEmision() {
+    public LocalDate getFechaEmision() {
         return this.fechaEmision;
     }
 
-    public @NotNull() ModalidadContrato getModalidadContrato() {
+    public ModalidadContrato getModalidadContrato() {
         return this.modalidadContrato;
     }
 
-    public @NotNull() LocalDate getFechaInicio() {
+    public LocalDate getFechaInicio() {
         return this.fechaInicio;
     }
 
-    public @NotNull() Area getArea() {
+    public Area getArea() {
         return this.area;
     }
 
-    public @NotNull() JornadaLaboral getJornadaLaboral() {
+    public JornadaLaboral getJornadaLaboral() {
         return this.jornadaLaboral;
     }
 
-    public @NotNull() Banco getBanco() {
+    public Banco getBanco() {
         return this.banco;
     }
 
-    public @Size(min = 1, max = 20) String getCci() {
+    public String getCci() {
         return this.cci;
     }
 
@@ -130,60 +132,67 @@ public class InsertarEmpleadoRequest {
         this.dni = dni;
     }
 
-    public void setNombre(@Size(min = 1, max = 20) String nombre) {
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    public void setApPaterno(@Size(min = 1, max = 20) String apPaterno) {
+    public void setApPaterno(String apPaterno) {
         this.apPaterno = apPaterno;
     }
 
-    public void setApMaterno(@Size(min = 1, max = 20) String apMaterno) {
+    public void setApMaterno(String apMaterno) {
         this.apMaterno = apMaterno;
     }
 
-    public void setGenero(@NotNull() boolean genero) {
+    public void setGenero(boolean genero) {
         this.genero = genero;
     }
 
-    public void setEstadoCivil(@NotNull() EstadoCivil estadoCivil) {
+    public void setEstadoCivil(EstadoCivil estadoCivil) {
         this.estadoCivil = estadoCivil;
     }
 
-    public void setFechaNacimiento(@NotNull() LocalDate fechaNacimiento) {
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public void setFoto(@Size(min = 1, max = 30) String foto) {
+    public void setFoto(String foto) {
         this.foto = foto;
     }
 
-    public void setFechaEmision(@NotNull() LocalDate fechaEmision) {
+    public void setFechaEmision(LocalDate fechaEmision) {
         this.fechaEmision = fechaEmision;
     }
 
-    public void setModalidadContrato(@NotNull() ModalidadContrato modalidadContrato) {
+    public void setModalidadContrato(ModalidadContrato modalidadContrato) {
         this.modalidadContrato = modalidadContrato;
     }
 
-    public void setFechaInicio(@NotNull() LocalDate fechaInicio) {
+    public void setFechaInicio(LocalDate fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public void setArea(@NotNull() Area area) {
+    public void setArea(Area area) {
         this.area = area;
     }
 
-    public void setJornadaLaboral(@NotNull() JornadaLaboral jornadaLaboral) {
+    public void setJornadaLaboral(JornadaLaboral jornadaLaboral) {
         this.jornadaLaboral = jornadaLaboral;
     }
 
-    public void setBanco(@NotNull() Banco banco) {
+    public void setBanco(Banco banco) {
         this.banco = banco;
     }
 
-    public void setCci(@Size(min = 1, max = 20) String cci) {
+    public void setCci(String cci) {
         this.cci = cci;
     }
 
+    public LocalDate getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(LocalDate fechaFin) {
+        this.fechaFin = fechaFin;
+    }
 }

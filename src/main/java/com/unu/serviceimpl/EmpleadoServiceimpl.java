@@ -221,6 +221,7 @@ public class EmpleadoServiceimpl implements EmpleadoService {
     public void desactivar(int id) {
         Contrato contrato = contratoRepository.findByEmpleado(id);
         contrato.setFechaFin(LocalDate.now());
+        contrato.setActivo(false);
         contratoRepository.save(contrato);
         empleadoRepository.desactivar(id);
     }

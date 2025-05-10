@@ -51,6 +51,9 @@ public class EditarEmpleadoRequest {
     @NotNull()
     private JornadaLaboral jornadaLaboral;
 
+    private LocalDate fechaFin;
+
+
     /* Bancario */
 
     @NotNull()
@@ -180,5 +183,13 @@ public class EditarEmpleadoRequest {
 
     public void setCci(@Size(min = 1, max = 20) String cci) {
         this.cci = cci;
+    }
+
+    public LocalDate getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(LocalDate fechaFin) {
+        this.fechaFin = fechaFin;
     }
 }
