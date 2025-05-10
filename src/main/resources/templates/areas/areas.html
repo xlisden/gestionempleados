@@ -126,9 +126,9 @@
             <div class="job-footer">
                 <div th:text="'S/.' + ${ area.sueldoBasico }" class="rate-location">
                 </div>
-                <button class="apply-btn">
+                <a th:href="@{/areas/editar/{id}(id=${ area.id })}" class="apply-btn">
                     <i class="bi bi-pencil" style="margin-right: 5px"></i> Editar
-                </button>
+                </a>
             </div>
         </div>
     </div>
