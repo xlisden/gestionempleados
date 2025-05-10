@@ -24,4 +24,8 @@ public interface ContratoService {
 //    public abstract ContratoRequest findByEmpleadoRequest(int idEmpleado) throws Exception;
     public abstract boolean contratoIsActivo(int idEmpleado);
 
+    public abstract void desactivar(int id);
+
+//    public abstract void activar(int id);
+
 }

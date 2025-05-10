@@ -39,6 +39,9 @@ public class Contrato {
     @JoinColumn(name = "ContJLaboral", foreignKey = @ForeignKey(name = "fk_contrato_jord_laboral"))
     private JornadaLaboral jornadaLaboral;
 
+    @Column(name = "ContActivo")
+    private boolean activo;
+
     public Contrato() {
     }
 
@@ -115,6 +118,14 @@ public class Contrato {
 
     public void setJornadaLaboral(JornadaLaboral jornadaLaboral) {
         this.jornadaLaboral = jornadaLaboral;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
     @Override

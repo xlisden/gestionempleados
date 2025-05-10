@@ -138,6 +138,12 @@
                                                    th:field="*{fechaInicio}" required>
                                             <label for="fechaEmision">Fecha Emisión</label>
                                         </div>
+                                        <div class="form-floating mb-2" id="inputExtraContainer" style="display: none;">
+                                            <input type="date" class="form-control" id="fechaFin"
+                                                   placeholder="fechafin" min="2000-01-01"
+                                                   th:field="*{fechaFin}" required>
+                                            <label for="fechaFin">Fecha Fin</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -202,7 +208,6 @@
 </div>
 
 <script>
-    // Espera a que cargue el DOM
     (() => {
         'use strict';
         const forms = document.querySelectorAll('.needs-validation');
@@ -217,6 +222,20 @@
             }, false);
         });
     })();
+    document.addEventListener('DOMContentLoaded', function () {
+        const modalidadSelect = document.getElementById('floatModalidad');
+        const extraInputContainer = document.getElementById('inputExtraContainer');
+
+        modalidadSelect.addEventListener('change', function () {
+            const selectedValue = modalidadSelect.value;
+
+            if (selectedValue === '2') {
+                extraInputContainer.style.display = 'block';
+            } else {
+                extraInputContainer.style.display = 'none';
+            }
+        });
+    });
 </script>
 </body>
 </html>

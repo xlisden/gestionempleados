@@ -193,8 +193,10 @@ public class AreasController {
                 Contrato contrato = contratoService.findByEmpleado(idEmpleado);
 
                 contrato.setFechaFin(LocalDate.now());
+                contrato.setActivo(false);
                 contratoService.updateContrato(contrato);
                 empleadoService.desactivar(idEmpleado);
+
             }
 
             contratoService.addContrato(request);

@@ -163,9 +163,38 @@ public class EmpleadosController {
                 return "empleados/AgregarEmpleado";
             }
 
+            boolean dniExiste = empleadoService.dniExists(empleado.getDni());
+            boolean cciExiste = cuentaService.cciExists(empleado.getCci());
+
+            if (dniExiste || cciExiste) {
+
+                if (dniExiste) {
+//                result.addError(new ObjectError("dni", "El DNI ya le pertenece a otro empleado."));
+//                result.rejectValue("dni", "error.dni", "El DNI ya le pertenece a otro empleado.");
+                    result.addError(new FieldError("cci", "cci", empleado.getCci(), false, null, null, "El DNI ya le pertenece a otro empleado."));
+                    System.err.println(empleado.getDni() + " ya existe.");
+                }
+
+                if (cciExiste) {
+//                result.addError(new ObjectError("dni", "El DNI ya le pertenece a otro empleado."));
+//                result.rejectValue("dni", "error.dni", "El DNI ya le pertenece a otro empleado.");
+                    result.addError(new FieldError("cci", "cci", empleado.getCci(), false, null, null, "El CCI ya le pertenece a otro empleado."));
+                    System.err.println(empleado.getCci() + " ya existe.");
+                }
+
+                model.addAttribute("estadosciviles", empleadoService.getEstadosCiviles());
+                model.addAttribute("areas", areaService.listAllAreas());
+                model.addAttribute("jornadas", jornadaService.listAllJornadas());
+                model.addAttribute("modalidades", empleadoService.getModalidadesContrato());
+                model.addAttribute("bancos", empleadoService.getBancos());
+                model.addAttribute("empleado", empleado);
+                model.addAttribute("hayErrores", true);
+                return "empleados/AgregarEmpleado";
+            }
+
             Empleado nuevoEmpleado = empleadoService.empleadoBruto(empleado, foto);
             Contrato contrato = contratoService.addTipoM(new Contrato(0, nuevoEmpleado, empleado.getArea(), empleado.getFechaEmision()
-                    , empleado.getModalidadContrato(), LocalDate.now(), null, empleado.getJornadaLaboral()));
+                    , empleado.getModalidadContrato(), empleado.getFechaInicio(), empleado.getFechaFin(), empleado.getJornadaLaboral()));
             CuentaBancaria cuentaBancaria = cuentaService.addDatos(new CuentaBancaria(0, empleado.getBanco(), empleado.getCci(), nuevoEmpleado));
 
             return "redirect:/empleados";
@@ -224,7 +253,7 @@ public class EmpleadosController {
             Empleado nuevoEmpleado = empleadoService.empleadoEditarPost(empleado, foto, idEmpleado);
 
             contratoService.updateContrato(new Contrato(idContrato, nuevoEmpleado, empleado.getArea(), empleado.getFechaEmision()
-                    , empleado.getModalidadContrato(), empleado.getFechaInicio(), null, empleado.getJornadaLaboral()));
+                    , empleado.getModalidadContrato(), empleado.getFechaInicio(), empleado.getFechaFin(), empleado.getJornadaLaboral()));
             cuentaService.updateDatos(new CuentaBancaria(idCuenta, empleado.getBanco(), empleado.getCci(), nuevoEmpleado));
 
             return "redirect:/empleados";
