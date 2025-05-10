@@ -4,10 +4,10 @@
 <head th:replace="~{shared/head :: head() }"></head>
 
 <body>
-<div th:replace="~{shared/header/header :: header(titulo = '') }"></div>
 
-<div class="wrapper">
-  <div th:replace="~{shared/sidebar/sidebar :: sidebar() }"></div>
+<div th:replace="~{shared/menu :: menu()}"></div>
+<div th:replace="~{shared/header :: header(titulo = 'Editar Área') }"></div>
+
 
   <div class="container">
 
@@ -19,11 +19,9 @@
   </nav>
 
   <form th:action="@{/areas/editar/{id}(id = ${area.id})}" th:object="${area}" method="post">
-    <h1 class="mt-4 mb-4">Emitir Recibo</h1>
 
     <div class="card mb-3 col-12 col-md-5">
       <div class="card-body">
-        <h4 class="mb-3">Editar Área</h4>
         <div class="form-floating mb-3">
           <input type="text" class="form-control" id="floatId" placeholder="dni" th:field="*{id}" readonly>
           <label for="floatId">Cod.</label>
@@ -47,7 +45,6 @@
       </div>
     </div>
   </form>
-</div>
 </div>
 
 </body>
