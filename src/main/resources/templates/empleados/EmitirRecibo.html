@@ -18,13 +18,18 @@
         vertical-align: middle;
     }
 </style>
-
+<script>
+    window.onload = function () {
+        setTimeout(function () {
+            window.location.href = /*[[ @{/empleados/{cod}(cod=${id})} ]]*/ '';
+            alert("¡El tiempo sesion a acabado por inactividad!");
+        }, 920000); // 900,000 ms = 15 minutos
+    };
+</script>
 <body>
 
-<div th:replace="~{shared/header/header :: header(titulo = '') }"></div>
-<div class="wrapper">
-    <div th:replace="~{shared/sidebar/sidebar :: sidebar() }"></div>
-
+<div th:replace="~{shared/menu :: menu()}"></div>
+<div th:replace="~{shared/header :: header(titulo = 'Emitir Recibo') }"></div>
 <div class="container px-4">
 
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
@@ -36,21 +41,22 @@
 
     <div class="container">
         <div class="row">
-            <form th:action="@{/empleados/emitir-recibo/{id}(id = ${facturacion.idEmpleado})}" th:object="${facturacion}"
+            <form th:action="@{/empleados/emitir-recibo/{id}(id = ${facturacion.idEmpleado})}"
+                  th:object="${facturacion}"
                   method="POST" enctype="multipart/form-data" class="col-12 col-md-6">
-
-                <h1 class="mt-3 mb-4">Emitir Recibo</h1>
 
                 <div class="card mb-3 col-12 col-md-9">
                     <div class="card-body">
                         <h4 class="mb-3">Datos personales</h4>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatDni" placeholder="dni"pattern="[0-9]{8}$"
+                            <input type="text" class="form-control" id="floatDni" placeholder="dni"
+                                   pattern="[0-9]{8}$"
                                    th:field="*{dni}" readonly>
                             <label for="floatDni">DNI</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatEmpleado" placeholder="nombres"pattern="[a-zA-ZÑnáéíúóÁÉÍÓÚ\s]*"
+                            <input type="text" class="form-control" id="floatEmpleado" placeholder="nombres"
+                                   pattern="[a-zA-ZÑnáéíúóÁÉÍÓÚ\s]*"
                                    th:field="*{empleado}" readonly>
                             <label for="floatEmpleado">Nombres</label>
                         </div>
@@ -60,7 +66,8 @@
                             <label for="floatFechaPago">Fecha</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="number" class="form-control" id="floatSueldo" placeholder="Sueldo base" pattern="^\d*\.?\d{0,2}$"
+                            <input type="number" class="form-control" id="floatSueldo" placeholder="Sueldo base"
+                                   pattern="^\d*\.?\d{0,2}$"
                                    th:field="*{sueldoBruto}" readonly>
                             <label for="floatSueldo">Sueldo Bruto</label>
                         </div>
@@ -73,28 +80,15 @@
                         </div>
                     </div>
                 </div>
-<!--                 <div class="form-floating mb-3">
-                    <input type="date" class="form-control" id="floatFechaPago" placeholder="fechapago" th:field="*{fechaPago}" th:value="*{fechaPago}">
-                    <label for="floatFechaPago">Fecha</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="number" class="form-control" id="floatSueldo" placeholder="nombres" th:field="*{sueldoBruto}">
-                    <label for="floatSueldo">Sueldo Bruto</label>
-                </div>
-                <div class="form-check">
-                    <input disabled="false" class="form-check-input" type="checkbox"  id="idBonificacion" th:checked="${bonificacion}">
-                    <label class="form-check-label" for="idBonificacion">
-                        Bonificación
-                    </label> -->
                 <div class="row pt-3">
-                    <div class="col-10 d-flex justify-content-center">
+                    <div class="col-9 d-flex justify-content-center">
                         <button id="btnGenerar" type="submit" class="btn btn-primary mb-5">Emitir</button>
                     </div>
                 </div>
             </form>
 
-            <div class="table-responsive mt-3 col-12 col-md-5">
-                <table class="table mt-5">
+            <div class="card table-responsive pt-2 col-12 col-md-5">
+                <table class="table">
                     <thead>
                     <tr>
                         <th>Id</th>
@@ -124,7 +118,6 @@
         </div>
     </div>
 
-</div>
 </div>
 
 <!--toasts-->
@@ -220,7 +213,6 @@
     }
 </script>
 </body>
-
 
 
 </html>

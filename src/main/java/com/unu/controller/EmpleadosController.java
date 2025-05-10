@@ -18,7 +18,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -80,11 +79,9 @@ public class EmpleadosController {
 
             try {
                 empleados = empleadoService.listAllEmpleados(nombre, areaa, jornad);
-                if (hoy.getDayOfMonth() >= FacturacionHelper.diaPago) {
-                    for (EmpleadoDto e : empleados) {
-                        if (e.isActivo() && !facturacionService.empleadoPagado(e.getId())) {
-                            empleadoService.emitirRecibo(null, e.getId(), FacturacionHelper.isBonificacion(hoy));
-                        }
+                for (EmpleadoDto e : empleados) {
+                    if (e.isActivo() && !facturacionService.empleadoPagado(e.getId())) {
+                        empleadoService.emitirRecibo(null, e.getId(), FacturacionHelper.isBonificacion(hoy));
                     }
                 }
 
@@ -117,7 +114,7 @@ public class EmpleadosController {
             } catch (Exception e) {
                 System.out.println("fallo en la captura de datos: " + e.getMessage());
             }
-            mav.addObject("id",id);
+            mav.addObject("id", id);
             mav.addObject("empleado", empleado);
             mav.addObject("cuentaBancaria", cuenta);
             mav.addObject("contrato", contrato);
@@ -184,6 +181,8 @@ public class EmpleadosController {
     public ModelAndView editarGetDatos(@PathVariable int id) throws Exception {
         if (logiservice.tiempoSesion()) {
             ModelAndView mav = new ModelAndView("empleados/EditarEmpleado");
+            int idCuenta = 0;
+            CuentaBancaria cuentaBancaria = new CuentaBancaria();
 
             try {
                 mav.addObject("idEmpleado", id);
@@ -196,15 +195,20 @@ public class EmpleadosController {
                 mav.addObject("modalidades", empleadoService.getModalidadesContrato());
                 mav.addObject("bancos", empleadoService.getBancos());
                 mav.addObject("empleado", empleadoService.empleadoEditar(empleadoService.getEmpleadoNormal(id),
-                                                                                        contratoService.findByEmpleado(id),
-                                                                                        cuentaService.getByEmpleado(id)));
+                        contratoService.findByEmpleado(id),
+                        cuentaService.getByEmpleado(id)));
+
+                return mav;
             } catch (Exception e) {
                 System.out.println("editarGetDatos() => " + e.getMessage());
                 e.printStackTrace();
 
                 mav.addObject("idContrato", new Contrato());
-                mav.addObject("idCuenta", new CuentaBancaria());
+                mav.addObject("idCuenta", 0);
             }
+
+            mav.addObject("idCuenta", 0);
+            mav.addObject("empleado", new EditarEmpleadoRequest());
             return mav;
         }
         return new ModelAndView("Logeo").addObject("login", new Login());
@@ -220,7 +224,7 @@ public class EmpleadosController {
             Empleado nuevoEmpleado = empleadoService.empleadoEditarPost(empleado, foto, idEmpleado);
 
             contratoService.updateContrato(new Contrato(idContrato, nuevoEmpleado, empleado.getArea(), empleado.getFechaEmision()
-                    , empleado.getModalidadContrato(),empleado.getFechaInicio(), null, empleado.getJornadaLaboral()));
+                    , empleado.getModalidadContrato(), empleado.getFechaInicio(), null, empleado.getJornadaLaboral()));
             cuentaService.updateDatos(new CuentaBancaria(idCuenta, empleado.getBanco(), empleado.getCci(), nuevoEmpleado));
 
             return "redirect:/empleados";

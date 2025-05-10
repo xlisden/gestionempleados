@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Repository("contratorepository")
 public interface ContratoRepository extends JpaRepository<Contrato, Serializable> {
@@ -15,5 +16,8 @@ public interface ContratoRepository extends JpaRepository<Contrato, Serializable
 
     @Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM Contrato c WHERE c.empleado.id = ?1 AND c.fechaFin is not null")
     public boolean contratoIsActivo(int idEmpleado);
+
+    @Query("SELECT c FROM Contrato c WHERE c.area.id = ?1")
+    public List<Contrato> getContratoByArea(int idArea);
 
 }

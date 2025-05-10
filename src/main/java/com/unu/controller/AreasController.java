@@ -4,6 +4,7 @@ import com.unu.controller.request.ContratoRequest;
 import com.unu.entity.Area;
 import com.unu.entity.Contrato;
 import com.unu.entity.Empleado;
+import com.unu.entity.dto.EmpleadoDto;
 import com.unu.service.AreaService;
 import com.unu.service.ContratoService;
 import com.unu.service.EmpleadoService;
@@ -70,13 +71,16 @@ public class AreasController {
     public ModelAndView editAreaGet(@PathVariable int id){
         ModelAndView mav = new ModelAndView("areas/editarArea");
         Area area = new Area();
+        List<EmpleadoDto> empleados = new ArrayList<>();
         try {
             area = areaService.getArea(id);
+            empleados = areaService.getEmpleadosPorArea(id);
         } catch (Exception e) {
 
         }
 
         mav.addObject("area", area);
+        mav.addObject("empleados", empleados);
         return mav;
     }
 
@@ -203,12 +207,5 @@ public class AreasController {
         }
         return "redirect:/empleados";
     }
-
-    @GetMapping("/prueba")
-    public ModelAndView aunnoborrar(){
-        ModelAndView mav = new ModelAndView("aunoborrar");
-        return mav;
-    }
-
 
 }
