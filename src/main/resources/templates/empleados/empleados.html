@@ -131,7 +131,7 @@
                     <a th:if="${empleado.activo}"
                        th:text="'Activo'"
                        class="active-class"
-                       onclick="return confirmarDespedir(\\'' + @{/empleados/desactivar/{id}(id=${empleado.id})} + '\\')"
+                       th:attr="onclick=|return confirmarDespedir('@{/empleados/desactivar/{id}(id=${empleado.id})}')|"
                        style="cursor:pointer;"></a>
                     <a th:if="${!empleado.activo}"
                        th:text="'Inactivo'"
