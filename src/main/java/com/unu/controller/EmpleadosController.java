@@ -328,7 +328,8 @@ public class EmpleadosController {
 
     @GetMapping("/desactivar/{id}") /*es un PATCH, pero por efectos practicos GET*/
     public String deasctivar(@PathVariable int id) {
-        empleadoService.desactivar(id);
+//        empleadoService.desactivar(id);
+        System.err.println("bola");
         return "redirect:/empleados";
     }
 
