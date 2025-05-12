@@ -52,6 +52,8 @@ public interface EmpleadoService {
     public abstract Empleado empleadoEditarPost(EditarEmpleadoRequest empe,MultipartFile foto,int id);
 
     public abstract List<EmpleadoDtoSelect> getAll();
-    
+
+    public abstract String getFechaNacimiento(int id) throws Exception;
+
 
 }

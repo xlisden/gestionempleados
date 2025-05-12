@@ -1,3 +1,4 @@
+
 package com.unu.controller.request;
 
 import com.unu.entity.*;
@@ -52,7 +53,6 @@ public class EditarEmpleadoRequest {
     private JornadaLaboral jornadaLaboral;
 
     private LocalDate fechaFin;
-
 
     /* Bancario */
 

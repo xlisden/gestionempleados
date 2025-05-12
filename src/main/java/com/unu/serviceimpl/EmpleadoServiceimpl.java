@@ -361,6 +361,11 @@ public class EmpleadoServiceimpl implements EmpleadoService {
 	public Empleado empleadoEditarPost(EditarEmpleadoRequest empe, MultipartFile foto,int id) {
 		Empleado actualizado= null;
 		try {
+            LocalDate fechaNac = empe.getFechaNacimiento();
+            if (empe.getFechaNacimiento() == null){
+                Empleado emp = empleadoRepository.findById(id).orElseThrow(() -> new Exception("El Empleado no existe."));
+                fechaNac = emp.getFechaNac();
+            }
 			 actualizado = new Empleado(id,getEmpleado(id).getCod(),empe.getDni(),empe.getNombre(),empe.getApPaterno(),empe.getApMaterno(),empe.isGenero(),
 				empe.getEstadoCivil(),empe.getFechaNacimiento(),getEmpleado(id).getFoto(),getEmpleado(id).isActivo());
 			 if(!foto.isEmpty())
@@ -386,6 +391,12 @@ public class EmpleadoServiceimpl implements EmpleadoService {
         }
 
         return empleados;
+    }
+
+    public String getFechaNacimiento(int id) throws Exception {
+        Empleado emp = empleadoRepository.findById(id).orElseThrow(() -> new Exception("El Empleado no existe."));
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        return format.format(Date.valueOf(emp.getFechaNac()));
     }
 
 

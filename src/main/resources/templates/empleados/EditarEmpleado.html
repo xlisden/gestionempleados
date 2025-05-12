@@ -18,7 +18,7 @@
 <body>
 
 <div th:replace="~{shared/menu :: menu()}"></div>
-<div th:replace="~{shared/header :: header(titulo = 'Nuevo Empleado') }"></div>
+<div th:replace="~{shared/header :: header(titulo = 'Editar Empleado') }"></div>
 
     <div class="container">
 
@@ -38,7 +38,6 @@
                 <input type="hidden" name="idCuenta" th:value="${ idCuenta }">
 
                 <div class="container mt-2">
-                    <h1 class="mt-2 mb-4">Editar Empleado</h1>
                     <div class="row">
                         <div class="col-12 col-md-6">
                             <div class="card mb-3">
@@ -90,7 +89,7 @@
                                     <div class="form-floating mb-2">
                                         <input type="date" class="form-control" id="floatFechaNac"
                                                placeholder="fechanac" th:field="*{fechaNacimiento}" min="1925-01-01"
-                                               max="2008-12-31" required>
+                                               max="2008-12-31">
                                         <label for="floatFechaNac">Fecha Nac.</label>
                                     </div>
                                     <div class="mb-2 d-flex align-items-center">
@@ -142,12 +141,12 @@
                                                 </select>
                                                 <label for="floatModalidad">Modalidad</label>
                                             </div>
-                                            <div class="form-floating mb-2">
-                                                <input type="date" class="form-control" id="fechaEmision"
-                                                       placeholder="fechaems" min="2000-01-01"
-                                                       th:field="*{fechaInicio}" required>
-                                                <label for="fechaEmision">Fecha Inicio</label>
-                                            </div>
+<!--                                            <div class="form-floating mb-2">-->
+<!--                                                <input type="date" class="form-control" id="fechaEmision"-->
+<!--                                                       placeholder="fechaems" min="2000-01-01"-->
+<!--                                                       th:field="*{fechaInicio}" required>-->
+<!--                                                <label for="fechaEmision">Fecha Inicio</label>-->
+<!--                                            </div>-->
                                             <div class="form-floating mb-2" id="inputExtraContainer" style="display: none;">
                                                 <input type="date" class="form-control" id="fechaFin"
                                                        placeholder="fechafin" min="2000-01-01"

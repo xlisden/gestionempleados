@@ -218,6 +218,7 @@ public class EmpleadosController {
                 mav.addObject("idContrato", contratoService.findByEmpleado(id).getId());
                 mav.addObject("idCuenta", cuentaService.getByEmpleado(id).getId());
 
+                System.err.println("fechaNac -> " + empleadoService.getEmpleadoNormal(id).getFechaNac());
                 mav.addObject("estadosciviles", empleadoService.getEstadosCiviles());
                 mav.addObject("areas", areaService.listAllAreas());
                 mav.addObject("jornadas", jornadaService.listAllJornadas());
@@ -234,10 +235,8 @@ public class EmpleadosController {
 
                 mav.addObject("idContrato", new Contrato());
                 mav.addObject("idCuenta", 0);
+                mav.addObject("empleado", new EditarEmpleadoRequest());
             }
-
-            mav.addObject("idCuenta", 0);
-            mav.addObject("empleado", new EditarEmpleadoRequest());
             return mav;
         }
         return new ModelAndView("Logeo").addObject("login", new Login());
@@ -268,10 +267,6 @@ public class EmpleadosController {
     private String editar(@ModelAttribute EditarEmpleadoRequest empleadoRequest, BindingResult bindingResult) {
         return "";
     }*/
-
-
-
-
 
     /* pagar al empleado */
 
@@ -329,7 +324,6 @@ public class EmpleadosController {
     @GetMapping("/desactivar/{id}") /*es un PATCH, pero por efectos practicos GET*/
     public String deasctivar(@PathVariable int id) {
         empleadoService.desactivar(id);
-//        System.err.println("wazzzzzzzzzzzzzzzzzzzzzzzzzzzzza");
         return "redirect:/empleados";
     }
 

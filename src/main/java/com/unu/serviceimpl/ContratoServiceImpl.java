@@ -5,6 +5,7 @@ import com.unu.entity.*;
 import com.unu.repository.ContratoRepository;
 import com.unu.service.ContratoService;
 import jakarta.transaction.Transactional;
+import org.hibernate.validator.internal.constraintvalidators.bv.NullValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -51,7 +52,12 @@ public class ContratoServiceImpl implements ContratoService {
     }
 
     @Override
-    public void updateContrato(Contrato contrato) {
+    public void updateContrato(Contrato contrato) throws Exception{
+        Contrato c = contratoRepository.findById(contrato.getId()).orElseThrow(() -> new Exception("El Contrato no existe."));
+        if (contrato.getFechaInicio() == null || contrato.getFechaEmision() == null){
+            contrato.setFechaInicio(c.getFechaInicio());
+            contrato.setFechaEmision(c.getFechaEmision());
+        }
         contratoRepository.save(contrato);
     }
 

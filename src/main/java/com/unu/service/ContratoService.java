@@ -15,7 +15,7 @@ public interface ContratoService {
 
     public abstract Contrato getTipoM(long id) throws Exception;
 
-    public abstract void updateContrato(Contrato contrato);
+    public abstract void updateContrato(Contrato contrato) throws Exception;
 
     public abstract void deleteTipoM(long id);
 
