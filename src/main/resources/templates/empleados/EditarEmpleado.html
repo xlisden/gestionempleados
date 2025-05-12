@@ -2,7 +2,7 @@
 <html lang="es">
 
 <head th:replace="~{shared/head :: head() }"></head>
-<script>
+  <script>
     window.onload = function () {
         setTimeout(function () {
             window.location.href = /*[[ @{/empleados/{cod}(cod=${id})} ]]*/ '';
@@ -10,6 +10,11 @@
         }, 920000); // 900,000 ms = 15 minutos
     };
 </script>
+<script type="text/javascript">
+		function confirmarupdate(){
+			return confirm("seguro que quieres actualizar?");
+		}
+	</script>
 <body>
 
 <div th:replace="~{shared/menu :: menu()}"></div>
@@ -180,7 +185,7 @@
 
                     <div class="row pt-3">
                         <div class="col-12 d-flex justify-content-center">
-                            <button type="submit" class="btn btn-primary btn-lg mb-5">Agregar</button>
+                            <button type="submit" onclick="return confirmarupdate()" class="btn btn-primary btn-lg mb-5">Modificar</button>
                         </div>
                     </div>
                 </div>
@@ -201,9 +206,9 @@
             <div class="modal-body">
                 -Formatos aceptados para la foto del empleado: <strong>.svg</strong>, <strong>.jpg</strong>, <strong>.png</strong>,
                 <strong>.webp</strong>.
-                -Tampoco estara permitido archivos con un peso mayor a 2mb.
-                -Si la foto no cumple o no se sube ninguna, se asignará foto por <strong>default.</strong>
-                -La imagen debe una tener un formato Carnet o cuadrado
+                <br>-Tampoco estara permitido archivos con un peso mayor a 2mb.
+                <br>-Si la foto no cumple o no se sube ninguna, se asignará foto por <strong>default.</strong>
+                <br>-La imagen debe una tener un formato Carnet o cuadrado
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

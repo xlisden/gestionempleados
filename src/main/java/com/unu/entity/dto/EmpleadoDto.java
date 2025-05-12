@@ -10,8 +10,17 @@ public class EmpleadoDto {
     private String modalidadContrato;
     private String jornadaLaboral;
     private boolean activo;
+    private String foto;
 
-    public EmpleadoDto() {
+    public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
+
+	public EmpleadoDto() {
     }
 
     public int getId() {
