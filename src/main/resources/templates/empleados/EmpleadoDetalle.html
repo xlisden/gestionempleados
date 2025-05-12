@@ -125,6 +125,11 @@
                                         <label for="floatInicio">Fecha de Inicio</label>
                                     </div>
                                     <div class="form-floating mb-2">
+                                        <input type="text" class="form-control" id="floatFin"
+                                               th:value="${ contrato.fechaFin }" readonly>
+                                        <label for="floatFin">Fecha de Fin</label>
+                                    </div>
+                                    <div class="form-floating mb-2">
                                         <input type="text" class="form-control" id="floatArea"
                                                th:value="${ contrato.area }" readonly>
                                         <label for="floatArea">Area</label>

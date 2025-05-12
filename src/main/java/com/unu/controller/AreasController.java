@@ -169,12 +169,6 @@ public class AreasController {
             if (request.getJornada() == null) {
                 result.rejectValue("jornada", null, "La jornada es requerida.");
             }
-            if (request.getFechaEmision() == null) {
-                result.rejectValue("fechaEmision", null, "La fecha de emision es requerida.");
-            }
-            if (request.getFechaInicio() == null) {
-                result.rejectValue("fechaInicio", null, "La fecha de inicio es requerida.");
-            }
 
             if (result.hasErrors()){
                 model.addAttribute("hayErrores", true);

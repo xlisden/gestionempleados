@@ -89,7 +89,11 @@
                                     <div class="form-floating mb-2">
                                         <input type="date" class="form-control" id="floatFechaNac"
                                                placeholder="fechanac" th:field="*{fechaNacimiento}" min="1925-01-01"
+<<<<<<< HEAD
                                                max="2008-12-31">
+=======
+                                               max="2008-12-31" >
+>>>>>>> d69b2664f8ceb7a432bae67d6c16374c268715db
                                         <label for="floatFechaNac">Fecha Nac.</label>
                                     </div>
                                     <div class="mb-2 d-flex align-items-center">
@@ -133,7 +137,7 @@
                                             </div>
                                             <div class="form-floating mb-2">
                                                 <select id="floatModalidad" class="form-select"
-                                                        th:field="*{modalidadContrato}" required>
+                                                        th:field="*{modalidadContrato}" disabled="false">
                                                     <option value="">Seleccione...</option>
                                                     <option th:each="modalidad : ${ modalidades }"
                                                             th:value="${ modalidad.id }"
@@ -141,6 +145,7 @@
                                                 </select>
                                                 <label for="floatModalidad">Modalidad</label>
                                             </div>
+<<<<<<< HEAD
 <!--                                            <div class="form-floating mb-2">-->
 <!--                                                <input type="date" class="form-control" id="fechaEmision"-->
 <!--                                                       placeholder="fechaems" min="2000-01-01"-->
@@ -152,6 +157,12 @@
                                                        placeholder="fechafin" min="2000-01-01"
                                                        th:field="*{fechaFin}" required>
                                                 <label for="fechaFin">Fecha Fin</label>
+=======
+                                            <div class="form-floating mb-2">
+                                                <input type="hidden" class="form-control" id="fechaEmision"
+                                                       placeholder="fechaems" min="2000-01-01"
+                                                       th:value="*{fechaEmision}" >
+>>>>>>> d69b2664f8ceb7a432bae67d6c16374c268715db
                                             </div>
                                         </div>
                                     </div>
@@ -184,7 +195,9 @@
 
                     <div class="row pt-3">
                         <div class="col-12 d-flex justify-content-center">
-                            <button type="submit" onclick="return confirmarupdate()" class="btn btn-primary btn-lg mb-5">Modificar</button>
+                            <button type="submit" onclick="return confirmarupdate()" class="btn btn-primary btn-lg mb-5" style="margin-right: 2rem;">Modificar</button>
+                            <a  th:href="@{/empleados}" class="btn btn-primary btn-lg mb-5">Cancelar
+                        	</a>
                         </div>
                     </div>
                 </div>

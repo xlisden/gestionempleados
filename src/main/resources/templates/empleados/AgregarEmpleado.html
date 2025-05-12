@@ -10,6 +10,12 @@
         }, 920000); // 900,000 ms = 15 minutos
     };
 </script>
+<script type="text/javascript">
+		function confirmarinsert(){
+			return confirm("¿Seguro que quieres agregar al Empleado?");
+		}
+	</script>
+<body>
 <body>
 
 <div th:replace="~{shared/menu :: menu()}"></div>
@@ -135,14 +141,8 @@
                                         <div class="form-floating mb-2">
                                             <input type="date" class="form-control" id="fechaEmision"
                                                    placeholder="fechaems" min="2000-01-01"
-                                                   th:field="*{fechaInicio}" required>
+                                                   th:field="*{fechaEmision}" required>
                                             <label for="fechaEmision">Fecha Emisión</label>
-                                        </div>
-                                        <div class="form-floating mb-2" id="inputExtraContainer" style="display: none;">
-                                            <input type="date" class="form-control" id="fechaFin"
-                                                   placeholder="fechafin" min="2000-01-01"
-                                                   th:field="*{fechaFin}" required>
-                                            <label for="fechaFin">Fecha Fin</label>
                                         </div>
                                     </div>
                                 </div>
@@ -176,7 +176,9 @@
 
                 <div class="row pt-3">
                     <div class="col-12 d-flex justify-content-center">
-                        <button type="submit" class="btn btn-primary btn-lg mb-5">Agregar</button>
+                        <button type="submit" onclick="return confirmarinsert()" class="btn btn-primary btn-lg mb-5" style="margin-right: 2rem;">Agregar</button>
+                        <a  th:href="@{/empleados}" class="btn btn-primary btn-lg mb-5">Descartar
+                        </a>
                     </div>
                 </div>
             </div>

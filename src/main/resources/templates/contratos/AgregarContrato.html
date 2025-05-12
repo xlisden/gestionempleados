@@ -9,6 +9,11 @@
         }, 920000); // 900,000 ms = 15 minutos
     };
 </script>
+<script type="text/javascript">
+		function confirmar(){
+			return confirm("¿Seguro que quieres confirmar el nuevo contrato ?");
+		}
+	</script>
 <body>
 
 <div th:replace="~{shared/menu :: menu()}"></div>
@@ -74,19 +79,11 @@
                        class="text-danger"></p>
                     <label for="fechaEmision">Fecha Emisión</label>
                 </div>
-
-                <div class="form-floating mb-3">
-                    <input type="date" class="form-control" id="fechaInicio" placeholder="fechainicio"
-                           th:field="*{fechaInicio}" th:value="*{fechaInicio}">
-                    <p th:if="${#fields.hasErrors('fechaInicio')}" th:errors="*{fechaInicio}"
-                       class="text-danger"></p>
-                    <label for="fechaInicio">Fecha Inicio</label>
-                </div>
             </div>
         </div>
 
         <div class=" col-5 d-flex justify-content-center" style="margin-top: 2rem;">
-            <button type="submit" class="btn btn-primary mb-5" style="margin-right: 2rem;">Contratar</button>
+            <button type="submit" class="btn btn-primary mb-5" onclick="return confirmar()" style="margin-right: 2rem;">Contratar</button>
             <a class="btn btn-outline-primary mb-5" href="/empleados">Cancelar</a>
         </div>
     </form>
