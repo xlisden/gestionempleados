@@ -251,9 +251,9 @@ public class EmpleadosController {
                                   @RequestParam(required = false) int idCuenta) {
         try {
             Empleado nuevoEmpleado = empleadoService.empleadoEditarPost(empleado, foto, idEmpleado);
-
+            System.out.println(empleado.getFechaEmision()+"    a ver");
             contratoService.updateContrato(new Contrato(idContrato, nuevoEmpleado, empleado.getArea(), empleado.getFechaEmision()
-                    , empleado.getModalidadContrato(), empleado.getFechaInicio(), empleado.getFechaFin(), empleado.getJornadaLaboral()));
+                    , empleado.getModalidadContrato(), null, null, empleado.getJornadaLaboral()));
             cuentaService.updateDatos(new CuentaBancaria(idCuenta, empleado.getBanco(), empleado.getCci(), nuevoEmpleado));
 
             return "redirect:/empleados";
@@ -329,6 +329,7 @@ public class EmpleadosController {
     @GetMapping("/desactivar/{id}") /*es un PATCH, pero por efectos practicos GET*/
     public String deasctivar(@PathVariable int id) {
         empleadoService.desactivar(id);
+//        System.err.println("wazzzzzzzzzzzzzzzzzzzzzzzzzzzzza");
         return "redirect:/empleados";
     }
 

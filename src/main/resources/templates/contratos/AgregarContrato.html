@@ -1,91 +1,92 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head th:replace="~{shared/head :: head() }"></head>
 <script>
-  window.onload = function () {
-    setTimeout(function () {
-      window.location.href = /*[[ @{/empleados/{cod}(cod=${id})} ]]*/ '';
-      alert("¡El tiempo sesion a acabado por inactividad!");
-    }, 920000); // 900,000 ms = 15 minutos
-  };
+    window.onload = function () {
+        setTimeout(function () {
+            window.location.href = /*[[ @{/empleados/{cod}(cod=${id})} ]]*/ '';
+            alert("¡El tiempo sesion a acabado por inactividad!");
+        }, 920000); // 900,000 ms = 15 minutos
+    };
 </script>
+<script type="text/javascript">
+		function confirmar(){
+			return confirm("¿Seguro que quieres confirmar el nuevo contrato ?");
+		}
+	</script>
 <body>
 
-<div th:replace="~{shared/header/header :: header(titulo = '') }"></div>
-
-<div class="wrapper">
-  <div th:replace="~{shared/sidebar/sidebar :: sidebar() }"></div>
+<div th:replace="~{shared/menu :: menu()}"></div>
+<div th:replace="~{shared/header :: header(titulo = 'Nuevo Contrato') }"></div>
 
 <div class="container">
 
-  <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="/empleados/">Empleados</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Nuevo Contrato</li>
-    </ol>
-  </nav>
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/empleados/">Empleados</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Nuevo Contrato</li>
+        </ol>
+    </nav>
 
-  <form th:action="@{/areas/agregar-contrato}" th:object="${contrato}" method="post">
-    <h1 class="mt-4 mb-4">Nuevo Contato</h1>
-    <div class="card mb-3 col-12 col-md-5">
-      <div class="card-body">
-        <div class="form-floating mb-3">
-          <select id="floatEmpleado" class="form-select" th:field="*{empleado}" >
-            <option value="">Seleccione...</option>
-            <option th:each="emp : ${ empleados }" th:value="${ emp.id }" th:text="${ emp.nombreCompleto }"></option>
-          </select>
-          <p th:if="${#fields.hasErrors('empleado')}" th:errors="*{empleado}" class="text-danger"></p>
-          <label for="floatEmpleado">Empleado</label>
+    <form th:action="@{/areas/agregar-contrato}" th:object="${contrato}" method="post">
+
+        <div class="card mb-3 col-12 col-md-5">
+            <div class="card-body">
+                <div class="form-floating mb-3">
+                    <select id="floatEmpleado" class="form-select" th:field="*{empleado}">
+                        <option value="">Seleccione...</option>
+                        <option th:each="emp : ${ empleados }" th:value="${ emp.id }"
+                                th:text="${ emp.nombreCompleto }"></option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('empleado')}" th:errors="*{empleado}" class="text-danger"></p>
+                    <label for="floatEmpleado">Empleado</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <select id="floatArea" class="form-select" th:field="*{area}">
+                        <option value="">Seleccione...</option>
+                        <option th:each="area : ${ areas }" th:value="${ area.id }"
+                                th:text="${ area.nombre }"></option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('area')}" th:errors="*{area}" class="text-danger"></p>
+                    <label for="floatArea">Área</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <select id="floatJornada" class="form-select" th:field="*{jornada}">
+                        <option value="">Seleccione...</option>
+                        <option th:each="jornada : ${ jornadas }" th:value="${ jornada.id }"
+                                th:text="${ jornada.nombre }"></option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('jornada')}" th:errors="*{jornada}" class="text-danger"></p>
+                    <label for="floatJornada">Jornada</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <select id="floatModalidad" class="form-select" th:field="*{modalidad}">
+                        <option value="">Seleccione...</option>
+                        <option th:each="modalidad : ${ modalidades }" th:value="${ modalidad.id }"
+                                th:text="${ modalidad.nombre }"></option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('modalidad')}" th:errors="*{modalidad}" class="text-danger"></p>
+                    <label for="floatModalidad">Modalidad</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="date" class="form-control" id="fechaEmision" placeholder="fechaemision"
+                           th:field="*{fechaEmision}" th:value="*{fechaEmision}">
+                    <p th:if="${#fields.hasErrors('fechaEmision')}" th:errors="*{fechaEmision}"
+                       class="text-danger"></p>
+                    <label for="fechaEmision">Fecha Emisión</label>
+                </div>
+            </div>
         </div>
 
-        <div class="form-floating mb-3">
-          <select id="floatArea" class="form-select" th:field="*{area}" >
-            <option value="">Seleccione...</option>
-            <option th:each="area : ${ areas }" th:value="${ area.id }" th:text="${ area.nombre }"></option>
-          </select>
-          <p th:if="${#fields.hasErrors('area')}" th:errors="*{area}" class="text-danger"></p>
-          <label for="floatArea">Área</label>
+        <div class=" col-5 d-flex justify-content-center" style="margin-top: 2rem;">
+            <button type="submit" class="btn btn-primary mb-5" onclick="return confirmar()" style="margin-right: 2rem;">Contratar</button>
+            <a class="btn btn-outline-primary mb-5" href="/empleados">Cancelar</a>
         </div>
-
-        <div class="form-floating mb-3">
-          <select id="floatJornada" class="form-select" th:field="*{jornada}" >
-            <option value="">Seleccione...</option>
-            <option th:each="jornada : ${ jornadas }" th:value="${ jornada.id }" th:text="${ jornada.nombre }"></option>
-          </select>
-          <p th:if="${#fields.hasErrors('jornada')}" th:errors="*{jornada}" class="text-danger"></p>
-          <label for="floatJornada">Jornada</label>
-        </div>
-
-        <div class="form-floating mb-3">
-          <select id="floatModalidad" class="form-select" th:field="*{modalidad}" >
-            <option value="">Seleccione...</option>
-            <option th:each="modalidad : ${ modalidades }" th:value="${ modalidad.id }" th:text="${ modalidad.nombre }"></option>
-          </select>
-          <p th:if="${#fields.hasErrors('modalidad')}" th:errors="*{modalidad}" class="text-danger"></p>
-          <label for="floatModalidad">Modalidad</label>
-        </div>
-
-        <div class="form-floating mb-3">
-          <input type="date" class="form-control" id="fechaEmision" placeholder="fechaemision" th:field="*{fechaEmision}" th:value="*{fechaEmision}">
-          <p th:if="${#fields.hasErrors('fechaEmision')}" th:errors="*{fechaEmision}" class="text-danger"></p>
-          <label for="fechaEmision">Fecha Emisión</label>
-        </div>
-
-        <div class="form-floating mb-3">
-          <input type="date" class="form-control" id="fechaInicio" placeholder="fechainicio" th:field="*{fechaInicio}" th:value="*{fechaInicio}">
-          <p th:if="${#fields.hasErrors('fechaInicio')}" th:errors="*{fechaInicio}" class="text-danger"></p>
-          <label for="fechaInicio">Fecha Inicio</label>
-        </div>
-      </div>
-    </div>
-
-    <div class="row pt-3">
-      <div class="col-5 d-flex justify-content-center">
-        <button type="submit" class="btn btn-primary mb-5">Contratar</button>
-      </div>
-    </div>
-  </form>
-</div>
+    </form>
 </div>
 
 </body>

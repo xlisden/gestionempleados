@@ -361,8 +361,11 @@ public class EmpleadoServiceimpl implements EmpleadoService {
 	public Empleado empleadoEditarPost(EditarEmpleadoRequest empe, MultipartFile foto,int id) {
 		Empleado actualizado= null;
 		try {
+			
 			 actualizado = new Empleado(id,getEmpleado(id).getCod(),empe.getDni(),empe.getNombre(),empe.getApPaterno(),empe.getApMaterno(),empe.isGenero(),
 				empe.getEstadoCivil(),empe.getFechaNacimiento(),getEmpleado(id).getFoto(),getEmpleado(id).isActivo());
+			 if(empe.getFechaNacimiento()==null)
+				 actualizado.setFechaNac(getEmpleadoNormal(id).getFechaNac());
 			 if(!foto.isEmpty())
 				 actualizado.setFoto(nombreFoto(foto, actualizado));
 			 updateEmple(actualizado);

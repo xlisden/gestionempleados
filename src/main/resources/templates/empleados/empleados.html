@@ -128,8 +128,16 @@
             <div class="d-flex align-items-start mb-3">
                 <div class="d-flex flex-column align-items-center me-3">
                     <img th:src="@{/img/{image}(image=${ empleado.foto })}" alt="empleado_imagen" class="profile-img mb-1">
-                    <span th:text="${empleado.activo} ? 'Activo' : 'Inactivo'"
-                          th:class="${empleado.activo} ? 'active-class' : 'inactive-class'" class="small"></span>
+                    <a th:if="${empleado.activo}"
+                       th:text="'Activo'"
+                       class="active-class"
+                       th:attr="onclick=|return confirmarDespedir('@{/empleados/desactivar/{id}(id=${empleado.id})}')|"
+                       style="cursor:pointer;"></a>
+                    <a th:if="${!empleado.activo}"
+                       th:text="'Inactivo'"
+                       class="inactive-class"
+                       th:onclick="'window.location.href=\'' + @{/areas/agregar-contrato/{id}(id=${empleado.id})} + '\''"
+                       style="cursor:pointer;"></a>
                 </div>
                 <div>
                     <h6 th:text="${ empleado.nombreCompleto }" class="mb-0 fw-bold"></h6>
@@ -159,6 +167,12 @@
         </div>
     </div>
 </div>
-
+<script>
+    function confirmarDespedir(ruta){
+        if (confirm("¿Está seguro de terminar el contrato de ese empleado?")){
+            location.href = ruta;
+        }
+    }
+</script>
 </body>
 </html>
