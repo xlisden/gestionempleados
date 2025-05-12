@@ -34,14 +34,27 @@ public class ContratoServiceImpl implements ContratoService {
         contrato.setArea(request.getArea());
         contrato.setFechaEmision(request.getFechaEmision());
         contrato.setModalidadCont(request.getModalidad());
-        contrato.setFechaInicio(request.getFechaInicio());
         contrato.setJornadaLaboral(request.getJornada());
+        
+        
+        contrato.setFechaInicio(contrato.getFechaEmision().plusMonths(1).withDayOfMonth(1));
+    	if(contrato.getModalidadCont().getId()==2)
+    		contrato.setFechaFin(contrato.getFechaInicio().plusMonths(6).withDayOfMonth(1));
+    	else {
+    		System.out.println("no se pudo contrato fin");
+    	}
 
         return contratoRepository.save(contrato);
     }
 
     @Override
     public Contrato addTipoM(Contrato contrato) {
+    	contrato.setFechaInicio(contrato.getFechaEmision().plusMonths(1).withDayOfMonth(1));
+    	if(contrato.getModalidadCont().getId()==2)
+    		contrato.setFechaFin(contrato.getFechaInicio().plusMonths(6).withDayOfMonth(1));
+    	else {
+    		System.out.println("no se pudo contrato fin");
+    	}
         return contratoRepository.save(contrato);
     }
 
@@ -52,6 +65,12 @@ public class ContratoServiceImpl implements ContratoService {
 
     @Override
     public void updateContrato(Contrato contrato) {
+    	contrato.setFechaInicio(contrato.getFechaEmision().plusMonths(1).withDayOfMonth(1));
+    	if(contrato.getModalidadCont().getId()==2)
+    		contrato.setFechaFin(contrato.getFechaInicio().plusMonths(6).withDayOfMonth(1));
+    	else {
+    		System.out.println("no se pudo contrato fin");
+    	}
         contratoRepository.save(contrato);
     }
 

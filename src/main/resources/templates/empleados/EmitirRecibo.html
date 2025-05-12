@@ -26,6 +26,11 @@
         }, 920000); // 900,000 ms = 15 minutos
     };
 </script>
+<script type="text/javascript">
+		function confirmar(){
+			return confirm("¿Seguro que quieres emitir?");
+		}
+	</script>
 <body>
 
 <div th:replace="~{shared/menu :: menu()}"></div>
@@ -82,7 +87,7 @@
                 </div>
                 <div class="row pt-3">
                     <div class="col-9 d-flex justify-content-center">
-                        <button id="btnGenerar" type="submit" class="btn btn-primary mb-5">Emitir</button>
+                        <button id="btnGenerar" type="submit" onclick="return confirmar()" class="btn btn-primary mb-5">Emitir</button>
                     </div>
                 </div>
             </form>
